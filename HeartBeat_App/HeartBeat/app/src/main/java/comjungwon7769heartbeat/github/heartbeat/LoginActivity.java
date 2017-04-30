@@ -31,12 +31,12 @@ public class LoginActivity extends AppCompatActivity {
 				boolean chk = Login_Usable_Check(txtId.getText().toString(), txtPwd.getText().toString());
 
 				//test용 true
-				if(true){
+				if(true) {
 					//Move To FriendList Act
 					Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
 					startActivity(intent);
 					finish();
-				}else{
+				} else {
 					//Popup Act
 				}
 			}
@@ -58,8 +58,7 @@ public class LoginActivity extends AppCompatActivity {
 
 		//ID나 PWD가 최소길이보다 작거나 최대길이보다 긴 경우
 		if(inputID.length() < minLength || inputID.length() > maxLegnth ||
-				inputPWD.length() < minLength || inputPWD.length() > maxLegnth)
-			return  false;
+				inputPWD.length() < minLength || inputPWD.length() > maxLegnth) return false;
 
 		return false;
 	} //loginUsableCheck()

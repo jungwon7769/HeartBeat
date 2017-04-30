@@ -57,7 +57,7 @@ public class FriendListActivity extends AppCompatActivity {
 	}
 
 	//친구목록 서버로부터 불러오기
-	private ArrayList<FriendDTO> FriendList_Load(){
+	private ArrayList<FriendDTO> FriendList_Load() {
 
 		return new ArrayList<FriendDTO>();
 	} //FriendList_Load()
