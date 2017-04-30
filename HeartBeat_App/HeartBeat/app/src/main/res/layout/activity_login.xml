@@ -22,9 +22,9 @@
         android:textStyle="bold"
         android:textIsSelectable="true"
         android:textAllCaps="true"
+        android:layout_marginTop="139dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="80dp"/>
+        android:layout_centerHorizontal="true"/>
 
     <EditText
         android:layout_width="wrap_content"
@@ -59,6 +59,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorIvory"
         android:text="@string/LoginAct_btnLogin"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/login_btnLogin"
         android:layout_below="@+id/login_txtPWD"
         android:layout_centerHorizontal="true"
@@ -69,6 +70,7 @@
         android:layout_height="wrap_content"
         android:background="@color/colorIvory"
         android:text="@string/LoginAct_btnJoin"
+        android:textColor="@color/colorPrimaryDark"
         android:id="@+id/login_btnJoin"
         android:layout_below="@+id/login_btnLogin"
         android:layout_alignStart="@+id/login_btnLogin"
