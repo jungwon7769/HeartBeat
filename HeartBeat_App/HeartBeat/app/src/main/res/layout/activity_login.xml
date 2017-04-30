@@ -9,53 +9,71 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="comjungwon7769heartbeat.github.heartbeat.LoginActivity"
-    android:background="#a9ca9d">
+    android:background="@color/colorOrange">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="HEART BEAT"
-        android:id="@+id/txtLogo"
-        android:layout_marginTop="158dp"
+        android:text="@string/app_name"
+        android:id="@+id/login_txtLogo"
+        android:textSize="50dp"
+        android:textColor="@color/colorIvory"
+        android:textStyle="bold"
+        android:textIsSelectable="true"
+        android:textAllCaps="true"
+        android:layout_marginTop="139dp"
         android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:textSize="40dp"/>
+        android:layout_centerHorizontal="true"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPersonName"
-        android:text="ID"
+        android:text=""
+        android:hint="ID"
         android:ems="10"
-        android:id="@+id/txtID"
-        android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true"/>
+        android:id="@+id/login_txtID"
+        android:textColor="@color/colorPrimaryDark"
+        android:textCursorDrawable="@null"
+        android:layout_below="@+id/login_txtLogo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"/>
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textPassword"
         android:ems="10"
-        android:id="@+id/txtPWD"
-        android:layout_below="@+id/txtID"
+        android:id="@+id/login_txtPWD"
+        android:text=""
+        android:hint="PASSWORD"
+        android:textColor="@color/colorPrimaryDark"
+        android:textCursorDrawable="@null"
+        android:layout_below="@+id/login_txtID"
+        android:layout_alignStart="@+id/login_txtID"
+        android:layout_marginTop="10dp"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorIvory"
+        android:text="@string/LoginAct_btnLogin"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/login_btnLogin"
+        android:layout_below="@+id/login_txtPWD"
         android:layout_centerHorizontal="true"
-        android:text="PWD"/>
+        android:layout_marginTop="20dp"/>
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Login"
-        android:id="@+id/btnLogin"
-        android:layout_below="@+id/txtPWD"
-        android:layout_centerHorizontal="true"/>
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Join"
-        android:id="@+id/btnJoin"
-        android:layout_below="@+id/btnLogin"
-        android:layout_centerHorizontal="true"/>
+        android:background="@color/colorIvory"
+        android:text="@string/LoginAct_btnJoin"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/login_btnJoin"
+        android:layout_below="@+id/login_btnLogin"
+        android:layout_alignStart="@+id/login_btnLogin"
+        android:layout_marginTop="10dp"/>
 
 </RelativeLayout>

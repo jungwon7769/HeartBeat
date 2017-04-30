@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">HeartBeat</string>
+    <string name="loading">Loading...</string>
+    <string name="LoginAct_btnLogin">Login</string>
+    <string name="LoginAct_btnJoin">Join</string>
+    <string name="joinAct_btnUsable">중복</string>
+    <string name="joinAct_btnJoin">가입하기</string>
+    <string name="joinAct_Title">JOIN</string>
 </resources>
