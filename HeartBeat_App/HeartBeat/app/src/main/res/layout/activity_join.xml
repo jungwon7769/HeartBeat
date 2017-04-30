@@ -8,6 +8,78 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="comjungwon7769heartbeat.github.heartbeat.JoinActivity">
+    tools:context="comjungwon7769heartbeat.github.heartbeat.JoinActivity"
+    android:background="@color/colorOrange">
 
+    <EditText
+        android:layout_width="180dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/join_txtID"
+        android:text=""
+        android:hint="ID"
+        android:textColor="@color/colorPrimaryDark"
+        android:textCursorDrawable="@null"
+        android:layout_above="@+id/join_txtPWD"
+        android:layout_alignStart="@+id/join_txtPWD"
+        android:layout_marginBottom="30dp"/>
+
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:inputType="textPassword"
+        android:ems="10"
+        android:id="@+id/join_txtPWD"
+        android:text=""
+        android:hint="PASSWORD"
+        android:textColor="@color/colorPrimaryDark"
+        android:textCursorDrawable="@null"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:layout_width="230dp"
+        android:layout_height="wrap_content"
+        android:id="@+id/join_txtNick"
+        android:text=""
+        android:hint="NICKNAME"
+        android:textColor="@color/colorPrimaryDark"
+        android:textCursorDrawable="@null"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/join_txtPWD"
+        android:layout_alignStart="@+id/join_txtPWD"/>
+
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="40dp"
+        android:layout_height="wrap_content"
+        android:background="@color/colorIvory"
+        android:text="@string/joinAct_btnUsable"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/join_btnUsable"
+        android:layout_alignBottom="@+id/join_txtID"
+        android:layout_alignEnd="@+id/join_txtPWD"/>
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/colorIvory"
+        android:text="@string/joinAct_btnJoin"
+        android:textColor="@color/colorPrimaryDark"
+        android:id="@+id/join_btnJoin"
+        android:layout_below="@+id/join_txtNick"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/joinAct_Title"
+        android:textColor="@color/colorIvory"
+        android:id="@+id/join_txtTitle"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="62dp"
+        android:textSize="40dp"
+        android:textStyle="bold"/>
 </RelativeLayout>

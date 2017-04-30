@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".LoadingActivity"
-    android:background="@color/colorAccent">
+    android:background="@color/colorOrange">
 
     <TextView
         android:layout_width="wrap_content"
@@ -19,15 +19,15 @@
         android:textSize="50dp"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:id="@+id/textView"
-        android:textColor="@color/colorPrimary"/>
+        android:id="@+id/loading_txt"
+        android:textColor="@color/colorIvory"/>
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/imageView"
+        android:id="@+id/loading_image"
         android:src="@android:mipmap/sym_def_app_icon"
-        android:layout_above="@+id/textView"
-        android:layout_alignStart="@+id/textView"
-        android:layout_alignEnd="@+id/textView"/>
+        android:layout_above="@+id/loading_txt"
+        android:layout_alignStart="@+id/loading_txt"
+        android:layout_alignEnd="@+id/loading_txt"/>
 </RelativeLayout>
