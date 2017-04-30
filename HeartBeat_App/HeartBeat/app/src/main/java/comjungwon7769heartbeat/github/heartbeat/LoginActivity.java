@@ -1,7 +1,6 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
 import android.content.Intent;
-import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,17 +27,7 @@ public class LoginActivity extends AppCompatActivity {
 
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				boolean chk = Login_Usable_Check(txtId.getText().toString(), txtPwd.getText().toString());
-
-				//test용 true
-				if(true){
-					//Move To FriendList Act
-					Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
-					startActivity(intent);
-					finish();
-				}else{
-					//Popup Act
-				}
+				Login_Usable_Check(txtId.getText().toString(), txtPwd.getText().toString());
 			}
 		});
 		btnJoin.setOnClickListener(new View.OnClickListener() {
@@ -49,17 +38,19 @@ public class LoginActivity extends AppCompatActivity {
 
 	} //onCreate()
 
-	private boolean Login_Usable_Check(String id, String pwd) {
-		String inputID = txtId.getText().toString();
-		String inputPWD = txtPwd.getText().toString();
-		Resources res = getResources();
-		int maxLegnth = res.getInteger(R.integer.infoLength_max);
-		int minLength = res.getInteger(R.integer.infoLength_min);
+	/*
+	Button.OnClickListener btnLogin_click = new View.OnClickListener() {
+		public void onClick(View v) {
+			//이곳에 버튼 클릭시 일어날 일을 적습니다.
+			TextView textV = (TextView)findViewById(R.id.login_txtLogo);
+			textV.setText("HOHO");
+		}
+	};
+	*/
 
-		//ID나 PWD가 최소길이보다 작거나 최대길이보다 긴 경우
-		if(inputID.length() < minLength || inputID.length() > maxLegnth ||
-				inputPWD.length() < minLength || inputPWD.length() > maxLegnth)
-			return  false;
+	private boolean Login_Usable_Check(String id, String pwd) {
+		TextView textV = (TextView) findViewById(R.id.login_txtLogo);
+		textV.setText(id + pwd);
 
 		return false;
 	} //loginUsableCheck()
