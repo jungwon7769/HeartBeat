@@ -17,6 +17,39 @@
         android:divider="@color/colorOrange"
         android:dividerHeight="@dimen/frList_listDivider"
         android:id="@+id/frList_list"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/frList_myDetailLayout"/>
+
+    <RelativeLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentStart="false"
+        android:id="@+id/frList_myDetailLayout"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true"/>
+        android:layout_alignParentEnd="false"
+        android:layout_alignEnd="@id/frList_list"
+        android:layout_marginBottom="10dp">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:id="@+id/frList_myMode"
+            android:src="@drawable/annoy"
+            android:layout_gravity="center_vertical"
+            android:background="#ffb9b9"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="안현정"
+            android:id="@+id/frList_myNick"
+            android:textSize="30dp"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/frList_myMode"
+            android:layout_marginStart="20dp"/>
+
+    </RelativeLayout>
 </RelativeLayout>
