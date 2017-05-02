@@ -41,21 +41,17 @@ public class JoinActivity extends Activity {
 		//회원가입 버튼 리스너 지정(Join)
 		btnJoin.setOnClickListener(new View.OnClickListener() {
 			                           public void onClick(View v) {
-				                           Resources res = getResources();
-				                           int maxLegnth = res.getInteger(R.integer.infoLength_max);
-				                           int minLength = res.getInteger(R.integer.infoLength_min);
-
 				                           //중복확인 결과 사용가능한 아이디, 비밀번호와 닉네임이 입력된상태
 				                           if(id.compareTo(txtID.getText().toString()) != 0 || !chkIdUsable)
 					                           Toast.makeText(getApplicationContext(), "ID 중복확인을 해주세요", Toast.LENGTH_SHORT).show();
-				                           else if(txtPWD.getText().toString().length() > maxLegnth)
-					                           Toast.makeText(getApplicationContext(), "PASSWORD의 길이는 " + maxLegnth + "보다 짧아야합니다", Toast.LENGTH_SHORT).show();
-				                           else if(txtPWD.getText().toString().length() < minLength)
-					                           Toast.makeText(getApplicationContext(), "PASSWORD의 길이는 " + minLength + "보다 길어야합니다", Toast.LENGTH_SHORT).show();
-				                           else if(txtNick.getText().toString().length() > maxLegnth)
-					                           Toast.makeText(getApplicationContext(), "닉네임의 길이는 " + maxLegnth + "보다 짧아야합니다", Toast.LENGTH_SHORT).show();
-				                           else if(txtNick.getText().toString().length() < minLength)
-					                           Toast.makeText(getApplicationContext(), "닉네임의 길이는 " + minLength + "보다 길어야합니다", Toast.LENGTH_SHORT).show();
+				                           else if(txtPWD.getText().toString().length() > Constants.maxString)
+					                           Toast.makeText(getApplicationContext(), "PASSWORD의 길이는 " + Constants.maxString + "보다 짧아야합니다", Toast.LENGTH_SHORT).show();
+				                           else if(txtPWD.getText().toString().length() < Constants.minString)
+					                           Toast.makeText(getApplicationContext(), "PASSWORD의 길이는 " + Constants.minString + "보다 길어야합니다", Toast.LENGTH_SHORT).show();
+				                           else if(txtNick.getText().toString().length() > Constants.maxString)
+					                           Toast.makeText(getApplicationContext(), "닉네임의 길이는 " + Constants.maxString + "보다 짧아야합니다", Toast.LENGTH_SHORT).show();
+				                           else if(txtNick.getText().toString().length() < Constants.minString)
+					                           Toast.makeText(getApplicationContext(), "닉네임의 길이는 " + Constants.minString + "보다 길어야합니다", Toast.LENGTH_SHORT).show();
 				                           else {
 					                           Join(txtID.getText().toString(), txtPWD.getText().toString(), txtNick.getText().toString());
 				                           }
@@ -69,16 +65,13 @@ public class JoinActivity extends Activity {
 
 	private boolean ID_Usable_Check(String id) {
 		String inputID = id;
-		Resources res = getResources();
-		int maxLegnth = res.getInteger(R.integer.infoLength_max);
-		int minLength = res.getInteger(R.integer.infoLength_min);
 
 		//입력한 ID가 최소길이보다 작거나 최대길이를 넘음
-		if(inputID.length() > maxLegnth) {
-			Toast.makeText(getApplicationContext(), "ID의 길이는 " + maxLegnth + "보다 짧아야합니다", Toast.LENGTH_SHORT).show();
+		if(inputID.length() > Constants.maxString) {
+			Toast.makeText(getApplicationContext(), "ID의 길이는 " + Constants.maxString + "보다 짧아야합니다", Toast.LENGTH_SHORT).show();
 			return false;
-		} else if(inputID.length() < minLength) {
-			Toast.makeText(getApplicationContext(), "ID의 길이는 " + minLength + "보다 길어야합니다", Toast.LENGTH_SHORT).show();
+		} else if(inputID.length() < Constants.minString) {
+			Toast.makeText(getApplicationContext(), "ID의 길이는 " + Constants.minString + "보다 길어야합니다", Toast.LENGTH_SHORT).show();
 			return false;
 		}
 		//ServerComu class Create

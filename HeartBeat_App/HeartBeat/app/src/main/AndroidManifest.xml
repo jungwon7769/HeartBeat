@@ -24,7 +24,7 @@
                   android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
         <activity android:name=".FriendListActivity"
-            android:label="친구목록">
+            android:label="HEARTBEAT">
         </activity>
     </application>
 

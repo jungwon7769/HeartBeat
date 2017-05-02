@@ -52,13 +52,10 @@ public class LoginActivity extends AppCompatActivity {
 	private boolean Login_Usable_Check(String id, String pwd) {
 		String inputID = txtId.getText().toString();
 		String inputPWD = txtPwd.getText().toString();
-		Resources res = getResources();
-		int maxLegnth = res.getInteger(R.integer.infoLength_max);
-		int minLength = res.getInteger(R.integer.infoLength_min);
 
 		//ID나 PWD가 최소길이보다 작거나 최대길이보다 긴 경우
-		if(inputID.length() < minLength || inputID.length() > maxLegnth ||
-				inputPWD.length() < minLength || inputPWD.length() > maxLegnth) return false;
+		if(inputID.length() < Constants.minString || inputID.length() > Constants.maxString ||
+				inputPWD.length() < Constants.minString || inputPWD.length() > Constants.maxString) return false;
 
 		return false;
 	} //loginUsableCheck()
