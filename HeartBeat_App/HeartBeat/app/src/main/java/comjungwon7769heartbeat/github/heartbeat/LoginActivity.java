@@ -1,9 +1,12 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -14,6 +17,8 @@ public class LoginActivity extends AppCompatActivity {
 	private EditText txtId, txtPwd;
 	private Button btnLogin, btnJoin;
 	private boolean check;
+	private String user_nick;
+	private Constants.Emotion user_mode;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +33,21 @@ public class LoginActivity extends AppCompatActivity {
 
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				user_nick = "SaveError";
+				user_mode = Constants.Emotion.annoy;
 				boolean chk = Login_Usable_Check(txtId.getText().toString(), txtPwd.getText().toString());
 
 				//test용 true
 				if(true) {
+					//Save User Data
+					SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+					SharedPreferences.Editor editor = preference.edit();
+					editor.putString("my_id", txtId.getText().toString());
+					editor.putString("my_pwd", txtPwd.getText().toString());
+					editor.putString("my_nick", user_nick);
+					editor.putInt("my_mode", user_mode.getMode());
+					editor.commit();
+
 					//Move To FriendList Act
 					Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
 					startActivity(intent);
@@ -54,8 +70,14 @@ public class LoginActivity extends AppCompatActivity {
 		String inputPWD = txtPwd.getText().toString();
 
 		//ID나 PWD가 최소길이보다 작거나 최대길이보다 긴 경우
-		if(inputID.length() < Constants.minString || inputID.length() > Constants.maxString ||
-				inputPWD.length() < Constants.minString || inputPWD.length() > Constants.maxString) return false;
+		//if(inputID.length() < Constants.minString || inputID.length() > Constants.maxString ||
+		//		inputPWD.length() < Constants.minString || inputPWD.length() > Constants.maxString) return false;
+
+		//Login Request To Server
+
+		//Load User Info(nick, mode) From Server
+		user_nick = "현정이지롱";
+		user_mode = Constants.Emotion.overeat;
 
 		return false;
 	} //loginUsableCheck()

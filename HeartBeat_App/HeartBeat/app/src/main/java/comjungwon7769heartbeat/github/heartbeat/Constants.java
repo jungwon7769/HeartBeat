@@ -19,10 +19,10 @@ public class Constants {
 			this.color = colorValue;
 		}
 		public int getMode(){return mode;}
-		public void setMode(int value){this.mode = value;}
+		//public void setMode(int value){ this.mode = value; this.color = Emotion.values()[value].getColor();}
 
 		public String getColor(){return color;}
-		public void setMode(String colorValue){this.color = colorValue;}
+		//public void setColor(String colorValue){this.color = colorValue;}
 	} //enum Emotion
 
 }
