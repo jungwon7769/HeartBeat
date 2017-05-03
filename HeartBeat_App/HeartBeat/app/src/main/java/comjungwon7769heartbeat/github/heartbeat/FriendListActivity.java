@@ -1,9 +1,14 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.Image;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +32,34 @@ public class FriendListActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_friend_list);
 
+		//User Info Load and Display ***
+		ImageView imgMyMode = (ImageView) findViewById(R.id.frList_myMode);
+		TextView txtMyNick = (TextView) findViewById(R.id.frList_myNick);
+
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		txtMyNick.setText(preference.getString("my_nick", "DataLoadError"));
+		int myMode = preference.getInt("my_mode", 2);
+
+		Constants.Emotion[] e = Constants.Emotion.values();
+		for(int i=0; i< e.length; i++){
+			if(e[i].getMode() == myMode){
+				imgMyMode.setImageResource(getResources().getIdentifier(e[i].toString(), "drawable", this.getPackageName()));
+				imgMyMode.setBackgroundColor(Color.parseColor("#" + e[i].getColor()));
+			}
+		}
+
+
+		findViewById(R.id.frList_myDetailLayout).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//myDetail 페이지로 이동
+				Intent intent = new Intent(getApplicationContext(), MyDetailActivity.class);
+				startActivity(intent);
+			}
+		});
+		//***User Info Load END
+
+		//Friend List Load ***
 		//StoreFriendTime 검사
 		//if 저장한지 오래된경우 FriendList_Load 호출
 
@@ -46,8 +79,8 @@ public class FriendListActivity extends AppCompatActivity {
 		friend_list.add(me2);
 
 		Random r = new Random();
-		for(int i=0; i<30; i++){
-			FriendDTO fff = new FriendDTO("dd", "친구"+i, "88AAE4", Constants.Emotion.values()[r.nextInt(10)]);
+		for(int i = 0; i < 30; i++) {
+			FriendDTO fff = new FriendDTO("dd", "친구" + i, "88AAE4", Constants.Emotion.values()[r.nextInt(10)]);
 			friend_list.add(fff);
 		}
 
@@ -64,13 +97,34 @@ public class FriendListActivity extends AppCompatActivity {
 				Toast.makeText(getApplicationContext(), friend_list.get(position).getNick(), Toast.LENGTH_SHORT).show();
 			}
 		});
-	}
+		//*** Friend List Load END
+
+		findViewById(R.id.frList_btnAlarm).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//알람메세지 페이지로 이동
+				Log.i("Test", "Go Message~~");
+			}
+		});
+		findViewById(R.id.frList_btnAddFriend).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//친구추가 페이지로 이동
+				Log.i("Test", "Go Add Friend~~");
+			}
+		});
+
+	} //onCreate()
 
 	//친구목록 서버로부터 불러오기
 	private ArrayList<FriendDTO> FriendList_Load() {
 
 		return new ArrayList<FriendDTO>();
 	} //FriendList_Load()
+
+	private void Friend_Detail_Button() {
+
+	}
 
 	//친구목록 리스트뷰의 어댑터 클래스(내부클래스)
 	private class FriendListAdapter extends BaseAdapter {
@@ -111,31 +165,16 @@ public class FriendListActivity extends AppCompatActivity {
 			//친구 기분 표시
 			ImageView mode = (ImageView) convertView.findViewById(R.id.frItem_Mode);    //뷰와 이미지 연결
 
-			switch(frMode){
-				case smile: mode.setImageResource(R.drawable.smile);
-					break;
-				case laugh: mode.setImageResource(R.drawable.laugh);
-					break;
-				case sad: mode.setImageResource(R.drawable.sad);
-					break;
-				case annoy:mode.setImageResource(R.drawable.annoy);
-					break;
-				case angry:mode.setImageResource(R.drawable.angry);
-					break;
-				case wink:mode.setImageResource(R.drawable.wink);
-					break;
-				case love:mode.setImageResource(R.drawable.love);
-					break;
-				case wow:mode.setImageResource(R.drawable.wow);
-					break;
-				case overeat:mode.setImageResource(R.drawable.overeat);
-					break;
-				case sleep:mode.setImageResource(R.drawable.sleep);
-					break;
-			} //switch
+			Constants.Emotion[] e = Constants.Emotion.values();
+			for(int i=0; i< e.length; i++){
+				if(e[i] == frMode){
+					mode.setImageResource(getResources().getIdentifier(e[i].toString(), "drawable", getPackageName()));
+					mode.setBackgroundColor(Color.parseColor("#" + e[i].getColor()));
+				}
+			}
 
 			//친구 색 표시
-			mode.setBackgroundColor(Color.parseColor("#"+ frItem.getColor()));
+			mode.setBackgroundColor(Color.parseColor("#" + frItem.getColor()));
 
 			//친구 닉네임 표시
 			TextView name = (TextView) convertView.findViewById(R.id.frItem_Nick);      //텍스트뷰와 닉네임 연결

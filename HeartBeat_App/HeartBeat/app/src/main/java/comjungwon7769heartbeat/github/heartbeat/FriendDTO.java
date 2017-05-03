@@ -1,5 +1,7 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.graphics.Color;
+
 /**
  * Created by AH on 2017-04-30.
  */
@@ -42,7 +44,12 @@ public class FriendDTO {
 	public Constants.Emotion getMode() {return  friendMode;}
 
 	public void setMode(int value) {
-		friendMode.setMode(value);
+		Constants.Emotion[] e = Constants.Emotion.values();
+		for(int i=0; i< e.length; i++){
+			if(e[i].getMode() == value){
+				friendMode = e[i];
+			}
+		}
 	}
 
 	public void setMode(Constants.Emotion mode) { friendMode = mode;}

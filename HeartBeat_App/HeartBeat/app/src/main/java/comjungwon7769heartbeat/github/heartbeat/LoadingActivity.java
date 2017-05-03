@@ -31,11 +31,13 @@ public class LoadingActivity extends AppCompatActivity {
 			//친구목록화면으로
 		}
 
+
 		new Timer().schedule(new TimerTask() {
 			public void run() {
 				test();
 			}
 		}, 1000);
+
 
 
 	}
