@@ -2,6 +2,7 @@ package comjungwon7769heartbeat.github.heartbeat;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.Image;
@@ -52,6 +53,8 @@ public class FriendListActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				//myDetail 페이지로 이동
+				Intent intent = new Intent(getApplicationContext(), MyDetailActivity.class);
+				startActivity(intent);
 			}
 		});
 		//***User Info Load END
@@ -95,6 +98,21 @@ public class FriendListActivity extends AppCompatActivity {
 			}
 		});
 		//*** Friend List Load END
+
+		findViewById(R.id.frList_btnAlarm).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//알람메세지 페이지로 이동
+				Log.i("Test", "Go Message~~");
+			}
+		});
+		findViewById(R.id.frList_btnAddFriend).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//친구추가 페이지로 이동
+				Log.i("Test", "Go Add Friend~~");
+			}
+		});
 
 	} //onCreate()
 

@@ -60,21 +60,21 @@
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:id="@+id/frList_btnAlarm"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_send"
-            android:background="@android:drawable/progress_horizontal"
-            android:layout_marginRight="5dp"/>
+            android:src="@android:drawable/ic_popup_reminder"
+            android:layout_margin="5dp"
+            />
 
         <ImageButton
             android:layout_width="wrap_content"
-            android:layout_height="50dp"
+            android:layout_height="60dp"
             android:id="@+id/frList_btnAddFriend"
             android:layout_weight="1"
             android:src="@android:drawable/ic_menu_myplaces"
-            android:background="@android:drawable/progress_horizontal"
-            android:layout_marginLeft="5dp"/>
+            android:layout_margin="5dp"
+            />
     </LinearLayout>
 
 </RelativeLayout>

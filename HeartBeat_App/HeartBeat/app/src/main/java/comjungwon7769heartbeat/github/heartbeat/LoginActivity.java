@@ -54,6 +54,10 @@ public class LoginActivity extends AppCompatActivity {
 					finish();
 				} else {
 					//Popup Act
+					Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+					intent.putExtra("Popup", Constants.popup_ok);
+					intent.putExtra("Message", getText(R.string.LoginFailed));
+					startActivityForResult(intent, 1);
 				}
 			}
 		});
@@ -64,6 +68,19 @@ public class LoginActivity extends AppCompatActivity {
 		});
 
 	} //onCreate()
+
+	/*
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if(requestCode==1){
+			if(resultCode==RESULT_OK){
+				//데이터 받기
+				String result = data.getStringExtra("result");
+				Log.i("Test", "PopupResult~~" + result);
+			}
+		}
+	}
+	*/
 
 	private boolean Login_Usable_Check(String id, String pwd) {
 		String inputID = txtId.getText().toString();

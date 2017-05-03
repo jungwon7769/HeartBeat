@@ -14,4 +14,11 @@
         <item name="android:background">@color/colorOrange</item>
         <item name="android:actionBarSize">@dimen/actionBar_Size</item>
     </style>
+
+    <style name="PopupTheme" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:actionBarStyle">@style/MyActionBar</item>
+        <item name="colorPrimary">@color/colorOrange</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorIvory</item>
+    </style>
 </resources>
