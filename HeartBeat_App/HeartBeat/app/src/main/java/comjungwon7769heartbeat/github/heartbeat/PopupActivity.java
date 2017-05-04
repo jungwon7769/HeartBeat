@@ -3,6 +3,7 @@ package comjungwon7769heartbeat.github.heartbeat;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -32,6 +33,24 @@ public class PopupActivity extends AppCompatActivity {
 					public void onClick(View v) {
 						Intent intent = new Intent();
 						intent.putExtra("result", "팝업 그만~~");
+						setResult(RESULT_OK, intent);
+
+						finish();
+					}
+				});
+
+				break;
+
+			case Constants.popup_pickColor:
+				setContentView(R.layout.activity_popup_ok);
+
+				btnOK = (Button)findViewById(R.id.popup_ok_btnOK);
+				btnOK.setOnClickListener(new Button.OnClickListener(){
+					@Override
+					public void onClick(View v) {
+						Intent intent = new Intent();
+						intent.putExtra("Popup", Constants.popup_pickColor);
+						intent.putExtra("selectedColor", "66FF22");
 						setResult(RESULT_OK, intent);
 
 						finish();
