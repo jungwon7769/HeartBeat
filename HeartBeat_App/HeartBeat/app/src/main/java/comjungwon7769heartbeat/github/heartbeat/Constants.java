@@ -7,7 +7,24 @@ public class Constants {
 	public static final int maxString = 32;
 	public static final int minString = 4;
 
-	public static final int popup_ok = 0;   //popup = 0, Message = String
+	/*
+	PopupActivity 의 Type 정의
+	 */
+	//PopupActivity Type에 따른, Intent를 이용해 (팝업으로 보낼 Data), (팝업에서 받아올 Data)
+	public static final int popup_ok = 0;   //Popup = 0, To PopupActivity(Message = String), From PopupActivity()
+	public static final int popup_re = 1;   //Popup = 1, To(Message = String), From(select = boolean)
+
+	public static final int popup_pickEmotion = 10;  //Popup = 10, To (), From (selectedEmotion = int)
+	public static final int popup_pickColor = 11;    //Popup = 11, To (), From (selectedColor = String)
+	public static final int popup_recordVoice = 12;     //Popup = 12, To(), From(??) 녹음부분 좀더 공부한 뒤에 다시 적겠음
+
+	public static final int popup_msgFriend = 20;   //Popup = 20, To(ID = String, Time = int), From(select = boolean)
+	public static final int popup_msgVoice = 21;    //Popup = 21, To(ID = String, Nick = String, Time = int..??), From()     야ㅒ도 오디오관련 좀더 공부하겠음..
+	public static final int popup_msgEmotion = 22;  //Popup = 22, To(ID = String, Nick = String, Emotion = int, Time = int), From()
+	public static final int popup_msgBzz = 23;      //Popup = 23, To(ID = String, Nick = String, Count = int, Time = int), From()
+
+
+
 
 	public static enum Emotion{
 		smile(0, "59BE7F"), laugh(1, "FFFF00"), sad(2, "FFBB00"), annoy(3, "FF9900"), angry(4, "FF0000"),
