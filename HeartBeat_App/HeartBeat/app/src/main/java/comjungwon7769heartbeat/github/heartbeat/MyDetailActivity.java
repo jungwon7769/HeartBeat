@@ -92,17 +92,21 @@ public class MyDetailActivity extends AppCompatActivity {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode==1){
-			if(resultCode==RESULT_OK){
+		if(requestCode==1 && resultCode==RESULT_OK){
 				if(data.getIntExtra("Popup", 1) == Constants.popup_pickColor) {
 					String selectedColor = data.getStringExtra("selectedColor");
-					Log.i("Test", "PopupResult~~" + selectedColor);
+					setLED(selectedColor);
 				}
-			}
+				else if(false){
+
+				}
+
+
 		}
-	}
+	} //onActivityResult
 
 	private void setLED(String color) {
+		Log.i("Test", "setLED~~" + color);
 
 	}
 

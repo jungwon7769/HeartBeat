@@ -48,7 +48,7 @@ public class PopupActivity extends AppCompatActivity {
 			setContentView(R.layout.activity_popup_pickcolor);
 			setTitle(R.string.popup_pickColor_label);
 
-			//ColorPickerView colorPickerView = (ColorPickerView)findViewById(R.id.popup_pickColor_colorPickerView);
+			final ColorPickerView colorPickerView = (ColorPickerView)findViewById(R.id.popup_pickColor_colorPickerView);
 
 			Button btnOK = (Button)findViewById(R.id.popup_pickColor_ok);
 			btnOK.setOnClickListener(new Button.OnClickListener(){
@@ -57,13 +57,21 @@ public class PopupActivity extends AppCompatActivity {
 					//확인버튼 클릭시 선택한 색상 전달후 액티비티 종료
 					Intent intent = new Intent();
 					intent.putExtra("Popup", Constants.popup_pickColor);
-					intent.putExtra("selectedColor", "66FF22");
+					intent.putExtra("selectedColor", colorPickerView.getSelectColor());
 					setResult(RESULT_OK, intent);
 
 					finish();
 				}
 			});
+			Button btnCancel = (Button)findViewById(R.id.popup_pickColor_cancel);
+			btnCancel.setOnClickListener(new Button.OnClickListener(){
+				@Override
+				public void onClick(View v) {
+					finish();
+				}
+			});
 		}
+		//popup_...
 
 
 
