@@ -2,8 +2,8 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="350dp"
-    android:layout_height="400dp"
+    android:layout_width="300dp"
+    android:layout_height="330dp"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
@@ -18,7 +18,7 @@
         android:text="@string/ok"
         android:id="@+id/popup_pickColor_ok"
         android:layout_marginRight="10dp"
-        android:layout_marginStart="47dp"
+        android:layout_marginStart="34dp"
         android:layout_alignTop="@+id/popup_pickColor_cancel"
         android:layout_alignStart="@+id/popup_pickColor_colorPickerView"/>
 
@@ -33,8 +33,8 @@
         android:layout_toRightOf="@+id/popup_pickColor_ok"/>
 
     <comjungwon7769heartbeat.github.heartbeat.ColorPickerView
-        android:layout_width="250dp"
-        android:layout_height="250dp"
+        android:layout_width="230dp"
+        android:layout_height="230dp"
         android:id="@+id/popup_pickColor_colorPickerView"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"/>

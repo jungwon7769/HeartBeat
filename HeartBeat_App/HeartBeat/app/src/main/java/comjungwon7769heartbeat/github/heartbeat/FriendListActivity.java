@@ -67,24 +67,8 @@ public class FriendListActivity extends AppCompatActivity {
 
 		friend_list = new ArrayList<>();
 
-		//이부분에 사실 DAO써서 불러오는게 들어가야한다-----------------------
-
-		FriendDTO me = new FriendDTO("hjjj", "안현정", "66CCFF", Constants.Emotion.smile);
-		friend_list.add(me);
-
-		FriendDTO me1 = new FriendDTO("hjjj", "안현정1", "66CCFF", Constants.Emotion.annoy);
-		friend_list.add(me1);
-
-		FriendDTO me2 = new FriendDTO("hjjj", "안현정2", "66CCFF", Constants.Emotion.sleep);
-		friend_list.add(me2);
-
-		Random r = new Random();
-		for(int i = 0; i < 30; i++) {
-			FriendDTO fff = new FriendDTO("dd", "친구" + i, "88AAE4", Constants.Emotion.values()[r.nextInt(10)]);
-			friend_list.add(fff);
-		}
-
-		//DAO로 불러오는거다-------------------------------------
+		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+		friend_list = friendDAO.listFriend();
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
 		FriendListAdapter adapter = new FriendListAdapter(this, R.layout.item_friend, friend_list);
@@ -118,7 +102,7 @@ public class FriendListActivity extends AppCompatActivity {
 
 	//친구목록 서버로부터 불러오기
 	private ArrayList<FriendDTO> FriendList_Load() {
-
+		//friendDAO.addFriend(fff);
 		return new ArrayList<FriendDTO>();
 	} //FriendList_Load()
 
