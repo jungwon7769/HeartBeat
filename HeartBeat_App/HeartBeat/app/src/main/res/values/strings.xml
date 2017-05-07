@@ -18,6 +18,7 @@
 
     <string name="popup_ok_label">알림</string>
     <string name="popup_pickColor_label">색상 선택</string>
+    <string name="popup_pickEmotion_label">기분 선택</string>
 
     <string name="LoginFailed">ID 혹은 PASSWORD가 잘못되었습니다</string>
     <string name="ok">확인</string>

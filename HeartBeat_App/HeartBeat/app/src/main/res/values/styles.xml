@@ -20,5 +20,6 @@
         <item name="android:background">@color/colorIvory</item>
         <item name="android:textColor">@color/colorOrange</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
+
     </style>
 </resources>
