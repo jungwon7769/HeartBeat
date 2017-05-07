@@ -81,6 +81,9 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void setEmotion_Click() {
 		//Popup(EmotionPick)
+		Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+		intent.putExtra("Popup", Constants.popup_pickEmotion);
+		startActivityForResult(intent, 1);
 	}
 
 	private void transBzzToMe_Click() {
@@ -97,8 +100,9 @@ public class MyDetailActivity extends AppCompatActivity {
 					String selectedColor = data.getStringExtra("selectedColor");
 					setLED(selectedColor);
 				}
-				else if(false){
-
+				else if(data.getIntExtra("Popup", 1) == Constants.popup_pickEmotion){
+					int selectedEmotion = data.getIntExtra("selectedEmotion", 0);
+					setEmotion(Constants.Emotion.values()[selectedEmotion]);
 				}
 
 
@@ -111,7 +115,7 @@ public class MyDetailActivity extends AppCompatActivity {
 	}
 
 	private void setEmotion(Constants.Emotion e) {
-
+		Log.i("Test", e.name());
 	}
 
 	private void playSoundMsg() {

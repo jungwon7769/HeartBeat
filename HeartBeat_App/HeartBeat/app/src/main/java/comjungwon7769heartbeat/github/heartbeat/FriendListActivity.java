@@ -41,12 +41,8 @@ public class FriendListActivity extends AppCompatActivity {
 		int myMode = preference.getInt("my_mode", 2);
 
 		Constants.Emotion[] e = Constants.Emotion.values();
-		for(int i=0; i< e.length; i++){
-			if(e[i].getMode() == myMode){
-				imgMyMode.setImageResource(getResources().getIdentifier(e[i].toString(), "drawable", this.getPackageName()));
-				imgMyMode.setBackgroundColor(Color.parseColor("#" + e[i].getColor()));
-			}
-		}
+		imgMyMode.setImageResource(getResources().getIdentifier(e[myMode].toString(), "drawable", this.getPackageName()));
+		imgMyMode.setBackgroundColor(Color.parseColor("#" + e[myMode].getColor()));
 
 
 		findViewById(R.id.frList_myDetailLayout).setOnClickListener(new View.OnClickListener() {
@@ -150,12 +146,8 @@ public class FriendListActivity extends AppCompatActivity {
 			ImageView mode = (ImageView) convertView.findViewById(R.id.frItem_Mode);    //뷰와 이미지 연결
 
 			Constants.Emotion[] e = Constants.Emotion.values();
-			for(int i=0; i< e.length; i++){
-				if(e[i] == frMode){
-					mode.setImageResource(getResources().getIdentifier(e[i].toString(), "drawable", getPackageName()));
-					mode.setBackgroundColor(Color.parseColor("#" + e[i].getColor()));
-				}
-			}
+			mode.setImageResource(getResources().getIdentifier(e[frMode.getMode()].toString(), "drawable", getPackageName()));
+			mode.setBackgroundColor(Color.parseColor("#" + e[frMode.getMode()].getColor()));
 
 			//친구 색 표시
 			mode.setBackgroundColor(Color.parseColor("#" + frItem.getColor()));

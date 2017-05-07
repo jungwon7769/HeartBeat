@@ -122,12 +122,12 @@ public class ColorPickerView extends View{
 		piece = 360 / colors.length;
 
 		//선택한 각도의 색구하기
-		index = (int)(angle / piece);
-		color2 = colors[index];
-
-		index--;
-		if(index < 0) index = colors.length - 1;
+		index = (angle == 0)?0:(int)(angle / piece);
 		color1 = colors[index];
+
+		index++;
+		if(index >= colors.length) index = 0;
+		color2 = colors[index];
 
 		percent = ((angle % piece) / piece);
 
