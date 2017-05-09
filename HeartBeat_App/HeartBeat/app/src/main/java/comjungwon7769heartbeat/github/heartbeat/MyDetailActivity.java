@@ -30,12 +30,9 @@ public class MyDetailActivity extends AppCompatActivity {
 		int myMode = preference.getInt("my_mode", 1);
 
 		Constants.Emotion[] e = Constants.Emotion.values();
-		for(int i = 0; i < e.length; i++) {
-			if(e[i].getMode() == myMode) {
-				user_mode.setImageResource(getResources().getIdentifier(e[i].toString(), "drawable", this.getPackageName()));
-				user_mode.setBackgroundColor(Color.parseColor("#" + e[i].getColor()));
-			}
-		}
+		user_mode.setImageResource(getResources().getIdentifier(e[myMode].toString(), "drawable", this.getPackageName()));
+		user_mode.setBackgroundColor(Color.parseColor("#" + e[myMode].getColor()));
+
 		//*** User Nick, Emotion Load Finish
 
 		//Menu Button JAVA, Layout 연결
@@ -92,18 +89,24 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void transSoundMsgToMe_Click() {
 		//Popup(RecordVoice)
+		Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+		intent.putExtra("Popup", Constants.popup_recordVoice);
+		startActivityForResult(intent, 1);
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode==1 && resultCode==RESULT_OK){
-				if(data.getIntExtra("Popup", 1) == Constants.popup_pickColor) {
-					String selectedColor = data.getStringExtra("selectedColor");
-					setLED(selectedColor);
-				}
-				else if(data.getIntExtra("Popup", 1) == Constants.popup_pickEmotion){
-					int selectedEmotion = data.getIntExtra("selectedEmotion", 0);
-					setEmotion(Constants.Emotion.values()[selectedEmotion]);
-				}
+		if(requestCode == 1 && resultCode == RESULT_OK) {
+			if(data.getIntExtra("Popup", 1) == Constants.popup_pickColor) {
+				String selectedColor = data.getStringExtra("selectedColor");
+				setLED(selectedColor);
+			} else if(data.getIntExtra("Popup", 1) == Constants.popup_pickEmotion) {
+				int selectedEmotion = data.getIntExtra("selectedEmotion", 0);
+				setEmotion(Constants.Emotion.values()[selectedEmotion]);
+			} else if(data.getIntExtra("Popup", 1) == Constants.popup_recordVoice){
+				String voicePath = data.getStringExtra("voicePath");
+				Log.i("Test", "MyDtail Voice path" + voicePath);
+				playSoundMsg();
+			}
 
 
 		}
@@ -116,9 +119,22 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void setEmotion(Constants.Emotion e) {
 		Log.i("Test", e.name());
+		//ServerComu 이용
+		//서버에 내기분변경 정보 전송
+
+		//SAVE select Mode (Preference Data)
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = preference.edit();
+		editor.putInt("my_mode", e.getMode());
+		editor.commit();
+
+		//Change Emiton Image
+		ImageView user_mode = (ImageView) findViewById(R.id.myDt_imgMode);
+		user_mode.setImageResource(getResources().getIdentifier(e.toString(), "drawable", this.getPackageName()));
+		user_mode.setBackgroundColor(Color.parseColor("#" + e.getColor()));
+
 	}
 
 	private void playSoundMsg() {
-
 	}
 }

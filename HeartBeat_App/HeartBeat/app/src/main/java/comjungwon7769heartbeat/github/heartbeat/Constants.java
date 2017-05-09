@@ -16,7 +16,7 @@ public class Constants {
 
 	public static final int popup_pickEmotion = 10;  //Popup = 10, To (), From (selectedEmotion = int)
 	public static final int popup_pickColor = 11;    //Popup = 11, To (), From (selectedColor = String)
-	public static final int popup_recordVoice = 12;     //Popup = 12, To(), From(??) 녹음부분 좀더 공부한 뒤에 다시 적겠음
+	public static final int popup_recordVoice = 12;     //Popup = 12, To(), From(voicePath = String)
 
 	public static final int popup_msgFriend = 20;   //Popup = 20, To(ID = String, Time = int), From(select = boolean)
 	public static final int popup_msgVoice = 21;    //Popup = 21, To(ID = String, Nick = String, Time = int..??), From()     야ㅒ도 오디오관련 좀더 공부하겠음..

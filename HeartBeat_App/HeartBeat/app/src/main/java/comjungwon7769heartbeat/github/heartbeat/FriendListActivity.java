@@ -33,17 +33,7 @@ public class FriendListActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_friend_list);
 
 		//User Info Load and Display ***
-		ImageView imgMyMode = (ImageView) findViewById(R.id.frList_myMode);
-		TextView txtMyNick = (TextView) findViewById(R.id.frList_myNick);
-
-		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		txtMyNick.setText(preference.getString("my_nick", "DataLoadError"));
-		int myMode = preference.getInt("my_mode", 2);
-
-		Constants.Emotion[] e = Constants.Emotion.values();
-		imgMyMode.setImageResource(getResources().getIdentifier(e[myMode].toString(), "drawable", this.getPackageName()));
-		imgMyMode.setBackgroundColor(Color.parseColor("#" + e[myMode].getColor()));
-
+		displayUserInfo();
 
 		findViewById(R.id.frList_myDetailLayout).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -53,7 +43,13 @@ public class FriendListActivity extends AppCompatActivity {
 				startActivity(intent);
 			}
 		});
-		//***User Info Load END
+
+		findViewById(R.id.frList_btnRefresh).setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				dataRefresh();
+			}
+		});
 
 		//Friend List Load ***
 		//StoreFriendTime 검사
@@ -64,6 +60,7 @@ public class FriendListActivity extends AppCompatActivity {
 		friend_list = new ArrayList<>();
 
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+		//friendDAO.addFriend(new FriendDTO("id", "친구지롱", "33F2DD", Constants.Emotion.sleep));
 		friend_list = friendDAO.listFriend();
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
@@ -95,6 +92,31 @@ public class FriendListActivity extends AppCompatActivity {
 		});
 
 	} //onCreate()
+
+	private void displayUserInfo() {
+		//User Info Load and Display ***
+		ImageView imgMyMode = (ImageView) findViewById(R.id.frList_myMode);
+		TextView txtMyNick = (TextView) findViewById(R.id.frList_myNick);
+
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		txtMyNick.setText(preference.getString("my_nick", "DataLoadError"));
+		int myMode = preference.getInt("my_mode", 2);
+
+		Constants.Emotion[] e = Constants.Emotion.values();
+		imgMyMode.setImageResource(getResources().getIdentifier(e[myMode].toString(), "drawable", this.getPackageName()));
+		imgMyMode.setBackgroundColor(Color.parseColor("#" + e[myMode].getColor()));
+	}
+
+	private void dataRefresh(){
+		displayUserInfo();
+
+		//FrinedList_Load 호출(Server)
+
+		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+		friend_list = friendDAO.listFriend();
+
+		frList.refreshDrawableState();
+	}
 
 	//친구목록 서버로부터 불러오기
 	private ArrayList<FriendDTO> FriendList_Load() {
