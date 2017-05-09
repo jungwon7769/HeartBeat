@@ -77,4 +77,14 @@
             />
     </LinearLayout>
 
+    <ImageButton
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:id="@+id/frList_btnRefresh"
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:src="@android:drawable/ic_menu_rotate"
+        android:background="@color/colorOrange"/>
+
 </RelativeLayout>
