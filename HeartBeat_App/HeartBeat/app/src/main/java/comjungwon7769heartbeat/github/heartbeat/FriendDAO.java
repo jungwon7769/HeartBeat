@@ -1,6 +1,5 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
-import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -15,7 +14,7 @@ import java.util.ArrayList;
  */
 public class FriendDAO extends SQLiteOpenHelper {
 	private final String table_name = "Friend_table";
-	private final String id = "FRIEND_ID", nick = "FRIEND_NICK", mode = "FRIEND_MODE", color = "COLOR";
+	private final String ID = "FRIEND_ID", NICK = "FRIEND_NICK", MODE = "FRIEND_MODE", COLOR = "COLOR";
 
 	public FriendDAO(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
 		super(context, name, factory, version);
@@ -26,10 +25,10 @@ public class FriendDAO extends SQLiteOpenHelper {
 		try {
 			//Table Create~~
 			db.execSQL("CREATE TABLE " + table_name + "(" +
-					id + " TEXT PRIMARY KEY, " +
-					nick + " STRING," +
-					mode + " INTEGER," +
-					color + " STRING" +
+					ID + " TEXT PRIMARY KEY, " +
+					NICK + " STRING," +
+					MODE + " INTEGER," +
+					COLOR + " STRING" +
 					")");
 		} catch(SQLException e) {
 		}
@@ -44,7 +43,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 	public boolean addFriend(FriendDTO friend) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
-		String sql = "INSERT INTO " + table_name + "(" + id + "," + nick + "," + mode + "," + color + ") VALUES(" +
+		String sql = "INSERT INTO " + table_name + "(" + ID + "," + NICK + "," + MODE + "," + COLOR + ") VALUES(" +
 				"'" + friend.getID() + "','" + friend.getNick() + "'," + friend.getModeInt() + ",'" + friend.getColor() + "')";
 		try {
 			db.execSQL(sql);
@@ -61,7 +60,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 	public boolean deleteFriend(String friendID) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
-		String sql = "DELETE FROM " + table_name + " WHERE " + id + " = '" + friendID + "'";
+		String sql = "DELETE FROM " + table_name + " WHERE " + ID + " = '" + friendID + "'";
 		try{
 			db.execSQL(sql);
 			db.close();
@@ -77,7 +76,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 	public void changeColor(String friendID, String color) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
-		String sql = "UPDATE " + table_name + " SET " + color + "='" +color +"' WHERE " + id + "='" + friendID +"'";
+		String sql = "UPDATE " + table_name + " SET " + COLOR + "='" +color +"' WHERE " + ID + "='" + friendID +"'";
 		try{
 			db.execSQL(sql);
 			db.close();
@@ -92,7 +91,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 		ArrayList<FriendDTO> list_friend = new ArrayList<FriendDTO>();
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor cursor = db.rawQuery("SELECT * FROM " + table_name + " ORDER BY " + nick + " ASC", null);
+		Cursor cursor = db.rawQuery("SELECT * FROM " + table_name + " ORDER BY " + NICK + " ASC", null);
 
 		cursor.moveToFirst();
 		while(!cursor.isAfterLast()) {

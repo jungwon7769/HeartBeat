@@ -46,6 +46,7 @@ public class LoginActivity extends AppCompatActivity {
 					editor.putString("my_pwd", txtPwd.getText().toString());
 					editor.putString("my_nick", user_nick);
 					editor.putInt("my_mode", user_mode.getMode());
+					editor.putString("bzz_id", "");
 					editor.commit();
 
 					//Move To FriendList Act

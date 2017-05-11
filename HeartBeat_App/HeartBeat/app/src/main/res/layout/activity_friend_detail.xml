@@ -8,10 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="comjungwon7769heartbeat.github.heartbeat.MyDetailActivity"
-    android:background="@color/colorIvory"
-    android:clickable="false"
-    android:contextClickable="false">
+    tools:context="comjungwon7769heartbeat.github.heartbeat.FriendDetailActivity"
+    android:background="@color/colorIvory">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -24,7 +22,7 @@
         <ImageView
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/myDt_imgMode"
+            android:id="@+id/frDt_imgMode"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:src="@drawable/laugh"
@@ -34,10 +32,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="NickName"
-            android:id="@+id/myDt_txtNick"
-            android:layout_below="@+id/myDt_imgMode"
-            android:layout_centerHorizontal="true"/>
+            android:text="hj"
+            android:id="@+id/frDt_txtNick"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/frDt_imgMode"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="hjjjong"
+            android:id="@+id/frDt_txtID"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
     <LinearLayout
@@ -46,31 +53,45 @@
         android:layout_height="match_parent"
         android:layout_below="@+id/relativeLayout"
         android:layout_alignParentStart="true"
-        android:id="@+id/myDt_menuListLayout">
+        android:id="@+id/frDt_menuListLayout">
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
-            android:text="@string/DetailAct_LEDColor"
-            android:id="@+id/myDt_btnLEDColor"
+            android:id="@+id/frDt_btnBzzColor"
+            android:text="@string/DetailAct_BzzColor"
             />
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
-            android:text="@string/DetailAct_setMode"
-            android:id="@+id/myDt_btnSetMode"/>
+            android:id="@+id/frDt_btnTransEmotion"
+            android:text="@string/DetailAct_transMode"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
-            android:text="@string/DetailAct_transBzz"
-            android:id="@+id/myDt_btnTransBzz"/>
+            android:id="@+id/frDt_btnTransBzz"
+            android:text="@string/DetailAct_transBzz"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
-            android:text="@string/DetailAct_transVoice"
-            android:id="@+id/myDt_btnTransVoice"/>
+            android:id="@+id/frDt_btnTransVoice"
+            android:text="@string/DetailAct_transVoice"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/detail_Button_Size"
+            android:id="@+id/frDt_btnBzzFriend"
+            android:text="@string/DetailAct_BzzFriend"/>
+
+        <Button
+            android:layout_width="fill_parent"
+            android:layout_height="@dimen/detail_Button_Size"
+            android:id="@+id/frDt_btnDeleteFriend"
+            android:text="@string/DetailAct_DeleteFriend"/>
+
     </LinearLayout>
+
 </RelativeLayout>

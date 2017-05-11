@@ -26,6 +26,7 @@ import java.util.Random;
 public class FriendListActivity extends AppCompatActivity {
 	ListView frList;
 	ArrayList<FriendDTO> friend_list;
+	FriendListAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,14 +65,20 @@ public class FriendListActivity extends AppCompatActivity {
 		friend_list = friendDAO.listFriend();
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
-		FriendListAdapter adapter = new FriendListAdapter(this, R.layout.item_friend, friend_list);
+		adapter = new FriendListAdapter(this, R.layout.item_friend, friend_list);
 		frList.setAdapter(adapter);
 
 		//친구리스트 클릭이벤트리스너 지정
 		frList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(getApplicationContext(), friend_list.get(position).getNick(), Toast.LENGTH_SHORT).show();
+				FriendDTO selectFriend = friend_list.get(position);
+				Intent intent = new Intent(getApplicationContext(), FriendDetailActivity.class);
+				intent.putExtra("ID", selectFriend.getID());
+				intent.putExtra("Color", selectFriend.getColor());
+				intent.putExtra("Mode", selectFriend.getModeInt());
+				intent.putExtra("Nick", selectFriend.getNick());
+				startActivity(intent);
 			}
 		});
 		//*** Friend List Load END
@@ -115,7 +122,6 @@ public class FriendListActivity extends AppCompatActivity {
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
 		friend_list = friendDAO.listFriend();
 
-		frList.refreshDrawableState();
 	}
 
 	//친구목록 서버로부터 불러오기

@@ -11,10 +11,15 @@
     <string name="joinAct_Title">JOIN</string>
 
     <string name="myDetailAct_Label">내 기기 설정</string>
-    <string name="myDetailAct_LEDColor">LED색 설정</string>
-    <string name="myDetailAct_setMode">기분설정</string>
-    <string name="myDetailAct_transBzz">진동전송</string>
-    <string name="myDetailAct_transVoice">음성메시지 전송</string>
+    <string name="frDetailAct_Label">친구</string>
+    <string name="DetailAct_LEDColor">LED색 설정</string>
+    <string name="DetailAct_BzzColor">진동색 지정</string>
+    <string name="DetailAct_setMode">기분설정</string>
+    <string name="DetailAct_transMode">기분전송</string>
+    <string name="DetailAct_transBzz">진동전송</string>
+    <string name="DetailAct_transVoice">음성메시지 전송</string>
+    <string name="DetailAct_BzzFriend">버튼진동대상 설정</string>
+    <string name="DetailAct_DeleteFriend">친구삭제</string>
 
     <string name="popup_ok_label">알림</string>
     <string name="popup_re_label">알림</string>
