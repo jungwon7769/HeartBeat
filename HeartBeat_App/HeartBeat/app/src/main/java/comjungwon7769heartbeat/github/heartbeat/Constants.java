@@ -7,6 +7,9 @@ public class Constants {
 	public static final int maxString = 32;
 	public static final int minString = 4;
 
+	public static final int friendLoad_Interval = 300000;    //millsec -> 5min
+
+
 	/*
 	PopupActivity 의 Type 정의
 	 */
