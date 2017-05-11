@@ -36,8 +36,19 @@
             android:name=".PopupActivity"
             android:theme="@style/PopupTheme">
         </activity>
-        <activity android:name=".MyDetailActivity"
+        <activity
+            android:name=".MyDetailActivity"
             android:label="@string/myDetailAct_Label">
+        </activity>
+        <activity
+            android:name=".FriendDetailActivity"
+            android:label="@string/frDetailAct_Label">
+        </activity>
+        <activity
+            android:name=".NickSetActivity"
+            android:label="@string/setting_Label">
+        </activity>
+        <activity android:name=".FriendRequestActivity">
         </activity>
     </application>
 

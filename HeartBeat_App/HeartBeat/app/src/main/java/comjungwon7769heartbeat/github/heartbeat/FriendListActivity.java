@@ -26,6 +26,7 @@ import java.util.Random;
 public class FriendListActivity extends AppCompatActivity {
 	ListView frList;
 	ArrayList<FriendDTO> friend_list;
+	FriendListAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +36,45 @@ public class FriendListActivity extends AppCompatActivity {
 		//User Info Load and Display ***
 		displayUserInfo();
 
+
+		frList = (ListView) findViewById(R.id.frList_list);
+		friend_list = new ArrayList<>();
+
+		//Friend List Load ***
+		//StoreFriendTime 검사
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		int saveTime = preference.getInt("friend_time", 0);
+		//if 저장한지 오래된경우 FriendList_Load 호출(서버에서 친구목록 가져옴)
+		if((System.currentTimeMillis() - saveTime) > Constants.friendLoad_Interval){
+			FriendList_Load();
+		}
+
+		//App Database 에서 친구목록 가져오기
+		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+		//friendDAO.addFriend(new FriendDTO("id", "친구지롱", "33F2DD", Constants.Emotion.sleep));
+		friend_list = friendDAO.listFriend();
+
+		//리스트어댑터 생성 밑 리스트뷰와 연결
+		adapter = new FriendListAdapter(this, R.layout.item_friend, friend_list);
+		frList.setAdapter(adapter);
+
+		//친구리스트 클릭이벤트리스너 지정
+		frList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				FriendDTO selectFriend = friend_list.get(position);
+				Intent intent = new Intent(getApplicationContext(), FriendDetailActivity.class);
+				intent.putExtra("ID", selectFriend.getID());
+				intent.putExtra("Color", selectFriend.getColor());
+				intent.putExtra("Mode", selectFriend.getModeInt());
+				intent.putExtra("Nick", selectFriend.getNick());
+				startActivity(intent);
+			}
+		});
+		//*** Friend List Load END
+
+		//Button Handler Setting ***
+		//MyDetail Activity Button
 		findViewById(R.id.frList_myDetailLayout).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -44,6 +84,7 @@ public class FriendListActivity extends AppCompatActivity {
 			}
 		});
 
+		//Refresh Button
 		findViewById(R.id.frList_btnRefresh).setOnClickListener(new View.OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -51,31 +92,7 @@ public class FriendListActivity extends AppCompatActivity {
 			}
 		});
 
-		//Friend List Load ***
-		//StoreFriendTime 검사
-		//if 저장한지 오래된경우 FriendList_Load 호출
-
-		frList = (ListView) findViewById(R.id.frList_list);
-
-		friend_list = new ArrayList<>();
-
-		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
-		//friendDAO.addFriend(new FriendDTO("id", "친구지롱", "33F2DD", Constants.Emotion.sleep));
-		friend_list = friendDAO.listFriend();
-
-		//리스트어댑터 생성 밑 리스트뷰와 연결
-		FriendListAdapter adapter = new FriendListAdapter(this, R.layout.item_friend, friend_list);
-		frList.setAdapter(adapter);
-
-		//친구리스트 클릭이벤트리스너 지정
-		frList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				Toast.makeText(getApplicationContext(), friend_list.get(position).getNick(), Toast.LENGTH_SHORT).show();
-			}
-		});
-		//*** Friend List Load END
-
+		//AlarmMessage Button
 		findViewById(R.id.frList_btnAlarm).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -83,13 +100,26 @@ public class FriendListActivity extends AppCompatActivity {
 				Log.i("Test", "Go Message~~");
 			}
 		});
+
+		//Add Friend Button
 		findViewById(R.id.frList_btnAddFriend).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//친구추가 페이지로 이동
-				Log.i("Test", "Go Add Friend~~");
+				Intent intent = new Intent(getApplicationContext(), FriendRequestActivity.class);
+				startActivity(intent);
 			}
 		});
+
+		//Setting Page Button
+		findViewById(R.id.frList_btnSetting).setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(getApplicationContext(), NickSetActivity.class);
+				startActivity(intent);
+			}
+		});
+
+		//***Button Handelr Setting END
 
 	} //onCreate()
 
@@ -115,7 +145,6 @@ public class FriendListActivity extends AppCompatActivity {
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
 		friend_list = friendDAO.listFriend();
 
-		frList.refreshDrawableState();
 	}
 
 	//친구목록 서버로부터 불러오기
