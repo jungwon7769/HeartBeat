@@ -36,21 +36,29 @@ public class Constants {
 	public static final int msgFlag_Friend = 3;
 
 
-	public static enum Emotion{
+	public static final int Emotion_sound[] = {R.raw.emotion_00_smile, R.raw.emotion_01_laugh, R.raw.emotion_02_sad, R.raw.emotion_03_annoy, R.raw.emotion_04_angry,
+			R.raw.emotion_05_wink, R.raw.emotion_06_love, R.raw.emotion_07_wow, R.raw.emotion_08_overeat, R.raw.emotion_09_sleep};
+
+	public static enum Emotion {
 		smile(0, "59BE7F"), laugh(1, "FFFF00"), sad(2, "0000FF"), annoy(3, "FF9900"), angry(4, "FF0000"),
 		wink(5, "8041D9"), love(6, "FF93B2"), wow(7, "7393D5"), overeat(8, "D9CA74"), sleep(9, "FFFFFF");
 
 		private int mode;
 		private String color;
 
-		Emotion(int value, String colorValue){
+		Emotion(int value, String colorValue) {
 			this.mode = value;
 			this.color = colorValue;
 		}
-		public int getMode(){return mode;}
+
+		public int getMode() {
+			return mode;
+		}
 		//public void setMode(int value){ this.mode = value; this.color = Emotion.values()[value].getColor();}
 
-		public String getColor(){return color;}
+		public String getColor() {
+			return color;
+		}
 		//public void setColor(String colorValue){this.color = colorValue;}
 	} //enum Emotion
 

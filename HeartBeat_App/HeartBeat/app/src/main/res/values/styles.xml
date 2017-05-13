@@ -7,8 +7,8 @@
         <item name="colorPrimary">@color/colorOrange</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorIvory</item>
-        <item name="android:background">@color/colorIvory</item>
-        <item name="android:fontFamily"></item>
+        <item name="android:windowBackground">@color/colorIvory</item>
+        <item name="android:typeface">serif</item>
     </style>
 
     <style name="MyActionBar"

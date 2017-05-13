@@ -206,6 +206,7 @@ public class PopupActivity extends AppCompatActivity {
 		try {
 			if(player != null) {
 				player.stop();
+				player.release();
 				player = null;
 			}
 			player = new MediaPlayer();
@@ -220,6 +221,7 @@ public class PopupActivity extends AppCompatActivity {
 	private void stopVoice() {
 		if(player != null) {
 			player.stop();
+			player.release();
 			player = null;
 		}
 	}
@@ -315,6 +317,7 @@ public class PopupActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_popup_pickemotion);
 		setTitle(R.string.popup_pickEmotion_label);
 
+		player = null;
 		mode = null;    //선택한 모드 초기화
 
 		//선택가능한 기분을 보여줄 GridView 레이아웃과 연결
@@ -333,6 +336,19 @@ public class PopupActivity extends AppCompatActivity {
 				//Change background of Select Emotion
 				mode = Constants.Emotion.values()[position];
 				view.setBackgroundResource(R.drawable.border);
+				try {
+					if(player != null) {
+						player.stop();
+						player.release();;
+						player = null;
+					}
+					Log.i("Test", "try");
+					player = MediaPlayer.create(getApplicationContext(), Constants.Emotion_sound[position]);
+					//player.prepare();
+					player.start();
+				} catch(Exception e) {
+
+				}
 			}
 		});
 
