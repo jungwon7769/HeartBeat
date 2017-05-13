@@ -13,8 +13,8 @@ import java.util.ArrayList;
  * Created by AH on 2017-05-06.
  */
 public class FriendDAO extends SQLiteOpenHelper {
-	private final String table_name = "Friend_table";
-	private final String ID = "FRIEND_ID", NICK = "FRIEND_NICK", MODE = "FRIEND_MODE", COLOR = "COLOR";
+	public static final String table_name = "Friend_table";
+	public static final String ID = "FRIEND_ID", NICK = "FRIEND_NICK", MODE = "FRIEND_MODE", COLOR = "COLOR";
 
 	public FriendDAO(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
 		super(context, name, factory, version);
@@ -105,7 +105,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 			cursor.moveToNext();
 		}
 
-
+		db.close();
 		return list_friend;
 	}
 

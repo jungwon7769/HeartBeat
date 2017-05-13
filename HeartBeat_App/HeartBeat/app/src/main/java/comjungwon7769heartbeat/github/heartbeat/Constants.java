@@ -27,7 +27,13 @@ public class Constants {
 	public static final int popup_msgEmotion = 22;  //Popup = 22, To(ID = String, Nick = String, Emotion = int, Time = int), From()
 	public static final int popup_msgBzz = 23;      //Popup = 23, To(ID = String, Nick = String, Count = int, Time = int), From()
 
-
+	/*
+	Message Flag 정의
+	 */
+	public static final int msgFlag_Voice = 0;
+	public static final int msgFlag_Emotion = 1;
+	public static final int msgFlag_Bzz = 2;
+	public static final int msgFlag_Friend = 3;
 
 
 	public static enum Emotion{
