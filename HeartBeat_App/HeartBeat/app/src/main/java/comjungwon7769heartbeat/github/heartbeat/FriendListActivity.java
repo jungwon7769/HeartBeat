@@ -24,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class FriendListActivity extends AppCompatActivity {
+	public static Context listContext;
 	ListView frList;
 	ArrayList<FriendDTO> friend_list;
 	FriendListAdapter adapter;
@@ -32,6 +33,7 @@ public class FriendListActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_friend_list);
+		listContext = this;
 
 		//User Info Load and Display ***
 		displayUserInfo();
@@ -51,7 +53,9 @@ public class FriendListActivity extends AppCompatActivity {
 
 		//App Database 에서 친구목록 가져오기
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
-		//friendDAO.addFriend(new FriendDTO("id", "친구지롱", "33F2DD", Constants.Emotion.sleep));
+		/*for(int i = 0; i<10; i++) {
+			friendDAO.addFriend(new FriendDTO("id" + i, "친구지롱" + i, "33F2DD", Constants.Emotion.sleep));
+		}*/
 		friend_list = friendDAO.listFriend();
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
@@ -63,7 +67,7 @@ public class FriendListActivity extends AppCompatActivity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				FriendDTO selectFriend = friend_list.get(position);
-				Intent intent = new Intent(getApplicationContext(), FriendDetailActivity.class);
+				Intent intent = new Intent(FriendListActivity.this, FriendDetailActivity.class);
 				intent.putExtra("ID", selectFriend.getID());
 				intent.putExtra("Color", selectFriend.getColor());
 				intent.putExtra("Mode", selectFriend.getModeInt());
@@ -79,16 +83,8 @@ public class FriendListActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				//myDetail 페이지로 이동
-				Intent intent = new Intent(getApplicationContext(), MyDetailActivity.class);
+				Intent intent = new Intent(FriendListActivity.this, MyDetailActivity.class);
 				startActivity(intent);
-			}
-		});
-
-		//Refresh Button
-		findViewById(R.id.frList_btnRefresh).setOnClickListener(new View.OnClickListener(){
-			@Override
-			public void onClick(View v) {
-				dataRefresh();
 			}
 		});
 
@@ -114,7 +110,7 @@ public class FriendListActivity extends AppCompatActivity {
 		findViewById(R.id.frList_btnSetting).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getApplicationContext(), NickSetActivity.class);
+				Intent intent = new Intent(FriendListActivity.this, NickSetActivity.class);
 				startActivity(intent);
 			}
 		});
@@ -137,7 +133,7 @@ public class FriendListActivity extends AppCompatActivity {
 		imgMyMode.setBackgroundColor(Color.parseColor("#" + e[myMode].getColor()));
 	}
 
-	private void dataRefresh(){
+	public void dataRefresh(){
 		displayUserInfo();
 
 		//FrinedList_Load 호출(Server)
@@ -145,6 +141,8 @@ public class FriendListActivity extends AppCompatActivity {
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
 		friend_list = friendDAO.listFriend();
 
+		adapter.setItemList(friend_list);
+		adapter.notifyDataSetChanged();
 	}
 
 	//친구목록 서버로부터 불러오기
@@ -178,6 +176,8 @@ public class FriendListActivity extends AppCompatActivity {
 		public Object getItem(int position) {
 			return myFriend.get(position).getNick();
 		}
+
+		public void setItemList(ArrayList<FriendDTO> value){ myFriend = value;}
 
 		@Override
 		public long getItemId(int position) {

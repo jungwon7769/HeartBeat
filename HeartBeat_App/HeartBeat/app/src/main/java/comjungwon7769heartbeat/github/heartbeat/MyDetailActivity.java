@@ -133,6 +133,8 @@ public class MyDetailActivity extends AppCompatActivity {
 		user_mode.setImageResource(getResources().getIdentifier(e.toString(), "drawable", this.getPackageName()));
 		user_mode.setBackgroundColor(Color.parseColor("#" + e.getColor()));
 
+		//List Activity ImgChange
+		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 	}
 
 	private void playSoundMsg() {

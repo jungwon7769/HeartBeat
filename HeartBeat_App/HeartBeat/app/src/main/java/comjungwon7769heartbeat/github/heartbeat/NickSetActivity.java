@@ -60,6 +60,7 @@ public class NickSetActivity extends AppCompatActivity {
 		intent.putExtra("Message", getText(R.string.NickSetSuccess));
 		startActivity(intent);
 		txtNick.setText("");
+		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 
 	}
 }

@@ -140,6 +140,9 @@ public class FriendDetailActivity extends AppCompatActivity {
 			editor.putString("bzz_id", ID);
 			editor.commit();
 			btnBzzFriend.setText(getResources().getString(R.string.DetailAct_BzzFriend) + " ON");
+
+			//List Activity ImgChange
+			((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 		}
 
 	}
@@ -178,6 +181,9 @@ public class FriendDetailActivity extends AppCompatActivity {
 		//ImageView 수정
 		ImageView imgMode = (ImageView) findViewById(R.id.frDt_imgMode);
 		imgMode.setBackgroundColor(android.graphics.Color.parseColor("#" + color));
+
+		//List Activity ImgChange
+		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 	}
 
 	private void transEmotion(Constants.Emotion e) {
@@ -192,6 +198,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 	}
 
 	private void deleteFriend(){
-
+		//List Activity ImgChange
+		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 	}
 }
