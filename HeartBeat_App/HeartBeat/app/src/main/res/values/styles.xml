@@ -7,6 +7,8 @@
         <item name="colorPrimary">@color/colorOrange</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorIvory</item>
+        <item name="android:background">@color/colorIvory</item>
+        <item name="android:fontFamily"></item>
     </style>
 
     <style name="MyActionBar"
@@ -18,7 +20,6 @@
     <style name="PopupTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:actionBarStyle">@style/Theme.AppCompat.NoActionBar</item>
         <item name="android:background">@color/colorIvory</item>
-        <item name="android:textColor">@color/colorOrange</item>
         <item name="colorAccent">@color/colorPrimaryDark</item>
 
     </style>

@@ -37,7 +37,8 @@
         android:text="@string/trans"
         android:id="@+id/popup_rv_btnTrans"
         android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/popup_rv_btnPlay"/>
+        android:layout_alignEnd="@+id/popup_rv_btnPlay"
+        android:enabled="false"/>
 
     <Button
         android:layout_width="wrap_content"

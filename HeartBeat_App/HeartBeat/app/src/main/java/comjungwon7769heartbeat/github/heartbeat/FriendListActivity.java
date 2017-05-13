@@ -207,6 +207,14 @@ public class FriendListActivity extends AppCompatActivity {
 			TextView name = (TextView) convertView.findViewById(R.id.frItem_Nick);      //텍스트뷰와 닉네임 연결
 			name.setText(frItem.getNick());
 
+			SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+			String bzzFriend = preference.getString("bzz_id", "");
+			ImageView imgBzz = (ImageView)convertView.findViewById(R.id.frItem_imgBzz);
+			imgBzz.setImageResource(android.R.drawable.btn_star_big_off);
+			if(bzzFriend.equals(frItem.getID())){
+				imgBzz.setImageResource(android.R.drawable.btn_star_big_on);
+			}
+
 			return convertView;
 		}
 

@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -33,8 +34,6 @@ public class LoginActivity extends AppCompatActivity {
 
 		btnLogin.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				user_nick = "SaveError";
-				user_mode = Constants.Emotion.annoy;
 				boolean chk = Login_Usable_Check(txtId.getText().toString(), txtPwd.getText().toString());
 
 				//test용 true

@@ -1,6 +1,8 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -20,6 +22,7 @@ public class LoadingActivity extends AppCompatActivity {
 
 	private boolean Data_Check; //사용자데이터 저장 유무
 	private boolean Login_Check;    //사용자데이터 로그인유효
+	private String ID, PWD;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -55,36 +58,38 @@ public class LoadingActivity extends AppCompatActivity {
 
 		Data_Check = App_Data_Check();
 
-		if(Data_Check == true) {
+		if(Data_Check) {
 			Login_Check = Login_Usable_Check();
-		}
-
-		if(Login_Check == true) {
-			Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
-			startActivity(intent);
-		}
-
-		new Timer().schedule(new TimerTask() {
-			public void run() {
-				test();
+			if(Login_Check) {
+				Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
+				startActivity(intent);
+				finish();
+			}else{
+				Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+				startActivity(intent);
+				finish();
 			}
-		}, 1000);
-	}
-
-	protected void test() {
-		Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-		startActivity(intent);
-		finish();
+		}else {
+			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+			startActivity(intent);
+			finish();
+		}
 	}
 
 	private boolean App_Data_Check() {
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ID = preference.getString("my_id", "");
+		PWD = preference.getString("my_pwd", "");
+		String nick = preference.getString("my_nick","");
+		int mode = preference.getInt("my_mode", 100);
 
-		return false;
+		if(mode == 100 || ID.equals("") || PWD.equals("") || nick.equals(""))  return false;
+		else return true;
 	}
 
 	private boolean Login_Usable_Check() {
 
-		return false;
+		return true;
 	}
 
 	@Override

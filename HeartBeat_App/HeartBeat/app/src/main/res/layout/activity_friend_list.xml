@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="comjungwon7769heartbeat.github.heartbeat.FriendListActivity"
-    android:background="@color/colorIvory">
+    >
 
     <RelativeLayout
         android:orientation="vertical"
@@ -20,8 +20,8 @@
         android:layout_alignParentEnd="true">
 
         <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:id="@+id/frList_myMode"
             android:src="@drawable/annoy"
             android:layout_gravity="center_vertical"
@@ -33,7 +33,7 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="안현정"
             android:id="@+id/frList_myNick"
-            android:textSize="30dp"
+            android:textSize="25dp"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/frList_myMode"
             android:layout_marginStart="20dp"/>
@@ -55,8 +55,7 @@
             android:layout_height="60dp"
             android:id="@+id/frList_btnAddFriend"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_search"
-            />
+            android:src="@android:drawable/ic_menu_search"/>
 
         <ImageButton
             android:layout_width="wrap_content"
@@ -64,20 +63,22 @@
             android:id="@+id/frList_btnAlarm"
             android:layout_weight="1"
             android:src="@android:drawable/sym_action_email"
-            />
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"/>
 
         <ImageButton
             android:layout_width="wrap_content"
             android:layout_height="60dp"
             android:id="@+id/frList_btnSetting"
             android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_preferences"/>
+            android:src="@android:drawable/ic_menu_preferences"
+            />
     </LinearLayout>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/colorOrange"
+        android:divider="@color/colorPrimaryDark"
         android:dividerHeight="@dimen/frList_listDivider"
         android:id="@+id/frList_list"
         android:layout_alignParentStart="true"

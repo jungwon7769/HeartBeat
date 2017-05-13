@@ -3,7 +3,8 @@
               android:orientation="horizontal"
               android:layout_width="fill_parent"
               android:layout_height="wrap_content"
-              android:padding="5dp">
+              android:padding="3dp"
+              android:gravity="center_vertical">
 
 
     <ImageView
@@ -11,7 +12,8 @@
         android:layout_height="50dp"
         android:id="@+id/frItem_Mode"
         android:src="@drawable/smile"
-        android:layout_gravity="center_vertical"/>
+        android:layout_gravity="center_vertical"
+        />
 
     <TextView
         android:layout_width="wrap_content"
@@ -21,5 +23,12 @@
         android:textSize="25dp"
         android:text="Ahn"
         android:layout_marginLeft="10dp"
-        android:layout_gravity="center_vertical"/>
+        android:layout_weight="1"
+        android:textAlignment="textStart"/>
+
+    <ImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:id="@+id/frItem_imgBzz"
+        android:src="@android:drawable/btn_star_big_off"/>
 </LinearLayout>
