@@ -3,6 +3,8 @@ package comjungwon7769heartbeat.github.heartbeat;
 import android.app.Activity;
 import android.content.res.Resources;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -31,11 +33,28 @@ public class JoinActivity extends Activity {
 		//중복검사 버튼 리스너 지정(ID_Usable_Check)
 		btnUsable.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				ID_Usable_Check(txtID.getText().toString());
+				if(ID_Usable_Check(txtID.getText().toString())) {
+					//if Not Exist
+					id = txtID.getText().toString();
+					chkIdUsable = true;
+				}
+			}
+		});
+		//ID 입력 란의 값이 바뀌는 경우
+		txtID.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				chkIdUsable = false;              //존재여부 검사 결과 false로 초기화
+			}
 
-				//if Not Exist
-				id = txtID.getText().toString();
-				chkIdUsable = true;
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
 			}
 		});
 		//회원가입 버튼 리스너 지정(Join)
@@ -78,7 +97,7 @@ public class JoinActivity extends Activity {
 		//Request ID Exist
 
 
-		return false;
+		return true;
 	} //id_usable_check()
 
 	private void Join(String id, String pwd, String Nick) {

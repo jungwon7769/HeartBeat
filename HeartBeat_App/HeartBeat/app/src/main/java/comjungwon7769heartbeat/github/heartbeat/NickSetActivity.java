@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -12,6 +14,7 @@ import android.widget.Toast;
 
 public class NickSetActivity extends AppCompatActivity {
 	EditText txtNick;
+	Button btnNickOK;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -19,8 +22,9 @@ public class NickSetActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_nick_set);
 
 		txtNick = (EditText)findViewById(R.id.setting_txtNick);
+		btnNickOK = (Button)findViewById(R.id.setting_btnNickOK);
 
-		((Button)findViewById(R.id.setting_btnNickOK)).setOnClickListener(new Button.OnClickListener() {
+		btnNickOK.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				OK_Button(txtNick.getText().toString());
@@ -30,6 +34,25 @@ public class NickSetActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				finish();
+			}
+		});
+
+		//ID 입력 란의 값이 바뀌는 경우
+		txtNick.addTextChangedListener(new TextWatcher() {
+			@Override
+			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+				if(s.length() >= Constants.minString && s.length() <= Constants.maxString) btnNickOK.setEnabled(true);
+				else btnNickOK.setEnabled(false);
+			}
+
+			@Override
+			public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+			}
+
+			@Override
+			public void afterTextChanged(Editable s) {
+
 			}
 		});
 	}
@@ -60,6 +83,8 @@ public class NickSetActivity extends AppCompatActivity {
 		intent.putExtra("Message", getText(R.string.NickSetSuccess));
 		startActivity(intent);
 		txtNick.setText("");
+		btnNickOK.setEnabled(false);
+		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 
 	}
 }

@@ -44,12 +44,7 @@ public class FriendDTO {
 	public Constants.Emotion getMode() {return  friendMode;}
 
 	public void setMode(int value) {
-		Constants.Emotion[] e = Constants.Emotion.values();
-		for(int i=0; i< e.length; i++){
-			if(e[i].getMode() == value){
-				friendMode = e[i];
-			}
-		}
+		friendMode = Constants.Emotion.values()[value];
 	}
 
 	public void setMode(Constants.Emotion mode) { friendMode = mode;}

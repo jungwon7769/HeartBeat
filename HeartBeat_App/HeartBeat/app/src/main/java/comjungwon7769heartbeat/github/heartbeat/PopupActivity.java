@@ -108,7 +108,7 @@ public class PopupActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				if(recordFilePath == null) {
-					Toast.makeText(getApplicationContext(), R.string.plzRecordFirst,Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), R.string.plzRecordFirst, Toast.LENGTH_SHORT).show();
 				} else playVoice(recordFilePath);
 			}
 		});
@@ -150,6 +150,7 @@ public class PopupActivity extends AppCompatActivity {
 	private void recordVoice() {
 		//녹음중이 아닌 경우
 		if(recorder == null) {
+			((Button) findViewById(R.id.popup_rv_btnTrans)).setEnabled(false);   //전송버튼 사용불가
 			//Set FilePath AND Create
 			recordFilePath = dirPath + "/" + System.currentTimeMillis() + ".mp3";
 			File file = new File(dirPath);
@@ -191,6 +192,7 @@ public class PopupActivity extends AppCompatActivity {
 			recorder = null;
 			//Change Button IMG
 			((Button) findViewById(R.id.popup_rv_btnRecord)).setBackgroundResource(R.drawable.circle_red);
+			((Button) findViewById(R.id.popup_rv_btnTrans)).setEnabled(true);    //전송버튼 사용가능
 		}
 	}
 
@@ -202,6 +204,10 @@ public class PopupActivity extends AppCompatActivity {
 			return;
 		}
 		try {
+			if(player != null) {
+				player.stop();
+				player = null;
+			}
 			player = new MediaPlayer();
 			player.setDataSource(path);
 			player.prepare();

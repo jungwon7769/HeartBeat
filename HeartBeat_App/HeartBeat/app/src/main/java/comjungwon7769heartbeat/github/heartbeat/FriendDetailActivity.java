@@ -95,7 +95,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 		//Bzz_Friend 검사 및 표시
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		if(Nick == (preference.getString("bzz_id", "DataLoadError"))) {
+		if(ID.equals(preference.getString("bzz_id", "DataLoadError"))) {
 			btnBzzFriend.setText(getResources().getString(R.string.DetailAct_BzzFriend) + " ON");
 		} else {
 			btnBzzFriend.setText(getResources().getString(R.string.DetailAct_BzzFriend) + " OFF");
@@ -135,11 +135,14 @@ public class FriendDetailActivity extends AppCompatActivity {
 	//Set Bzz Friend Button
 	private void setBzzFriend_Click(){
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		if(ID != preference.getString("bzz_friend", "")) {
+		if(!ID.equals(preference.getString("bzz_id", ""))) {
 			SharedPreferences.Editor editor = preference.edit();
 			editor.putString("bzz_id", ID);
 			editor.commit();
 			btnBzzFriend.setText(getResources().getString(R.string.DetailAct_BzzFriend) + " ON");
+
+			//List Activity ImgChange
+			((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 		}
 
 	}
@@ -178,6 +181,9 @@ public class FriendDetailActivity extends AppCompatActivity {
 		//ImageView 수정
 		ImageView imgMode = (ImageView) findViewById(R.id.frDt_imgMode);
 		imgMode.setBackgroundColor(android.graphics.Color.parseColor("#" + color));
+
+		//List Activity ImgChange
+		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 	}
 
 	private void transEmotion(Constants.Emotion e) {
@@ -192,6 +198,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 	}
 
 	private void deleteFriend(){
-
+		//List Activity ImgChange
+		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 	}
 }

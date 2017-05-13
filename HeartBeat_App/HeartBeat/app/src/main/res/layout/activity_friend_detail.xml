@@ -8,8 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="comjungwon7769heartbeat.github.heartbeat.FriendDetailActivity"
-    android:background="@color/colorIvory">
+    tools:context="comjungwon7769heartbeat.github.heartbeat.FriendDetailActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -66,31 +65,36 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
             android:id="@+id/frDt_btnTransEmotion"
-            android:text="@string/DetailAct_transMode"/>
+            android:text="@string/DetailAct_transMode"
+            android:layout_marginTop="1dp"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
             android:id="@+id/frDt_btnTransBzz"
-            android:text="@string/DetailAct_transBzz"/>
+            android:text="@string/DetailAct_transBzz"
+            android:layout_marginTop="1dp"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
             android:id="@+id/frDt_btnTransVoice"
-            android:text="@string/DetailAct_transVoice"/>
+            android:text="@string/DetailAct_transVoice"
+            android:layout_marginTop="1dp"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
             android:id="@+id/frDt_btnBzzFriend"
-            android:text="@string/DetailAct_BzzFriend"/>
+            android:text="@string/DetailAct_BzzFriend"
+            android:layout_marginTop="1dp"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
             android:id="@+id/frDt_btnDeleteFriend"
-            android:text="@string/DetailAct_DeleteFriend"/>
+            android:text="@string/DetailAct_DeleteFriend"
+            android:layout_marginTop="1dp"/>
 
     </LinearLayout>
 

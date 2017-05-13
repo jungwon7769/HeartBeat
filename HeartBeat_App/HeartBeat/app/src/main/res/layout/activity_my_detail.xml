@@ -9,7 +9,6 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="comjungwon7769heartbeat.github.heartbeat.MyDetailActivity"
-    android:background="@color/colorIvory"
     android:clickable="false"
     android:contextClickable="false">
 
@@ -52,25 +51,27 @@
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
             android:text="@string/DetailAct_LEDColor"
-            android:id="@+id/myDt_btnLEDColor"
-            />
+            android:id="@+id/myDt_btnLEDColor"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
             android:text="@string/DetailAct_setMode"
-            android:id="@+id/myDt_btnSetMode"/>
+            android:id="@+id/myDt_btnSetMode"
+            android:layout_marginTop="1dp"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
             android:text="@string/DetailAct_transBzz"
-            android:id="@+id/myDt_btnTransBzz"/>
+            android:id="@+id/myDt_btnTransBzz"
+            android:layout_marginTop="1dp"/>
 
         <Button
             android:layout_width="fill_parent"
             android:layout_height="@dimen/detail_Button_Size"
             android:text="@string/DetailAct_transVoice"
-            android:id="@+id/myDt_btnTransVoice"/>
+            android:id="@+id/myDt_btnTransVoice"
+            android:layout_marginTop="1dp"/>
     </LinearLayout>
 </RelativeLayout>
