@@ -46,56 +46,91 @@
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
+    <TableLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayout"
-        android:layout_alignParentStart="true"
-        android:id="@+id/frDt_menuListLayout">
+        android:layout_below="@+id/relativeLayout">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:id="@+id/frDt_btnBzzColor"
-            android:text="@string/DetailAct_BzzColor"
-            />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:id="@+id/frDt_btnTransEmotion"
-            android:text="@string/DetailAct_transMode"
-            android:layout_marginTop="1dp"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:background="@drawable/selector_button"
+                android:id="@+id/frDt_btnBzzColor"
+                android:text="@string/DetailAct_BzzColor"
+                android:layout_row="0"
+                android:layout_column="0"
+                android:layout_weight="1"/>
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:background="@drawable/selector_button"
+                android:id="@+id/frDt_btnTransEmotion"
+                android:text="@string/DetailAct_transMode"
+                android:layout_row="0"
+                android:layout_column="1"
+                android:layout_weight="1"
+                android:layout_span="1"/>
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:id="@+id/frDt_btnTransBzz"
-            android:text="@string/DetailAct_transBzz"
-            android:layout_marginTop="1dp"/>
+        </TableRow>
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:id="@+id/frDt_btnTransVoice"
-            android:text="@string/DetailAct_transVoice"
-            android:layout_marginTop="1dp"/>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:id="@+id/frDt_btnBzzFriend"
-            android:text="@string/DetailAct_BzzFriend"
-            android:layout_marginTop="1dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:background="@drawable/selector_button"
+                android:id="@+id/frDt_btnTransBzz"
+                android:text="@string/DetailAct_transBzz"
+                android:layout_row="1"
+                android:layout_column="0"
+                android:layout_weight="1"
+                android:layout_span="1"/>
 
-        <Button
-            android:layout_width="fill_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:id="@+id/frDt_btnDeleteFriend"
-            android:text="@string/DetailAct_DeleteFriend"
-            android:layout_marginTop="1dp"/>
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:background="@drawable/selector_button"
+                android:id="@+id/frDt_btnTransVoice"
+                android:text="@string/DetailAct_transVoice"
+                android:layout_row="1"
+                android:layout_column="1"
+                android:layout_weight="1"
+                android:layout_span="2"/>
+        </TableRow>
 
-    </LinearLayout>
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:background="@drawable/selector_button"
+                android:id="@+id/frDt_btnDeleteFriend"
+                android:text="@string/DetailAct_DeleteFriend"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_weight="1"
+                android:layout_span="1"/>
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:background="@drawable/selector_button"
+                android:id="@+id/frDt_btnBzzFriend"
+                android:text="@string/DetailAct_BzzFriend"
+                android:layout_row="2"
+                android:layout_column="0"
+                android:layout_weight="1"
+                android:layout_span="1"/>
+        </TableRow>
+
+    </TableLayout>
 
 </RelativeLayout>

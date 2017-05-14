@@ -14,9 +14,7 @@ import android.widget.TextView;
 
 public class FriendDetailActivity extends AppCompatActivity {
 
-	private String ID, Nick, Color;
-	private Constants.Emotion Mode;
-
+	private FriendDTO selectFriendDTO;
 	private Button btnBzzColor, btnTransEmotion, btnTransBzz, btnTransVoice, btnBzzFriend, btnDeleteFriend;
 
 	@Override
@@ -80,22 +78,19 @@ public class FriendDetailActivity extends AppCompatActivity {
 		Constants.Emotion[] e = Constants.Emotion.values();
 
 		//Instance dAta Save
-		ID = id;
-		Nick = nick;
-		Mode = e[mode];
-		Color = color;
+		selectFriendDTO = new FriendDTO(id, nick, color, e[mode]);
 
 		//View Setting
-		((TextView) findViewById(R.id.frDt_txtID)).setText(ID);
-		((TextView) findViewById(R.id.frDt_txtNick)).setText(Nick);
+		((TextView) findViewById(R.id.frDt_txtID)).setText(selectFriendDTO.getID());
+		((TextView) findViewById(R.id.frDt_txtNick)).setText(selectFriendDTO.getNick());
 
 		ImageView imgMode = (ImageView) findViewById(R.id.frDt_imgMode);
-		imgMode.setImageResource(getResources().getIdentifier(Mode.toString(), "drawable", this.getPackageName()));
-		imgMode.setBackgroundColor(android.graphics.Color.parseColor("#" + Color));
+		imgMode.setImageResource(getResources().getIdentifier(selectFriendDTO.getMode().toString(), "drawable", this.getPackageName()));
+		imgMode.setBackgroundColor(android.graphics.Color.parseColor("#" + selectFriendDTO.getColor()));
 
 		//Bzz_Friend 검사 및 표시
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		if(ID.equals(preference.getString("bzz_id", "DataLoadError"))) {
+		if(selectFriendDTO.getID().equals(preference.getString("bzz_id", "DataLoadError"))) {
 			btnBzzFriend.setText(getResources().getString(R.string.DetailAct_BzzFriend) + " ON");
 		} else {
 			btnBzzFriend.setText(getResources().getString(R.string.DetailAct_BzzFriend) + " OFF");
@@ -135,9 +130,9 @@ public class FriendDetailActivity extends AppCompatActivity {
 	//Set Bzz Friend Button
 	private void setBzzFriend_Click(){
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		if(!ID.equals(preference.getString("bzz_id", ""))) {
+		if(!selectFriendDTO.getID().equals(preference.getString("bzz_id", ""))) {
 			SharedPreferences.Editor editor = preference.edit();
-			editor.putString("bzz_id", ID);
+			editor.putString("bzz_id", selectFriendDTO.getID());
 			editor.commit();
 			btnBzzFriend.setText(getResources().getString(R.string.DetailAct_BzzFriend) + " ON");
 
@@ -172,11 +167,11 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 	private void saveFriendColor(String color) {
 		//Instance Data update
-		Color = color;
+		selectFriendDTO.setColor(color);
 
 		//APP DB에 Save
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
-		friendDAO.changeColor(ID, color);
+		friendDAO.changeColor(selectFriendDTO.getID(), color);
 
 		//ImageView 수정
 		ImageView imgMode = (ImageView) findViewById(R.id.frDt_imgMode);

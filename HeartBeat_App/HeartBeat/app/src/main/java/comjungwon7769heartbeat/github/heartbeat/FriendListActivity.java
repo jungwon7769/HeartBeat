@@ -210,9 +210,9 @@ public class FriendListActivity extends AppCompatActivity {
 			SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 			String bzzFriend = preference.getString("bzz_id", "");
 			ImageView imgBzz = (ImageView)convertView.findViewById(R.id.frItem_imgBzz);
-			imgBzz.setImageResource(android.R.drawable.btn_star_big_off);
+			imgBzz.setImageResource(R.drawable.bzzfriend_no);
 			if(bzzFriend.equals(frItem.getID())){
-				imgBzz.setImageResource(android.R.drawable.btn_star_big_on);
+				imgBzz.setImageResource(R.drawable.bzzfriend_yes);
 			}
 
 			return convertView;

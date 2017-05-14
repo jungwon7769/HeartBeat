@@ -40,6 +40,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/selector_button"
             android:text="@string/search"
             android:id="@+id/addfr_btnSearch"/>
     </LinearLayout>
@@ -58,11 +59,13 @@
             android:layout_height="wrap_content"
             android:text="@string/Request"
             android:id="@+id/addfr_btnAdd"
-            android:enabled="false"/>
+            android:enabled="false"
+            android:background="@drawable/selector_button"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/selector_button"
             android:text="@string/cancel"
             android:id="@+id/addfr_btnCancel"/>
     </LinearLayout>

@@ -23,6 +23,7 @@
     <Button
         android:layout_width="80dp"
         android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_bgdark"
         android:text="@string/ok"
         android:id="@+id/popup_pickEmotion_ok"
         android:layout_gravity="center_horizontal"
@@ -32,6 +33,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_bgdark"
         android:text="@string/cancel"
         android:id="@+id/popup_pickEmotion_cancel"
         android:layout_marginEnd="56dp"
