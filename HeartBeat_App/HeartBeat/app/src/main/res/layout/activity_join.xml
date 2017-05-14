@@ -60,10 +60,11 @@
         android:layout_alignEnd="@+id/join_txtPWD"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_button_bgdark"
         android:textColor="@color/colorPrimaryDark"
+        android:padding="3dp"
         android:text="@string/joinAct_btnJoin"
         android:id="@+id/join_btnJoin"
         android:layout_below="@+id/join_txtNick"

@@ -109,5 +109,22 @@ public class FriendDAO extends SQLiteOpenHelper {
 		return list_friend;
 	}
 
+	//색상값 반환 Method
+	public String getColor(String friendID){
+		String friendColor;
+		SQLiteDatabase db = this.getReadableDatabase();
+		Cursor cursor = db.rawQuery("SELECT * FROM " + table_name + " WHERE " + ID + "='" + friendID + "'", null);
+
+		if(cursor.isNull(0)) {
+			db.close();
+			return null;
+		}
+		cursor.moveToFirst();
+		friendColor = cursor.getString(3);
+		db.close();
+
+		return friendColor;
+	}
+
 
 }
