@@ -4,5 +4,6 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="actionBar_Size">20dp</dimen>
     <dimen name="frList_listDivider">1dp</dimen>
-    <dimen name="detail_Button_Size">60dp</dimen>
+    <dimen name="detail_Button_Size">100dp</dimen>
+    <dimen name="button_radius">3dp</dimen>
 </resources>

@@ -25,6 +25,7 @@
         android:id="@+id/popup_ok_btnOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_bgdark"
         android:layout_alignParentBottom="true"
         android:layout_alignParentStart="false"
         android:layout_centerHorizontal="true"

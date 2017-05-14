@@ -38,42 +38,28 @@
             android:layout_toEndOf="@+id/frList_myMode"
             android:layout_marginStart="20dp"/>
 
-    </RelativeLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:id="@+id/frList_buttonLayout"
-        android:layout_below="@+id/frList_myDetailLayout"
-        android:layout_marginTop="5dp"
-        android:layout_marginBottom="5dp">
-
         <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/frList_btnAddFriend"
-            android:layout_weight="1"
-            android:src="@android:drawable/ic_menu_search"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
-            android:id="@+id/frList_btnAlarm"
-            android:layout_weight="1"
-            android:src="@android:drawable/sym_action_email"
-            android:layout_marginLeft="1dp"
-            android:layout_marginRight="1dp"/>
-
-        <ImageButton
-            android:layout_width="wrap_content"
-            android:layout_height="60dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="@drawable/selector_button_circle"
             android:id="@+id/frList_btnSetting"
             android:layout_weight="1"
             android:src="@android:drawable/ic_menu_preferences"
-            />
-    </LinearLayout>
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"/>
+
+    </RelativeLayout>
+
+    <ImageButton
+        android:layout_width="fill_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:background="@drawable/selector_button"
+        android:id="@+id/frList_btnAlarm"
+        android:layout_weight="1"
+        android:src="@android:drawable/sym_action_email"
+        android:layout_below="@+id/frList_myDetailLayout"/>
 
     <ListView
         android:layout_width="match_parent"
@@ -82,7 +68,18 @@
         android:dividerHeight="@dimen/frList_listDivider"
         android:id="@+id/frList_list"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/frList_buttonLayout"
+        android:layout_below="@+id/frList_btnAlarm"
         />
+
+
+    <ImageButton
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/selector_button_circle"
+        android:id="@+id/frList_btnAddFriend"
+        android:layout_weight="1"
+        android:src="@android:drawable/ic_menu_search"
+        android:layout_alignBottom="@+id/frList_list"
+        android:layout_alignEnd="@+id/frList_list"/>
 
 </RelativeLayout>

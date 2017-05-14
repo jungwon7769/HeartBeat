@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="comjungwon7769heartbeat.github.heartbeat.JoinActivity"
-    android:background="@color/colorOrange">
+    android:background="@color/colorPrimary">
 
     <EditText
         android:layout_width="180dp"
@@ -17,7 +17,7 @@
         android:id="@+id/join_txtID"
         android:text=""
         android:hint="ID"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorLight"
         android:textCursorDrawable="@null"
         android:layout_above="@+id/join_txtPWD"
         android:layout_alignStart="@+id/join_txtPWD"
@@ -31,7 +31,7 @@
         android:id="@+id/join_txtPWD"
         android:text=""
         android:hint="PASSWORD"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorLight"
         android:textCursorDrawable="@null"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"/>
@@ -42,7 +42,7 @@
         android:id="@+id/join_txtNick"
         android:text=""
         android:hint="NICKNAME"
-        android:textColor="@color/colorPrimaryDark"
+        android:textColor="@color/colorLight"
         android:textCursorDrawable="@null"
         android:layout_marginTop="30dp"
         android:layout_below="@+id/join_txtPWD"
@@ -52,9 +52,9 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="40dp"
         android:layout_height="wrap_content"
-        android:background="@color/colorIvory"
-        android:text="@string/joinAct_btnUsable"
+        android:background="@drawable/selector_button_bgdark"
         android:textColor="@color/colorPrimaryDark"
+        android:text="@string/joinAct_btnUsable"
         android:id="@+id/join_btnUsable"
         android:layout_alignBottom="@+id/join_txtID"
         android:layout_alignEnd="@+id/join_txtPWD"/>
@@ -62,9 +62,9 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorIvory"
-        android:text="@string/joinAct_btnJoin"
+        android:background="@drawable/selector_button_bgdark"
         android:textColor="@color/colorPrimaryDark"
+        android:text="@string/joinAct_btnJoin"
         android:id="@+id/join_btnJoin"
         android:layout_below="@+id/join_txtNick"
         android:layout_centerHorizontal="true"
@@ -73,9 +73,9 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="@color/colorLight"
         android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="@string/joinAct_Title"
-        android:textColor="@color/colorIvory"
         android:id="@+id/join_txtTitle"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"

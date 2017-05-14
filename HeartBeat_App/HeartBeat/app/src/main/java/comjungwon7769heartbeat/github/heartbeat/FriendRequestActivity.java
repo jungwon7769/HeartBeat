@@ -28,6 +28,13 @@ public class FriendRequestActivity extends AppCompatActivity {
 		Friend_ID = "";
 		Check = false;
 
+		((Button)findViewById(R.id.addfr_btnCancel)).setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
 		//ID 입력 란의 값이 바뀌는 경우
 		txtID.addTextChangedListener(new TextWatcher() {
 			@Override

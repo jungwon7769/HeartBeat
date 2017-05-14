@@ -29,6 +29,15 @@ public class LoadingActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_loading);
 
+		new Timer().schedule(new TimerTask() {
+			public void run() {
+				oncreateii();
+			}
+		}, 1000);
+
+	} //OnCreate
+
+	private void oncreateii(){
 		//Android Version Check
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			int chkPermission_Record = ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.RECORD_AUDIO);
@@ -49,8 +58,7 @@ public class LoadingActivity extends AppCompatActivity {
 			//Permission 모두 있음
 			else moveActivityByData();
 		} else moveActivityByData();
-
-	} //OnCreate
+	}
 
 	private void moveActivityByData() {
 		Data_Check = false;
@@ -84,7 +92,7 @@ public class LoadingActivity extends AppCompatActivity {
 		int mode = preference.getInt("my_mode", 100);
 
 		if(mode == 100 || ID.equals("") || PWD.equals("") || nick.equals(""))  return false;
-		else return true;
+		else return false;  //Test
 	}
 
 	private boolean Login_Usable_Check() {

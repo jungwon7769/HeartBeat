@@ -29,6 +29,7 @@
                 android:text="닉네임 설정"
                 android:id="@+id/setting_titleNick"
                 android:textSize="30dp"
+                android:textColor="@color/colorPrimary"
                 android:layout_gravity="center_horizontal"/>
         </TableRow>
 
@@ -41,6 +42,7 @@
                 android:layout_width="200dp"
                 android:layout_height="wrap_content"
                 android:id="@+id/setting_txtNick"
+                android:textColor="@color/colorPrimaryDark"
                 android:layout_centerVertical="true"
                 android:layout_centerHorizontal="true"
                 android:hint="Nickname"
@@ -61,6 +63,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_button"
                     android:text="@string/ok"
                     android:id="@+id/setting_btnNickOK"
                     android:layout_weight="1"
@@ -69,6 +72,7 @@
                 <Button
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:background="@drawable/selector_button"
                     android:text="@string/cancel"
                     android:id="@+id/setting_btnNickCancel"
                     android:layout_weight="1"/>

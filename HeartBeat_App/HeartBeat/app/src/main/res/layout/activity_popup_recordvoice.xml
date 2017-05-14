@@ -34,6 +34,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_bgdark"
         android:text="@string/trans"
         android:id="@+id/popup_rv_btnTrans"
         android:layout_alignParentBottom="true"
@@ -43,6 +44,7 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@drawable/selector_button_bgdark"
         android:text="@string/cancel"
         android:id="@+id/popup_rv_btnCancel"
         android:layout_alignTop="@+id/popup_rv_btnTrans"
