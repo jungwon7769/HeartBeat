@@ -13,6 +13,7 @@
     <string name="myDetailAct_Label">내 기기 설정</string>
     <string name="frDetailAct_Label">친구</string>
     <string name="setting_Label">설정</string>
+    <string name="frRequestAct_Label">친구 신청</string>
 
     <string name="addFriend">친구 신청</string>
 
@@ -22,7 +23,7 @@
     <string name="DetailAct_transMode">기분전송</string>
     <string name="DetailAct_transBzz">진동전송</string>
     <string name="DetailAct_transVoice">음성메시지 전송</string>
-    <string name="DetailAct_BzzFriend">버튼진동대상 설정</string>
+    <string name="DetailAct_BzzFriend">버튼진동\n대상설정\n</string>
     <string name="DetailAct_DeleteFriend">친구삭제</string>
 
     <string name="popup_ok_label">알림</string>

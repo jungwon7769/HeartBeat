@@ -167,7 +167,7 @@ public class PopupActivity extends AppCompatActivity {
 			}
 
 			//Change Button Img
-			((Button) findViewById(R.id.popup_rv_btnRecord)).setBackgroundResource(R.drawable.circle_black);
+			((Button) findViewById(R.id.popup_rv_btnRecord)).setBackgroundResource(R.drawable.record_stop);
 
 			//Recorder Setting
 			recorder = new MediaRecorder();
@@ -191,7 +191,7 @@ public class PopupActivity extends AppCompatActivity {
 			recorder.release();
 			recorder = null;
 			//Change Button IMG
-			((Button) findViewById(R.id.popup_rv_btnRecord)).setBackgroundResource(R.drawable.circle_red);
+			((Button) findViewById(R.id.popup_rv_btnRecord)).setBackgroundResource(R.drawable.record_start);
 			((Button) findViewById(R.id.popup_rv_btnTrans)).setEnabled(true);    //전송버튼 사용가능
 		}
 	}

@@ -10,24 +10,25 @@
         android:layout_height="120dp"
         android:id="@+id/popup_rv_btnRecord"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/circle_red"
-        android:layout_marginTop="20dp"
-        android:allowUndo="false"/>
+        android:background="@drawable/record_start"
+        android:layout_marginTop="20dp"/>
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/popup_rv_btnPlay"
         android:src="@android:drawable/ic_media_play"
+        android:background="@drawable/selector_button_circle"
         android:layout_below="@+id/popup_rv_btnRecord"
         android:layout_alignStart="@+id/popup_rv_btnRecord"
         android:layout_marginTop="20dp"/>
 
     <ImageButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:id="@+id/popup_rv_btnStop"
         android:src="@android:drawable/ic_media_pause"
+        android:background="@drawable/selector_button_circle"
         android:layout_alignTop="@+id/popup_rv_btnPlay"
         android:layout_toEndOf="@+id/popup_rv_btnPlay"/>
 

@@ -54,15 +54,23 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
             <Button
+                android:drawableLeft="@drawable/icon_pallete"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
                 android:id="@+id/frDt_btnBzzColor"
                 android:text="@string/DetailAct_BzzColor"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                />
             <Button
+                android:drawableLeft="@drawable/icon_emotion"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
@@ -73,8 +81,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
             <Button
+                android:drawableLeft="@drawable/icon_bzz"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
@@ -83,6 +95,9 @@
                 android:layout_weight="1"/>
 
             <Button
+                android:drawableLeft="@drawable/icon_sound"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
@@ -93,8 +108,12 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:baselineAligned="false">
             <Button
+                android:drawableLeft="@drawable/icon_friend_delete"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
@@ -103,6 +122,9 @@
                 android:layout_weight="1"/>
 
             <Button
+                android:drawableLeft="@drawable/icon_bzzfriend"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
