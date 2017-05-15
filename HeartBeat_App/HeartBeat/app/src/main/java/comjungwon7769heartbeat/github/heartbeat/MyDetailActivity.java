@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.media.MediaPlayer;
+import android.media.MediaRecorder;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +13,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.io.File;
 
 public class MyDetailActivity extends AppCompatActivity {
 	Button btnSetLED, btnSetEmotion, btnTransBzz, btnTransVoice;
@@ -85,6 +90,7 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void transBzzToMe_Click() {
 		//Trans Bzz Using BluetoothComu
+		//Notcomplete
 	}
 
 	private void transSoundMsgToMe_Click() {
@@ -104,8 +110,7 @@ public class MyDetailActivity extends AppCompatActivity {
 				setEmotion(Constants.Emotion.values()[selectedEmotion]);
 			} else if(data.getIntExtra("Popup", 1) == Constants.popup_recordVoice){
 				String voicePath = data.getStringExtra("voicePath");
-				Log.i("Test", "MyDtail Voice path" + voicePath);
-				playSoundMsg();
+				playSoundMsg(voicePath);
 			}
 
 
@@ -114,6 +119,8 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void setLED(String color) {
 		Log.i("Test", "setLED~~" + color);
+		//Bluetooth Comu - color Trans
+		//Notcomplete
 
 	}
 
@@ -121,6 +128,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		Log.i("Test", e.name());
 		//ServerComu 이용
 		//서버에 내기분변경 정보 전송
+		//Notcomplete
 
 		//SAVE select Mode (Preference Data)
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
@@ -137,6 +145,21 @@ public class MyDetailActivity extends AppCompatActivity {
 		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 	}
 
-	private void playSoundMsg() {
+	private void playSoundMsg(String path) {
+		MediaPlayer player;
+		File file = new File(path);
+		//파일이 없는 경우
+		if(!file.exists()) {
+			Toast.makeText(getApplicationContext(), "File Path ERROR", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		try {
+			player = new MediaPlayer();
+			player.setDataSource(path);
+			player.prepare();
+			player.start();
+		} catch(Exception e) {
+
+		}
 	}
 }

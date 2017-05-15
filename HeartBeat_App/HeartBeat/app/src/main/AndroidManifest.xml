@@ -30,7 +30,7 @@
         </activity>
         <activity
             android:name=".FriendListActivity"
-            android:label="HEARTBEAT">
+            android:label="@string/app_name">
         </activity>
         <activity
             android:name=".PopupActivity"
@@ -48,7 +48,8 @@
             android:name=".NickSetActivity"
             android:label="@string/setting_Label">
         </activity>
-        <activity android:name=".FriendRequestActivity">
+        <activity android:name=".FriendRequestActivity"
+            android:label="@string/frRequestAct_Label">
         </activity>
     </application>
 

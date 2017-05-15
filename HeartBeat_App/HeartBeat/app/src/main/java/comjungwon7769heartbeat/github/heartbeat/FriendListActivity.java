@@ -38,24 +38,20 @@ public class FriendListActivity extends AppCompatActivity {
 		//User Info Load and Display ***
 		displayUserInfo();
 
-
 		frList = (ListView) findViewById(R.id.frList_list);
 		friend_list = new ArrayList<>();
 
 		//Friend List Load ***
 		//StoreFriendTime 검사
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		int saveTime = preference.getInt("friend_time", 0);
+		long saveTime = preference.getLong("friend_time", 0);
 		//if 저장한지 오래된경우 FriendList_Load 호출(서버에서 친구목록 가져옴)
-		if((System.currentTimeMillis() - saveTime) > Constants.friendLoad_Interval){
+		if((System.currentTimeMillis() - saveTime) > Constants.friendLoad_Interval) {
 			FriendList_Load();
 		}
 
 		//App Database 에서 친구목록 가져오기
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
-		/*for(int i = 0; i<10; i++) {
-			friendDAO.addFriend(new FriendDTO("id" + i, "친구지롱" + i, "33F2DD", Constants.Emotion.sleep));
-		}*/
 		friend_list = friendDAO.listFriend();
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
@@ -92,8 +88,13 @@ public class FriendListActivity extends AppCompatActivity {
 		findViewById(R.id.frList_btnAlarm).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//알람메세지 페이지로 이동
-				Log.i("Test", "Go Message~~");
+				//Notcomplete
+				//테스트데이터 만드는거 넣어놓음///원래여기 알람메세지페이지이동
+				FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+				Random r = new Random();
+				int n = r.nextInt(1000);
+				friendDAO.addFriend(new FriendDTO("id" + n, "친구지롱" + n, "33F2DD", Constants.Emotion.values()[r.nextInt(10)]));
+				dataRefresh();
 			}
 		});
 
@@ -133,10 +134,11 @@ public class FriendListActivity extends AppCompatActivity {
 		imgMyMode.setBackgroundColor(Color.parseColor("#" + e[myMode].getColor()));
 	}
 
-	public void dataRefresh(){
+	public void dataRefresh() {
 		displayUserInfo();
 
 		//FrinedList_Load 호출(Server)
+		//Notcomplete
 
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
 		friend_list = friendDAO.listFriend();
@@ -147,13 +149,18 @@ public class FriendListActivity extends AppCompatActivity {
 
 	//친구목록 서버로부터 불러오기
 	private ArrayList<FriendDTO> FriendList_Load() {
-		//friendDAO.addFriend(fff);
+		//Notcomplete
+		Log.i("Test", "FriendList_Load");
+
+		//"Update Time" 갱신
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		SharedPreferences.Editor editor = preference.edit();
+		editor.putLong("friend_time", System.currentTimeMillis());
+		editor.commit();
+
+
 		return new ArrayList<FriendDTO>();
 	} //FriendList_Load()
-
-	private void Friend_Detail_Button() {
-
-	}
 
 	//친구목록 리스트뷰의 어댑터 클래스(내부클래스)
 	private class FriendListAdapter extends BaseAdapter {
@@ -177,7 +184,9 @@ public class FriendListActivity extends AppCompatActivity {
 			return myFriend.get(position).getNick();
 		}
 
-		public void setItemList(ArrayList<FriendDTO> value){ myFriend = value;}
+		public void setItemList(ArrayList<FriendDTO> value) {
+			myFriend = value;
+		}
 
 		@Override
 		public long getItemId(int position) {
@@ -209,9 +218,9 @@ public class FriendListActivity extends AppCompatActivity {
 
 			SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 			String bzzFriend = preference.getString("bzz_id", "");
-			ImageView imgBzz = (ImageView)convertView.findViewById(R.id.frItem_imgBzz);
+			ImageView imgBzz = (ImageView) convertView.findViewById(R.id.frItem_imgBzz);
 			imgBzz.setImageResource(R.drawable.bzzfriend_no);
-			if(bzzFriend.equals(frItem.getID())){
+			if(bzzFriend.equals(frItem.getID())) {
 				imgBzz.setImageResource(R.drawable.bzzfriend_yes);
 			}
 

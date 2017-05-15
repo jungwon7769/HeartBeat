@@ -36,8 +36,7 @@ public class LoginActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				boolean chk = Login_Usable_Check(txtId.getText().toString(), txtPwd.getText().toString());
 
-				//test용 true
-				if(true) {
+				if(chk) {
 					//Save User Data
 					SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 					SharedPreferences.Editor editor = preference.edit();
@@ -46,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
 					editor.putString("my_nick", user_nick);
 					editor.putInt("my_mode", user_mode.getMode());
 					editor.putString("bzz_id", "");
-					editor.putInt("friend_time", 0);
+					editor.putLong("friend_time", 0);
 					editor.commit();
 
 					//Move To FriendList Act
@@ -70,34 +69,24 @@ public class LoginActivity extends AppCompatActivity {
 
 	} //onCreate()
 
-	/*
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		if(requestCode==1){
-			if(resultCode==RESULT_OK){
-				//데이터 받기
-				String result = data.getStringExtra("result");
-				Log.i("Test", "PopupResult~~" + result);
-			}
-		}
-	}
-	*/
-
 	private boolean Login_Usable_Check(String id, String pwd) {
 		String inputID = txtId.getText().toString();
 		String inputPWD = txtPwd.getText().toString();
 
 		//ID나 PWD가 최소길이보다 작거나 최대길이보다 긴 경우
-		//if(inputID.length() < Constants.minString || inputID.length() > Constants.maxString ||
-		//		inputPWD.length() < Constants.minString || inputPWD.length() > Constants.maxString) return false;
+		if(inputID.length() < Constants.minString || inputID.length() > Constants.maxString ||
+				inputPWD.length() < Constants.minString || inputPWD.length() > Constants.maxString) return false;
 
 		//Login Request To Server
+		//Notcomplete
+
+		//if Server 에 회원정보가 없는 경우 return false;
 
 		//Load User Info(nick, mode) From Server
 		user_nick = "현정이지롱";
 		user_mode = Constants.Emotion.overeat;
 
-		return false;
+		return true;
 	} //loginUsableCheck()
 
 	private void Join_Button() {

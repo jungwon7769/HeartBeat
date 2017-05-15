@@ -59,6 +59,7 @@ public class PopupActivity extends AppCompatActivity {
 				popup_recordVoice(intent);
 				break;
 
+			//Notcomplete 4 Type Popup
 			case Constants.popup_msgFriend:
 				break;
 			case Constants.popup_msgEmotion:
@@ -167,7 +168,7 @@ public class PopupActivity extends AppCompatActivity {
 			}
 
 			//Change Button Img
-			((Button) findViewById(R.id.popup_rv_btnRecord)).setBackgroundResource(R.drawable.circle_black);
+			((Button) findViewById(R.id.popup_rv_btnRecord)).setBackgroundResource(R.drawable.record_stop);
 
 			//Recorder Setting
 			recorder = new MediaRecorder();
@@ -191,7 +192,7 @@ public class PopupActivity extends AppCompatActivity {
 			recorder.release();
 			recorder = null;
 			//Change Button IMG
-			((Button) findViewById(R.id.popup_rv_btnRecord)).setBackgroundResource(R.drawable.circle_red);
+			((Button) findViewById(R.id.popup_rv_btnRecord)).setBackgroundResource(R.drawable.record_start);
 			((Button) findViewById(R.id.popup_rv_btnTrans)).setEnabled(true);    //전송버튼 사용가능
 		}
 	}
@@ -204,11 +205,13 @@ public class PopupActivity extends AppCompatActivity {
 			return;
 		}
 		try {
+			//재생중인 파일이 있는 경우
 			if(player != null) {
 				player.stop();
 				player.release();
 				player = null;
 			}
+			//play
 			player = new MediaPlayer();
 			player.setDataSource(path);
 			player.prepare();
@@ -342,9 +345,7 @@ public class PopupActivity extends AppCompatActivity {
 						player.release();;
 						player = null;
 					}
-					Log.i("Test", "try");
 					player = MediaPlayer.create(getApplicationContext(), Constants.Emotion_sound[position]);
-					//player.prepare();
 					player.start();
 				} catch(Exception e) {
 

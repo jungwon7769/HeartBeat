@@ -55,7 +55,7 @@
         android:layout_height="50dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/selector_button"
+        android:background="@drawable/selector_button_line"
         android:id="@+id/frList_btnAlarm"
         android:layout_weight="1"
         android:src="@android:drawable/sym_action_email"
@@ -78,8 +78,10 @@
         android:background="@drawable/selector_button_circle"
         android:id="@+id/frList_btnAddFriend"
         android:layout_weight="1"
-        android:src="@android:drawable/ic_menu_search"
-        android:layout_alignBottom="@+id/frList_list"
-        android:layout_alignEnd="@+id/frList_list"/>
+        android:src="@drawable/button_friend_add"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:scaleType="fitCenter"
+        android:padding="10dp"/>
 
 </RelativeLayout>

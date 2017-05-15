@@ -4,109 +4,105 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:clickable="false"
+    android:contextClickable="false"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="comjungwon7769heartbeat.github.heartbeat.MyDetailActivity"
-    android:clickable="false"
-    android:contextClickable="false">
+    tools:context="comjungwon7769heartbeat.github.heartbeat.MyDetailActivity">
 
     <RelativeLayout
+        android:id="@+id/relativeLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
-        android:padding="20dp"
-        android:id="@+id/relativeLayout">
+        android:layout_alignParentTop="true"
+        android:padding="20dp">
 
         <ImageView
+            android:id="@+id/myDt_imgMode"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:id="@+id/myDt_imgMode"
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
-            android:src="@drawable/laugh"
-            android:background="#f2b8a1"/>
+            android:background="#f2b8a1"
+            android:src="@drawable/laugh"/>
 
         <TextView
+            android:id="@+id/myDt_txtNick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="NickName"
-            android:id="@+id/myDt_txtNick"
             android:layout_below="@+id/myDt_imgMode"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:text="NickName"
+            android:textAppearance="?android:attr/textAppearanceMedium"/>
     </RelativeLayout>
 
-    <TableLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayout">
+        android:layout_below="@+id/relativeLayout"
+        android:orientation="vertical">
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
             <Button
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/detail_Button_Size"
-                android:background="@drawable/selector_button"
-                android:text="@string/DetailAct_LEDColor"
                 android:id="@+id/myDt_btnLEDColor"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true"
-                android:layout_column="0"
-                android:layout_weight="1"/>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/detail_Button_Size"
-                android:background="@drawable/selector_button"
-                android:text="@string/DetailAct_setMode"
-                android:id="@+id/myDt_btnSetMode"
-                android:layout_gravity="right|top"
-                android:layout_below="@+id/myDt_btnTransBzz"
-                android:layout_alignParentEnd="true"
-                android:layout_column="1"
-                android:layout_weight="1"/>
-        </TableRow>
-
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <Button
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_Button_Size"
+                android:layout_weight="1"
                 android:background="@drawable/selector_button"
-                android:text="@string/DetailAct_transVoice"
-                android:id="@+id/myDt_btnTransVoice"
-                android:layout_gravity="left|bottom"
-                android:layout_alignParentBottom="true"
-                android:layout_alignParentStart="true"
-                android:layout_column="0"
-                android:layout_weight="1"/>
+                android:drawableLeft="@drawable/icon_pallete"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
+                android:text="@string/DetailAct_LEDColor"/>
 
             <Button
-                android:layout_width="wrap_content"
+                android:id="@+id/myDt_btnSetMode"
+                android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_Button_Size"
+                android:layout_weight="1"
                 android:background="@drawable/selector_button"
-                android:text="@string/DetailAct_transBzz"
-                android:id="@+id/myDt_btnTransBzz"
-                android:layout_gravity="right|center_vertical"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentEnd="true"
-                android:layout_toRightOf="@+id/myDt_btnLEDColor"
-                android:layout_column="1"
-                android:layout_weight="1"/>
-        </TableRow>
+                android:drawableLeft="@drawable/icon_emotion"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
+                android:text="@string/DetailAct_setMode"/>
+        </LinearLayout>
 
-        <TableRow
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:baselineAligned="false">
 
-        </TableRow>
+            <Button
+                android:id="@+id/myDt_btnTransVoice"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:layout_weight="1"
+                android:background="@drawable/selector_button"
+                android:drawableLeft="@drawable/icon_sound"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
+                android:text="@string/DetailAct_transVoice"/>
 
-    </TableLayout>
+            <Button
+                android:id="@+id/myDt_btnTransBzz"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:layout_weight="1"
+                android:background="@drawable/selector_button"
+                android:drawableLeft="@drawable/icon_bzz"
+                android:drawablePadding="@dimen/button_padding"
+                android:padding="@dimen/button_padding"
+                android:text="@string/DetailAct_transBzz"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
 </RelativeLayout>

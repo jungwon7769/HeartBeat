@@ -7,7 +7,7 @@ public class Constants {
 	public static final int maxString = 32;
 	public static final int minString = 4;
 
-	public static final int friendLoad_Interval = 300000;    //millsec -> 5min
+	public static final int friendLoad_Interval = 10000;    //millsec -> 5min 300000
 
 
 	/*
@@ -23,9 +23,9 @@ public class Constants {
 	public static final int popup_recordVoice = 12;     //Popup = 12, To(), From(voicePath = String)
 
 	public static final int popup_msgFriend = 20;   //Popup = 20, To(ID = String, Time = int), From(select = boolean)
-	public static final int popup_msgVoice = 21;    //Popup = 21, To(ID = String, Nick = String, Time = int..??), From()     야ㅒ도 오디오관련 좀더 공부하겠음..
-	public static final int popup_msgEmotion = 22;  //Popup = 22, To(ID = String, Nick = String, Emotion = int, Time = int), From()
-	public static final int popup_msgBzz = 23;      //Popup = 23, To(ID = String, Nick = String, Count = int, Time = int), From()
+	public static final int popup_msgVoice = 21;    //Popup = 21, To(ID = String, Nick = String, Time = long, Path = String), From()
+	public static final int popup_msgEmotion = 22;  //Popup = 22, To(ID = String, Nick = String, Emotion = int, Time = long), From()
+	public static final int popup_msgBzz = 23;      //Popup = 23, To(ID = String, Nick = String, Count = int, Time = long), From()
 
 	/*
 	Message Flag 정의

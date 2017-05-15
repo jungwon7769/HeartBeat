@@ -21,6 +21,7 @@ public class NickSetActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_nick_set);
 
+		//Layout Link
 		txtNick = (EditText)findViewById(R.id.setting_txtNick);
 		btnNickOK = (Button)findViewById(R.id.setting_btnNickOK);
 
@@ -41,8 +42,6 @@ public class NickSetActivity extends AppCompatActivity {
 		txtNick.addTextChangedListener(new TextWatcher() {
 			@Override
 			public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-				if(s.length() >= Constants.minString && s.length() <= Constants.maxString) btnNickOK.setEnabled(true);
-				else btnNickOK.setEnabled(false);
 			}
 
 			@Override
@@ -52,7 +51,8 @@ public class NickSetActivity extends AppCompatActivity {
 
 			@Override
 			public void afterTextChanged(Editable s) {
-
+				if(s.length() >= Constants.minString && s.length() <= Constants.maxString) btnNickOK.setEnabled(true);
+				else btnNickOK.setEnabled(false);
 			}
 		});
 	}
@@ -75,6 +75,7 @@ public class NickSetActivity extends AppCompatActivity {
 		editor.commit();
 
 		//Server Comu
+		//Notcomplete
 
 
 		//popup
