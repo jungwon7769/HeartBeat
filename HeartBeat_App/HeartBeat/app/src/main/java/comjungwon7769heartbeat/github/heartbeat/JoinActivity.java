@@ -37,6 +37,7 @@ public class JoinActivity extends Activity {
 					//if Not Exist
 					id = txtID.getText().toString();
 					chkIdUsable = true;
+					//if Exist chkIdUsable false
 				}
 			}
 		});
@@ -95,6 +96,7 @@ public class JoinActivity extends Activity {
 		}
 		//ServerComu class Create
 		//Request ID Exist
+		//Notcomplete
 
 
 		return true;
@@ -103,6 +105,7 @@ public class JoinActivity extends Activity {
 	private void Join(String id, String pwd, String Nick) {
 		//ServerComu Class Create
 		//Request Join
+		//Notcomplete
 
 		finish();
 	} //join()

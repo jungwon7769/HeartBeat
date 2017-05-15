@@ -117,6 +117,8 @@ public class FriendDetailActivity extends AppCompatActivity {
 	//Trans Bzz Button
 	private void transBzz_Click() {
 		//Trans Bzz Using BluetoothComu
+
+		//Notcomplete
 	}
 
 	//Trans Voice Button
@@ -144,7 +146,11 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 	//Delete Friend Button
 	private void deleteFriend_Click(){
-
+		//Popup(re)
+		Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+		intent.putExtra("Popup", Constants.popup_re);
+		intent.putExtra("Message", getResources().getString(R.string.deleteFriend_Re));
+		startActivityForResult(intent, 1);
 	}
 	//---------***Button Handler Method END------------------
 
@@ -159,9 +165,9 @@ public class FriendDetailActivity extends AppCompatActivity {
 			} else if(data.getIntExtra("Popup", 1) == Constants.popup_recordVoice){
 				String voicePath = data.getStringExtra("voicePath");
 				Log.i("Test", "MyDtail Voice path" + voicePath);
+			} else if(data.getIntExtra("Popup", 1) == Constants.popup_re){
+				if(data.getBooleanExtra("select", false)) deleteFriend();
 			}
-
-
 		}
 	} //onActivityResult
 
@@ -179,21 +185,37 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 		//List Activity ImgChange
 		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+
+		//Server Comu
+		//Notcomplete
 	}
 
 	private void transEmotion(Constants.Emotion e) {
-		Log.i("Test", e.name());
 		//ServerComu 이용
-		//기분전송
-
+		//Notcomplete
 	}
 
 	private void transSoundMsg(){
-
+		//Server Comu
+		//Notcomplete
 	}
 
 	private void deleteFriend(){
+		//Server Comu
+		//Notcomplete
+
+		//App DataBase
+		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+		friendDAO.deleteFriend(selectFriendDTO.getID());
+		//App Data
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		if(selectFriendDTO.getID().equals(preference.getString("bzz_id", ""))) {
+			SharedPreferences.Editor editor = preference.edit();
+			editor.putString("bzz_id", "");
+			editor.commit();
+		}
 		//List Activity ImgChange
 		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+		finish();
 	}
 }

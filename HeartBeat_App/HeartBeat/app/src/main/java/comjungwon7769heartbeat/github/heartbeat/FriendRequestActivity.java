@@ -85,8 +85,9 @@ public class FriendRequestActivity extends AppCompatActivity {
 
 	//ID 존재 여부 검사
 	private boolean ID_Usable_Check(String friend_id) {
+		if(friend_id.length() < Constants.minString) return false;
 		//Server Comu - 아이디 존재여부 검사 요청
-
+		//Notcomplete
 
 		//존재하는 경우 true
 		return true;
@@ -95,6 +96,8 @@ public class FriendRequestActivity extends AppCompatActivity {
 	//친구요청버튼 클릭시 Handler
 	private void OK_Button(String friend_id) {
 		//Server Comu - 친구요청 메세지 전송
+		//Notcomplete
+
 		Toast.makeText(getApplicationContext(),"친구요청한다",Toast.LENGTH_SHORT).show();
 		txtID.setText("");
 	}

@@ -79,8 +79,8 @@
         android:id="@+id/frList_btnAddFriend"
         android:layout_weight="1"
         android:src="@drawable/button_friend_add"
-        android:layout_alignBottom="@+id/frList_list"
-        android:layout_alignEnd="@+id/frList_list"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
         android:scaleType="fitCenter"
         android:padding="10dp"/>
 

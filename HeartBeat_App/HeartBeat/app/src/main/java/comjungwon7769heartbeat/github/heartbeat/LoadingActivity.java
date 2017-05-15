@@ -24,6 +24,9 @@ public class LoadingActivity extends AppCompatActivity {
 	private boolean Login_Check;    //사용자데이터 로그인유효
 	private String ID, PWD;
 
+	/*
+	GUI 확인을 위해 oncreateii 함수를 만들고 onCreate 에 Timer 만들어놓음
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -92,12 +95,14 @@ public class LoadingActivity extends AppCompatActivity {
 		int mode = preference.getInt("my_mode", 100);
 
 		if(mode == 100 || ID.equals("") || PWD.equals("") || nick.equals(""))  return false;
-		else return false;  //Test
+		else return true;
 	}
 
 	private boolean Login_Usable_Check() {
+		//Server Comu
+		//Notcomplete
 
-		return true;
+		return false;
 	}
 
 	@Override

@@ -38,6 +38,7 @@
     <string name="plzRecordFirst">먼저 녹음을 해주세요</string>
     <string name="NickSetSuccess">닉네임이 성공적으로 변경되었습니다</string>
     <string name="addfr_notExistID">존재하지 않는 ID입니다</string>
+    <string name="deleteFriend_Re">정말로 친구를 삭제하시겠습니까?</string>
 
 
     <string name="ok">확인</string>

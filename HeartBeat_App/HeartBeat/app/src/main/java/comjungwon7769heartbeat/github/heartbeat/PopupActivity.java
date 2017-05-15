@@ -59,6 +59,7 @@ public class PopupActivity extends AppCompatActivity {
 				popup_recordVoice(intent);
 				break;
 
+			//Notcomplete 4 Type Popup
 			case Constants.popup_msgFriend:
 				break;
 			case Constants.popup_msgEmotion:
@@ -204,11 +205,13 @@ public class PopupActivity extends AppCompatActivity {
 			return;
 		}
 		try {
+			//재생중인 파일이 있는 경우
 			if(player != null) {
 				player.stop();
 				player.release();
 				player = null;
 			}
+			//play
 			player = new MediaPlayer();
 			player.setDataSource(path);
 			player.prepare();
@@ -342,9 +345,7 @@ public class PopupActivity extends AppCompatActivity {
 						player.release();;
 						player = null;
 					}
-					Log.i("Test", "try");
 					player = MediaPlayer.create(getApplicationContext(), Constants.Emotion_sound[position]);
-					//player.prepare();
 					player.start();
 				} catch(Exception e) {
 
