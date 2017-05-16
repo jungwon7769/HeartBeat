@@ -22,12 +22,17 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.File;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 public class PopupActivity extends AppCompatActivity {
 
 	final String dirPath = Environment.getExternalStorageDirectory().getAbsolutePath() + "/HeartBeat/tmp/myVoice";
 
-	private Constants.Emotion mode;
+	private String ID;      //Message Sender ID
+	private long Time;      //Message Time
+
+	private Constants.Emotion mode;     //Select Emotion Save
 	private MediaPlayer player;
 	private MediaRecorder recorder;
 	private String recordFilePath;
@@ -61,12 +66,16 @@ public class PopupActivity extends AppCompatActivity {
 
 			//Notcomplete 4 Type Popup
 			case Constants.popup_msgFriend:
+				popup_msgFriend(intent);
 				break;
 			case Constants.popup_msgEmotion:
+				popup_msgEmotion(intent);
 				break;
 			case Constants.popup_msgVoice:
+				popup_msgVoice(intent);
 				break;
 			case Constants.popup_msgBzz:
+				popup_msgBzz(intent);
 				break;
 			/*
 			public static final int popup_re = 1;   //Popup = 1, To(Message = String), From(select = boolean)
@@ -75,16 +84,172 @@ public class PopupActivity extends AppCompatActivity {
 	public static final int popup_pickColor = 11;    //Popup = 11, To (), From (selectedColor = String)
 	public static final int popup_recordVoice = 12;     //Popup = 12, To(), From(??) 녹음부분 좀더 공부한 뒤에 다시 적겠음
 
-	public static final int popup_msgFriend = 20;   //Popup = 20, To(ID = String, Time = int), From(select = boolean)
-	public static final int popup_msgVoice = 21;    //Popup = 21, To(ID = String, Nick = String, Time = int..??), From()     야ㅒ도 오디오관련 좀더 공부하겠음..
-	public static final int popup_msgEmotion = 22;  //Popup = 22, To(ID = String, Nick = String, Emotion = int, Time = int), From()
-	public static final int popup_msgBzz = 23;
+	public static final int popup_msgFriend = 20;   //Popup = 20, To(ID = String, Time = long), From(ID = String, Time = long, select = boolean)
+	public static final int popup_msgVoice = 21;    //Popup = 21, To(ID = String, Nick = String, Time = long, Path = String), From(ID = String, Time = long, select = boolean)
+	public static final int popup_msgEmotion = 22;  //Popup = 22, To(ID = String, Nick = String, Emotion = int, Time = long), From(ID = String, Time = long, select = boolean)
+	public static final int popup_msgBzz = 23;      //Popup = 23, To(ID = String, Nick = String, Count = int, Time = long), From(ID = String, Time = long, select = boolean)
 			 */
 
 		}
 
 
 	} // onCreate
+
+	//popup Type별 메소드
+	//알림관련
+	private void popup_ok(Intent intent) {
+		setContentView(R.layout.activity_popup_ok);
+		setTitle(R.string.popup_ok_label);
+
+		//팝업을 호출한 액티비티로부터 데이터를 불러와 셋팅
+		TextView message = (TextView) findViewById(R.id.popup_ok_txt);
+		message.setText(intent.getStringExtra("Message"));
+
+		//팝업의 OK 버튼의 리스너 지정
+		Button btnOK = (Button) findViewById(R.id.popup_ok_btnOK);
+		btnOK.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//확인버튼 클릭시 액티비티 종료
+				Intent intent = new Intent();
+				intent.putExtra("Popup", Constants.popup_ok);
+				setResult(RESULT_OK, intent);
+
+				finish();
+			}
+		});
+	}
+
+	private void popup_re(Intent intent) {
+		setContentView(R.layout.activity_popup_re);
+		setTitle(R.string.popup_re_label);
+
+		//팝업을 호출한 액티비티로부터 데이터를 불러와 셋팅
+		TextView message = (TextView) findViewById(R.id.popup_re_txt);
+		message.setText(intent.getStringExtra("Message"));
+
+		//팝업의 OK 버튼의 리스너 지정
+		Button btnOK = (Button) findViewById(R.id.popup_re_ok);
+		btnOK.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//확인버튼 클릭시 액티비티 종료
+				Intent intent = new Intent();
+				intent.putExtra("Popup", Constants.popup_re);
+				intent.putExtra("select", true);
+				setResult(RESULT_OK, intent);
+
+				finish();
+			}
+		});
+
+		//취소버튼 클릭시 팝업액티비티 종료
+		Button btnCancel = (Button) findViewById(R.id.popup_re_cancel);
+		btnCancel.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+	}
+
+	//전송관련
+	private void popup_pickColor(Intent intent) {
+		setContentView(R.layout.activity_popup_pickcolor);
+		setTitle(R.string.popup_pickColor_label);
+
+		//색상선택기
+		final ColorPickerView colorPickerView = (ColorPickerView) findViewById(R.id.popup_pickColor_colorPickerView);
+
+		//확인버튼 리스너지정
+		Button btnOK = (Button) findViewById(R.id.popup_pickColor_ok);
+		btnOK.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				//확인버튼 클릭시 선택한 색상 전달후 액티비티 종료
+				Intent intent = new Intent();
+				intent.putExtra("Popup", Constants.popup_pickColor);
+				intent.putExtra("selectedColor", colorPickerView.getSelectColor());
+				setResult(RESULT_OK, intent);
+
+				finish();
+			}
+		});
+		//취소버튼 클릭시 팝업액티비티 종료
+		Button btnCancel = (Button) findViewById(R.id.popup_pickColor_cancel);
+		btnCancel.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+	}
+
+	private void popup_pickEmotion(Intent intent) {
+		setContentView(R.layout.activity_popup_pickemotion);
+		setTitle(R.string.popup_pickEmotion_label);
+
+		player = null;
+		mode = null;    //선택한 모드 초기화
+
+		//선택가능한 기분을 보여줄 GridView 레이아웃과 연결
+		GridView gridView = (GridView) findViewById(R.id.popup_pickEmotion_grid);
+		gridView.setAdapter(new emotionAdapter(this));  //어댑터지정
+
+		//그리드뷰의 기분(아이템)클릭시 동작할 리스너 지정
+		gridView.setOnItemClickListener(new GridView.OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+				//Exist Select Emotion
+				if(mode != null) {
+					ImageView prev = (ImageView) parent.getChildAt(mode.getMode());
+					prev.setBackgroundColor(Color.parseColor("#" + mode.getColor()));   //background init
+				}
+				//Change background of Select Emotion
+				mode = Constants.Emotion.values()[position];
+				view.setBackgroundResource(R.drawable.border);
+				try {
+					if(player != null) {
+						player.stop();
+						player.release();
+						;
+						player = null;
+					}
+					player = MediaPlayer.create(getApplicationContext(), Constants.Emotion_sound[position]);
+					player.start();
+				} catch(Exception e) {
+
+				}
+			}
+		});
+
+		//확인버튼 클릭시 동작할 리스너 지정
+		Button btnOK = (Button) findViewById(R.id.popup_pickEmotion_ok);
+		btnOK.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(mode != null) {
+					//선택한 기분이 있는 경우에만 해당 기분을 전달후 액티비티 종료
+					Intent intent = new Intent();
+					intent.putExtra("Popup", Constants.popup_pickEmotion);
+					intent.putExtra("selectedEmotion", mode.getMode());
+					setResult(RESULT_OK, intent);
+
+					finish();
+				} else {
+					Toast.makeText(getApplicationContext(), R.string.requestEmotionSelect, Toast.LENGTH_SHORT).show();
+				}
+			}
+		});
+		//취소버튼 클릭시 액티비티 종료
+		Button btnCancel = (Button) findViewById(R.id.popup_pickEmotion_cancel);
+		btnCancel.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+	}
 
 	private void popup_recordVoice(Intent intent) {
 		setContentView(R.layout.activity_popup_recordvoice);
@@ -148,6 +313,175 @@ public class PopupActivity extends AppCompatActivity {
 		});
 	}
 
+	//메시지관련
+	private void popup_msgFriend(Intent intent) {
+		setContentView(R.layout.activity_popup_msgfriend);
+		setTitle(R.string.popup_msgFriend_label);
+
+		//팝업을 호출한 액티비티로부터 데이터를 불러와 셋팅
+		ID = intent.getStringExtra("ID");
+		Time = intent.getLongExtra("Time", 0);
+		final TextView id = (TextView) findViewById(R.id.popup_msgfr_txtId);
+		id.setText(ID);
+
+		//팝업 버튼의 리스너 지정
+		Button btnAccept = (Button) findViewById(R.id.popup_msgfr_btnAccept);
+		btnAccept.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.putExtra("Popup", Constants.popup_msgFriend);
+				intent.putExtra("ID", ID);
+				intent.putExtra("Time", Time);
+				intent.putExtra("select", true);
+				setResult(RESULT_OK, intent);
+
+				finish();
+			}
+		});
+		Button btnDeny = (Button)findViewById(R.id.popup_msgfr_btnDeny);
+		btnDeny.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.putExtra("Popup", Constants.popup_msgFriend);
+				intent.putExtra("ID", ID);
+				intent.putExtra("Time", Time);
+				intent.putExtra("select", false);
+				setResult(RESULT_OK, intent);
+
+				finish();
+			}
+		});
+	}
+
+	private void popup_msgVoice(Intent intent) {
+		setContentView(R.layout.activity_popup_msgvoice);
+		setTitle(R.string.popup_msgVoice_label);
+
+		//팝업을 호출한 액티비티로부터 데이터를 불러와 뷰 셋팅
+		ID = intent.getStringExtra("ID");
+		Time = intent.getLongExtra("Time", 0);
+		this.recordFilePath = intent.getStringExtra("Path");
+
+		final TextView txtNick = (TextView) findViewById(R.id.popup_msgVoice_txtNick);
+		txtNick.setText(intent.getStringExtra("Nick"));
+		final TextView txtTime = (TextView)findViewById(R.id.popup_msgVoice_txtTime);
+		DateFormat dateFormat = new SimpleDateFormat("YYYY.MM.dd\nHH:mm:ss");
+		txtTime.setText(dateFormat.format(Time));
+
+		//팝업 버튼의 리스너 지정
+		Button btnPlay = (Button) findViewById(R.id.popup_msgVoice_btnPlay);
+		btnPlay.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				playVoice(recordFilePath);
+			}
+		});
+		Button btnDelete = (Button)findViewById(R.id.popup_msgVoice_btnDelete);
+		btnDelete.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.putExtra("Popup", Constants.popup_msgVoice);
+				intent.putExtra("ID", ID);
+				intent.putExtra("Time", Time);
+				intent.putExtra("select", false);
+				setResult(RESULT_OK, intent);
+
+				finish();
+			}
+		});
+	}
+
+	private void popup_msgEmotion(Intent intent) {
+		setContentView(R.layout.activity_popup_msgemotion);
+		setTitle(R.string.popup_msgEmotion_label);
+
+		//팝업을 호출한 액티비티로부터 데이터를 불러와 뷰 셋팅
+		ID = intent.getStringExtra("ID");
+		Time = intent.getLongExtra("Time", 0);
+
+		final TextView txtNick = (TextView) findViewById(R.id.popup_msgEmotion_txtNick);
+		txtNick.setText(intent.getStringExtra("Nick"));
+		final TextView txtTime = (TextView)findViewById(R.id.popup_msgEmotion_txtTime);
+		DateFormat dateFormat = new SimpleDateFormat("YYYY.MM.dd\nHH:mm:ss");
+		txtTime.setText(dateFormat.format(Time));
+
+		mode = Constants.Emotion.values()[intent.getIntExtra("Emotion", 0)];
+		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgEmotion_imgEmotion);
+		imgMode.setImageResource(getResources().getIdentifier(mode.toString(), "drawable", this.getPackageName()));
+		imgMode.setBackgroundColor(Color.parseColor("#" + mode.getColor()));
+
+		//팝업 버튼의 리스너 지정
+		Button btnPlay = (Button) findViewById(R.id.popup_msgEmotion_btnPlay);
+		btnPlay.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				try {
+					if(player != null) {
+						player.stop();
+						player.release();
+						;
+						player = null;
+					}
+					player = MediaPlayer.create(getApplicationContext(), Constants.Emotion_sound[mode.getMode()]);
+					player.start();
+				} catch(Exception e) {
+
+				}
+			}
+		});
+		Button btnDelete = (Button)findViewById(R.id.popup_msgEmotion_btnDelete);
+		btnDelete.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.putExtra("Popup", Constants.popup_msgEmotion);
+				intent.putExtra("ID", ID);
+				intent.putExtra("Time", Time);
+				intent.putExtra("select", false);
+				setResult(RESULT_OK, intent);
+
+				finish();
+			}
+		});
+	}
+
+	private void popup_msgBzz(Intent intent) {
+		setContentView(R.layout.activity_popup_msgbzz);
+		setTitle(R.string.popup_msgBzz_label);
+
+		//팝업을 호출한 액티비티로부터 데이터를 불러와 뷰 셋팅
+		ID = intent.getStringExtra("ID");
+		Time = intent.getLongExtra("Time", 0);
+
+		final TextView txtNick = (TextView) findViewById(R.id.popup_msgBzz_txtNick);
+		txtNick.setText(intent.getStringExtra("Nick"));
+		final TextView txtTime = (TextView)findViewById(R.id.popup_msgBzz_txtTime);
+		DateFormat dateFormat = new SimpleDateFormat("YYYY.MM.dd\nHH:mm:ss");
+		txtTime.setText(dateFormat.format(Time));
+		final TextView txtCount = (TextView) findViewById(R.id.popup_msgBzz_txtCount);
+		txtCount.setText(intent.getIntExtra("Count", 0));
+
+		//팝업 버튼의 리스너 지정
+		Button btnDelete = (Button)findViewById(R.id.popup_msgBzz_btnDelete);
+		btnDelete.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent();
+				intent.putExtra("Popup", Constants.popup_msgVoice);
+				intent.putExtra("ID", ID);
+				intent.putExtra("Time", Time);
+				intent.putExtra("select", false);
+				setResult(RESULT_OK, intent);
+
+				finish();
+			}
+		});
+	}
+
+	//Popup 기능 수행을 위한 Method
 	private void recordVoice() {
 		//녹음중이 아닌 경우
 		if(recorder == null) {
@@ -229,158 +563,6 @@ public class PopupActivity extends AppCompatActivity {
 		}
 	}
 
-	private void popup_ok(Intent intent) {
-		setContentView(R.layout.activity_popup_ok);
-		setTitle(R.string.popup_ok_label);
-
-		//팝업을 호출한 액티비티로부터 데이터를 불러와 셋팅
-		TextView message = (TextView) findViewById(R.id.popup_ok_txt);
-		message.setText(intent.getStringExtra("Message"));
-
-		//팝업의 OK 버튼의 리스너 지정
-		Button btnOK = (Button) findViewById(R.id.popup_ok_btnOK);
-		btnOK.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//확인버튼 클릭시 액티비티 종료
-				Intent intent = new Intent();
-				intent.putExtra("Popup", Constants.popup_ok);
-				setResult(RESULT_OK, intent);
-
-				finish();
-			}
-		});
-	}
-
-	private void popup_re(Intent intent) {
-		setContentView(R.layout.activity_popup_re);
-		setTitle(R.string.popup_re_label);
-
-		//팝업을 호출한 액티비티로부터 데이터를 불러와 셋팅
-		TextView message = (TextView) findViewById(R.id.popup_re_txt);
-		message.setText(intent.getStringExtra("Message"));
-
-		//팝업의 OK 버튼의 리스너 지정
-		Button btnOK = (Button) findViewById(R.id.popup_re_ok);
-		btnOK.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//확인버튼 클릭시 액티비티 종료
-				Intent intent = new Intent();
-				intent.putExtra("Popup", Constants.popup_re);
-				intent.putExtra("select", true);
-				setResult(RESULT_OK, intent);
-
-				finish();
-			}
-		});
-
-		//취소버튼 클릭시 팝업액티비티 종료
-		Button btnCancel = (Button) findViewById(R.id.popup_re_cancel);
-		btnCancel.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-	}
-
-	private void popup_pickColor(Intent intent) {
-		setContentView(R.layout.activity_popup_pickcolor);
-		setTitle(R.string.popup_pickColor_label);
-
-		//색상선택기
-		final ColorPickerView colorPickerView = (ColorPickerView) findViewById(R.id.popup_pickColor_colorPickerView);
-
-		//확인버튼 리스너지정
-		Button btnOK = (Button) findViewById(R.id.popup_pickColor_ok);
-		btnOK.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				//확인버튼 클릭시 선택한 색상 전달후 액티비티 종료
-				Intent intent = new Intent();
-				intent.putExtra("Popup", Constants.popup_pickColor);
-				intent.putExtra("selectedColor", colorPickerView.getSelectColor());
-				setResult(RESULT_OK, intent);
-
-				finish();
-			}
-		});
-		//취소버튼 클릭시 팝업액티비티 종료
-		Button btnCancel = (Button) findViewById(R.id.popup_pickColor_cancel);
-		btnCancel.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-	}
-
-	private void popup_pickEmotion(Intent intent) {
-		setContentView(R.layout.activity_popup_pickemotion);
-		setTitle(R.string.popup_pickEmotion_label);
-
-		player = null;
-		mode = null;    //선택한 모드 초기화
-
-		//선택가능한 기분을 보여줄 GridView 레이아웃과 연결
-		GridView gridView = (GridView) findViewById(R.id.popup_pickEmotion_grid);
-		gridView.setAdapter(new emotionAdapter(this));  //어댑터지정
-
-		//그리드뷰의 기분(아이템)클릭시 동작할 리스너 지정
-		gridView.setOnItemClickListener(new GridView.OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				//Exist Select Emotion
-				if(mode != null) {
-					ImageView prev = (ImageView) parent.getChildAt(mode.getMode());
-					prev.setBackgroundColor(Color.parseColor("#" + mode.getColor()));   //background init
-				}
-				//Change background of Select Emotion
-				mode = Constants.Emotion.values()[position];
-				view.setBackgroundResource(R.drawable.border);
-				try {
-					if(player != null) {
-						player.stop();
-						player.release();;
-						player = null;
-					}
-					player = MediaPlayer.create(getApplicationContext(), Constants.Emotion_sound[position]);
-					player.start();
-				} catch(Exception e) {
-
-				}
-			}
-		});
-
-		//확인버튼 클릭시 동작할 리스너 지정
-		Button btnOK = (Button) findViewById(R.id.popup_pickEmotion_ok);
-		btnOK.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(mode != null) {
-					//선택한 기분이 있는 경우에만 해당 기분을 전달후 액티비티 종료
-					Intent intent = new Intent();
-					intent.putExtra("Popup", Constants.popup_pickEmotion);
-					intent.putExtra("selectedEmotion", mode.getMode());
-					setResult(RESULT_OK, intent);
-
-					finish();
-				} else {
-					Toast.makeText(getApplicationContext(), R.string.requestEmotionSelect, Toast.LENGTH_SHORT).show();
-				}
-			}
-		});
-		//취소버튼 클릭시 액티비티 종료
-		Button btnCancel = (Button) findViewById(R.id.popup_pickEmotion_cancel);
-		btnCancel.setOnClickListener(new Button.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				finish();
-			}
-		});
-	}
-
 	//popup_pickEmotion 에서 기분을 GridView로 보여주기위한 커스텀어댑터 클래스
 	public class emotionAdapter extends BaseAdapter {
 		private Context context;
@@ -426,16 +608,15 @@ public class PopupActivity extends AppCompatActivity {
 		}
 	}
 
-
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		/*
+		/*if(event.getAction()== MotionEvent.BUTTON_BACK) {
+
+		}
 		if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
 			return false;
-		}
-		*/
-		if(recorder != null) recorder.stop();
-		recorder = null;
+		}*/
+		stopVoice();
 		return true;
 	}
 

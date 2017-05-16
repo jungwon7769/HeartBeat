@@ -6,13 +6,14 @@ package comjungwon7769heartbeat.github.heartbeat;
 public class MsgDTO {
 
 	private String Sender;
-	private int Flag, Time, Count;
+	private int Flag, Count;
+	private long Time;
 	private Constants.Emotion Mode;
 	private String File_Path;
 
 	public MsgDTO(){}
 
-	public MsgDTO(int flag, String sender, int time, Constants.Emotion e, String filePath){
+	public MsgDTO(int flag, String sender, long time, Constants.Emotion e, String filePath){
 		this.Flag = flag;
 		this.Sender = sender;
 		this.Time = time;
@@ -23,7 +24,7 @@ public class MsgDTO {
 
 	public String getSender(){return this.Sender;}
 	public int getFlag(){return this.Flag;}
-	public int getTime(){return this.Time;}
+	public long getTime(){return this.Time;}
 	public int getCount(){return this.Count;}
 	public Constants.Emotion getMode(){return this.Mode;}
 	public int getModeInt(){return this.Mode.getMode();}
@@ -31,7 +32,7 @@ public class MsgDTO {
 
 	public void setSender(String sender){this.Sender = sender;}
 	public void setFlag(int flag){this.Flag = flag;}
-	public void setTime(int time){this.Time = time;}
+	public void setTime(long time){this.Time = time;}
 	public void setCount(int count){this.Count = count;}
 	public void setMode(Constants.Emotion e){this.Mode = e;}
 	public void setMode(int e){this.Mode = Constants.Emotion.values()[e];}

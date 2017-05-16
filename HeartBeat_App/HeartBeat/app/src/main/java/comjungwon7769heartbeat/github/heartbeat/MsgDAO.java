@@ -59,7 +59,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 	}
 
 	//DELETE Message
-	public boolean deleteMsg(String sender, int time) {
+	public boolean deleteMsg(String sender, long time) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		String sql = "DELETE FROM " + Table_name + " WHERE " + Sender + " = '" + sender + "' AND " + Time + "=" + time;
@@ -111,7 +111,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 	}
 
 	//Msg 반환 Method
-	public MsgDTO getMsg(String sender, int time) {
+	public MsgDTO getMsg(String sender, long time) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + " AND " + Time + " = " + time, null);
 
@@ -141,7 +141,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 	}
 
 	//진동 카운트 없데이트 Method
-	public void updateMsg(String sender, int flag, int count, int time) {
+	public void updateMsg(String sender, int flag, int count, long time) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		if(flag != Constants.msgFlag_Bzz) {

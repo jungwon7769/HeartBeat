@@ -22,10 +22,10 @@ public class Constants {
 	public static final int popup_pickColor = 11;    //Popup = 11, To (), From (selectedColor = String)
 	public static final int popup_recordVoice = 12;     //Popup = 12, To(), From(voicePath = String)
 
-	public static final int popup_msgFriend = 20;   //Popup = 20, To(ID = String, Time = int), From(select = boolean)
-	public static final int popup_msgVoice = 21;    //Popup = 21, To(ID = String, Nick = String, Time = long, Path = String), From()
-	public static final int popup_msgEmotion = 22;  //Popup = 22, To(ID = String, Nick = String, Emotion = int, Time = long), From()
-	public static final int popup_msgBzz = 23;      //Popup = 23, To(ID = String, Nick = String, Count = int, Time = long), From()
+	public static final int popup_msgFriend = 20;   //Popup = 20, To(ID = String, Time = long), From(ID = String, Time = long, select = boolean)
+	public static final int popup_msgVoice = 21;    //Popup = 21, To(ID = String, Nick = String, Time = long, Path = String), From(ID = String, Time = long, select = boolean)
+	public static final int popup_msgEmotion = 22;  //Popup = 22, To(ID = String, Nick = String, Emotion = int, Time = long), From(ID = String, Time = long, select = boolean)
+	public static final int popup_msgBzz = 23;      //Popup = 23, To(ID = String, Nick = String, Count = int, Time = long), From(ID = String, Time = long, select = boolean)
 
 	/*
 	Message Flag 정의

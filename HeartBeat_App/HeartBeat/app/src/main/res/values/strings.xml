@@ -31,6 +31,10 @@
     <string name="popup_pickColor_label">색상 선택</string>
     <string name="popup_pickEmotion_label">기분 선택</string>
     <string name="popup_recordVoice_label">음성메세지 녹음</string>
+    <string name="popup_msgFriend_label">친구요청</string>
+    <string name="popup_msgVoice_label">음성 메세지</string>
+    <string name="popup_msgEmotion_label">기분 메세지</string>
+    <string name="popup_msgBzz_label">진동 메세지</string>
 
 
     <string name="LoginFailed">ID 혹은 PASSWORD가 잘못되었습니다</string>
@@ -39,6 +43,7 @@
     <string name="NickSetSuccess">닉네임이 성공적으로 변경되었습니다</string>
     <string name="addfr_notExistID">존재하지 않는 ID입니다</string>
     <string name="deleteFriend_Re">정말로 친구를 삭제하시겠습니까?</string>
+    <string name="msgfr_message">친구요청을 수락하시겠습니까?</string>
 
 
     <string name="ok">확인</string>
@@ -46,4 +51,8 @@
     <string name="trans">전송</string>
     <string name="Request">요청</string>
     <string name="search">검색</string>
+    <string name="accept">수락</string>
+    <string name="deny">거절</string>
+    <string name="play">재생</string>
+    <string name="delete">삭제</string>
 </resources>
