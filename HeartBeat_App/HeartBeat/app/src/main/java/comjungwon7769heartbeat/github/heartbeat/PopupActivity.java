@@ -418,18 +418,8 @@ public class PopupActivity extends AppCompatActivity {
 		btnPlay.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				try {
-					if(player != null) {
-						player.stop();
-						player.release();
-						;
-						player = null;
-					}
-					player = MediaPlayer.create(getApplicationContext(), Constants.Emotion_sound[mode.getMode()]);
-					player.start();
-				} catch(Exception e) {
-
-				}
+				//NotComplete
+				//Bluetooth Comu
 			}
 		});
 		Button btnDelete = (Button)findViewById(R.id.popup_msgEmotion_btnDelete);
