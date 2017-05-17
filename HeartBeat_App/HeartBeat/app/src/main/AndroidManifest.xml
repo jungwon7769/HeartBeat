@@ -52,8 +52,11 @@
             android:name=".NickSetActivity"
             android:label="@string/setting_Label">
         </activity>
-        <activity android:name=".FriendRequestActivity"
+        <activity
+            android:name=".FriendRequestActivity"
             android:label="@string/frRequestAct_Label">
+        </activity>
+        <activity android:name=".MessageListActivity">
         </activity>
     </application>
 

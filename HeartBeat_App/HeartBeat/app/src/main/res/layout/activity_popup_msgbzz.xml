@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/popup_msgBzz_txtTime"
             android:text="time"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+            android:textAlignment="center"/>
         <TextView
             android:gravity="center_horizontal"
             android:drawableTop="@drawable/icon_bzz"

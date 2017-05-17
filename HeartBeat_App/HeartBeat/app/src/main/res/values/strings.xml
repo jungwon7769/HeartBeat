@@ -15,6 +15,11 @@
     <string name="setting_Label">설정</string>
     <string name="frRequestAct_Label">친구 신청</string>
 
+    <string name="msgList_friend_Label">친구요청메세지</string>
+    <string name="msgList_voice_Label">음성메세지</string>
+    <string name="msgList_emotion_Label">기분메세지</string>
+    <string name="msgList_bzz_Label">진동메세지</string>
+
     <string name="addFriend">친구 신청</string>
 
     <string name="DetailAct_LEDColor">LED색 설정</string>

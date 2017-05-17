@@ -43,7 +43,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/popup_msgEmotion_txtTime"
             android:text="time"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+            android:textAlignment="center"/>
         <ImageView
             android:layout_width="100dp"
             android:layout_height="100dp"
