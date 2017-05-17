@@ -3,9 +3,8 @@ package comjungwon7769heartbeat.github.heartbeat;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -116,9 +115,14 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 	//Trans Bzz Button
 	private void transBzz_Click() {
-		//Trans Bzz Using BluetoothComu
-
-		//Notcomplete
+		//호빈추가 : 여기부터
+		ServerCommunication sc = new ServerCommunication();
+		if(sc.init()) {
+			SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+			String id = preference.getString("my_id", "DataLoadError");
+			sc.sandMsg(id,selectFriendDTO.getID(), null, null, 2, null, null, null);//친구아이디 어케 가져왛ㅎㅎ??
+		}
+		//여기까지
 	}
 
 	//Trans Voice Button
