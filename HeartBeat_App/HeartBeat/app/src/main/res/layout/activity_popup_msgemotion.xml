@@ -63,7 +63,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/selector_button"
+                android:background="@drawable/selector_button_bgdark"
                 android:text="@string/play"
                 android:id="@+id/popup_msgEmotion_btnPlay"/>
 
@@ -71,7 +71,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/selector_button"
+                android:background="@drawable/selector_button_bgdark"
                 android:text="@string/delete"
                 android:id="@+id/popup_msgEmotion_btnDelete"/>
         </LinearLayout>

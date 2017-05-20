@@ -11,64 +11,71 @@
     tools:context="comjungwon7769heartbeat.github.heartbeat.FriendRequestActivity">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="@string/addFriend"
-        android:textColor="@color/colorPrimary"
-        android:id="@+id/textView"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"/>
+        android:layout_marginTop="107dp"
+        android:text="@string/addFriend"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:textColor="@color/colorPrimary"/>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:id="@+id/linearLayout2"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_below="@+id/textView"
-        android:layout_alignParentStart="true"
-        android:layout_marginTop="80dp"
-        android:id="@+id/linearLayout2">
+        android:layout_centerInParent="true"
+        android:layout_marginTop="50dp"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
 
         <EditText
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
             android:id="@+id/addfr_txtNick"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
             android:hint="ID"/>
 
         <Button
+            android:id="@+id/addfr_btnSearch"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@drawable/selector_button"
-            android:text="@string/search"
-            android:id="@+id/addfr_btnSearch"/>
+            android:text="@string/search"/>
     </LinearLayout>
 
     <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="250dp"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal"
         android:layout_below="@+id/linearLayout2"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="37dp">
+        android:layout_centerInParent="true"
+        android:layout_marginTop="30dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/Request"
             android:id="@+id/addfr_btnAdd"
-            android:enabled="false"
-            android:background="@drawable/selector_button"/>
-
-        <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_button"
-            android:text="@string/cancel"
-            android:id="@+id/addfr_btnCancel"/>
+            android:enabled="false"
+            android:paddingLeft="@dimen/button_padding"
+            android:paddingRight="@dimen/button_padding"
+            android:text="@string/Request"/>
+
+        <Button
+            android:id="@+id/addfr_btnCancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/selector_button"
+            android:paddingLeft="@dimen/button_padding"
+            android:paddingRight="@dimen/button_padding"
+            android:text="@string/cancel"/>
     </LinearLayout>
 
 </RelativeLayout>

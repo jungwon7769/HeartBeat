@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="5dp"
-                android:background="@drawable/selector_button"
+                android:background="@drawable/selector_button_bgdark"
                 android:text="@string/accept"
                 android:id="@+id/popup_msgfr_btnAccept"/>
 
@@ -65,7 +65,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="5dp"
-                android:background="@drawable/selector_button"
+                android:background="@drawable/selector_button_bgdark"
                 android:text="@string/deny"
                 android:id="@+id/popup_msgfr_btnDeny"/>
         </LinearLayout>

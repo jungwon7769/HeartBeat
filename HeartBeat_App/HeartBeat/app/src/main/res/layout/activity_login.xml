@@ -9,16 +9,21 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="comjungwon7769heartbeat.github.heartbeat.LoginActivity"
-    android:background="@color/colorPrimary">
+    android:background="@drawable/aurora"
+    android:backgroundTint="@color/colorPrimary"
+    android:backgroundTintMode="multiply">
 
-    <ImageView
+    <TextView
         android:layout_width="wrap_content"
-        android:layout_height="210dp"
+        android:layout_height="wrap_content"
+        android:text="HEART\nBEAT"
+        android:textAlignment="center"
         android:id="@+id/login_imgLogo"
-        android:src="@drawable/heartbeat_logo"
-        android:layout_marginTop="60dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"/>
+        android:textSize="60dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:fontFamily="monospace"
+        />
 
     <EditText
         android:layout_width="wrap_content"
@@ -48,7 +53,7 @@
         android:layout_marginTop="10dp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_button_bgdark"
         android:text="@string/LoginAct_btnLogin"
@@ -58,7 +63,7 @@
         android:layout_marginTop="20dp"/>
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
         android:background="@drawable/selector_button_bgdark"
         android:text="@string/LoginAct_btnJoin"

@@ -41,12 +41,12 @@
         <ImageButton
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="@drawable/selector_button_circle"
+            android:background="#00000000"
             android:id="@+id/frList_btnSetting"
             android:layout_weight="1"
             android:src="@android:drawable/ic_menu_preferences"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_toRightOf="@+id/frList_myNick"/>
 
     </RelativeLayout>
 

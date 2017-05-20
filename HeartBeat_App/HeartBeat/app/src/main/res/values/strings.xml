@@ -28,7 +28,7 @@
     <string name="DetailAct_transMode">기분전송</string>
     <string name="DetailAct_transBzz">진동전송</string>
     <string name="DetailAct_transVoice">음성메시지 전송</string>
-    <string name="DetailAct_BzzFriend">버튼진동\n대상설정\n</string>
+    <string name="DetailAct_BzzFriend">버튼진동대상설정 </string>
     <string name="DetailAct_DeleteFriend">친구삭제</string>
 
     <string name="popup_ok_label">알림</string>
