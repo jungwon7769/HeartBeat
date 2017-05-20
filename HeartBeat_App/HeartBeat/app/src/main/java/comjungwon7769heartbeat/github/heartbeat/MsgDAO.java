@@ -5,6 +5,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ import java.util.ArrayList;
  * Created by AH on 2017-05-13.
  */
 public class MsgDAO extends SQLiteOpenHelper {
+	public static final String DataBase_name = "Msg_table.db";
 	public static final String Table_name = "Msg_table";
 	public static final String Sender = "SENDER", Flag = "MSG_FLAG", Time = "TIME", Count = "COUNT", Mode = "MODE", Sound = "SOUND";
 
@@ -27,9 +29,9 @@ public class MsgDAO extends SQLiteOpenHelper {
 					Sender + " STRING REFERENCES " + FriendDAO.table_name + "(" + FriendDAO.ID + ") ON DELETE SET NULL," +
 					Flag + " INTEGER," +
 					Time + " INTEGER," +
-					Count + " INTEGER" +
-					Mode + " INTEGER" +
-					Sound + "STRING" +
+					Count + " INTEGER," +
+					Mode + " INTEGER," +
+					Sound + " STRING" +
 					")");
 		} catch(SQLException e) {
 		}
@@ -46,7 +48,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 
 		String sql = "INSERT INTO " + Table_name + "(" + Sender + "," + Flag + "," + Time + "," + Count + "," + Mode + "," + Sound + ") VALUES(" +
 				"'" + message.getSender() + "'," + message.getFlag() + "," + message.getTime() + "," +
-				message.getCount() + "," + message.getMode() + ",'" + message.getSoundPath() + "')";
+				message.getCount() + "," + message.getModeInt() + ",'" + message.getSoundPath() + "')";
 		try {
 			db.execSQL(sql);
 			db.close();

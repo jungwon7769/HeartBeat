@@ -39,6 +39,30 @@ public class FriendDAO extends SQLiteOpenHelper {
 
 	}
 
+	//Get Friend DTO
+	public FriendDTO getFriend(String friendID){
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		String sql = "SELECT * FROM " + table_name + " WHERE " + ID + " = '" + friendID + "'";
+		Cursor cursor = db.rawQuery(sql, null);
+
+		cursor.moveToFirst();
+		if (cursor.isAfterLast()){
+			db.close();
+			return null;
+		}
+
+		FriendDTO friendDTO = new FriendDTO();
+		friendDTO.setID(cursor.getString(0));
+		friendDTO.setNick(cursor.getString(1));
+		friendDTO.setMode(cursor.getInt(2));
+		friendDTO.setColor(cursor.getString(3));
+
+		db.close();
+
+		return friendDTO;
+	}
+
 	//ADD Friend Method
 	public boolean addFriend(FriendDTO friend) {
 		SQLiteDatabase db = this.getWritableDatabase();
@@ -115,11 +139,11 @@ public class FriendDAO extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + table_name + " WHERE " + ID + "='" + friendID + "'", null);
 
-		if(cursor.isNull(0)) {
+		cursor.moveToFirst();
+		if (cursor.isAfterLast()){
 			db.close();
 			return null;
 		}
-		cursor.moveToFirst();
 		friendColor = cursor.getString(3);
 		db.close();
 

@@ -367,7 +367,7 @@ public class PopupActivity extends AppCompatActivity {
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgVoice_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
 		final TextView txtTime = (TextView)findViewById(R.id.popup_msgVoice_txtTime);
-		DateFormat dateFormat = new SimpleDateFormat("YYYY.MM.dd\nHH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd\nHH:mm:ss");
 		txtTime.setText(dateFormat.format(Time));
 
 		//팝업 버튼의 리스너 지정
@@ -405,7 +405,7 @@ public class PopupActivity extends AppCompatActivity {
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgEmotion_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
 		final TextView txtTime = (TextView)findViewById(R.id.popup_msgEmotion_txtTime);
-		DateFormat dateFormat = new SimpleDateFormat("YYYY.MM.dd\nHH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd\nHH:mm:ss");
 		txtTime.setText(dateFormat.format(Time));
 
 		mode = Constants.Emotion.values()[intent.getIntExtra("Emotion", 0)];
@@ -449,10 +449,10 @@ public class PopupActivity extends AppCompatActivity {
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgBzz_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
 		final TextView txtTime = (TextView)findViewById(R.id.popup_msgBzz_txtTime);
-		DateFormat dateFormat = new SimpleDateFormat("YYYY.MM.dd\nHH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd\nHH:mm:ss");
 		txtTime.setText(dateFormat.format(Time));
 		final TextView txtCount = (TextView) findViewById(R.id.popup_msgBzz_txtCount);
-		txtCount.setText(intent.getIntExtra("Count", 0));
+		txtCount.setText(intent.getIntExtra("Count", 0)+"");
 
 		//팝업 버튼의 리스너 지정
 		Button btnDelete = (Button)findViewById(R.id.popup_msgBzz_btnDelete);
