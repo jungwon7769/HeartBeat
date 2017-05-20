@@ -60,6 +60,7 @@
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
                 android:backgroundTint="@color/color1"
+                android:textColor="@color/colorLight"
                 android:id="@+id/frDt_btnBzzColor"
                 android:text="@string/DetailAct_BzzColor"
                 />
@@ -73,6 +74,7 @@
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
                 android:backgroundTint="@color/color2"
+                android:textColor="@color/colorLight"
                 android:id="@+id/frDt_btnTransEmotion"
                 android:text="@string/DetailAct_transMode"/>
             <Button
@@ -85,6 +87,7 @@
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
                 android:backgroundTint="@color/color3"
+                android:textColor="@color/colorLight"
                 android:id="@+id/frDt_btnTransBzz"
                 android:text="@string/DetailAct_transBzz"/>
 
@@ -98,6 +101,7 @@
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
                 android:backgroundTint="@color/color4"
+                android:textColor="@color/colorLight"
                 android:id="@+id/frDt_btnTransVoice"
                 android:text="@string/DetailAct_transVoice"/>
             <Button
@@ -110,6 +114,7 @@
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
                 android:backgroundTint="@color/color5"
+                android:textColor="@color/colorLight"
                 android:id="@+id/frDt_btnDeleteFriend"
                 android:text="@string/DetailAct_DeleteFriend"/>
 
@@ -122,6 +127,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/detail_Button_Size"
                 android:background="@drawable/selector_button"
+                android:backgroundTint="@color/color6"
+                android:textColor="@color/colorLight"
                 android:id="@+id/frDt_btnBzzFriend"
                 android:text="@string/DetailAct_BzzFriend"/>
     </LinearLayout>

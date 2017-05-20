@@ -10,6 +10,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class FriendRequestActivity extends AppCompatActivity {
 	private EditText txtID;
 	private Button btnAdd;
@@ -98,7 +100,14 @@ public class FriendRequestActivity extends AppCompatActivity {
 		//Server Comu - 친구요청 메세지 전송
 		//Notcomplete
 
-		Toast.makeText(getApplicationContext(),"친구요청한다",Toast.LENGTH_SHORT).show();
+		//Notcomplete
+		//테스트데이터 만드는거 넣어놓음
+		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+		Random ra = new Random();
+		int n = ra.nextInt(1000);
+		friendDAO.addFriend(new FriendDTO("id" + n, "친구지롱" + n, "33F2DD", Constants.Emotion.values()[ra.nextInt(10)]));
+		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+
 		txtID.setText("");
 	}
 }

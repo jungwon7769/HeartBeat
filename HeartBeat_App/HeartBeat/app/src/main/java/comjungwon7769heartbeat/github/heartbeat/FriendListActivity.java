@@ -88,20 +88,8 @@ public class FriendListActivity extends AppCompatActivity {
 		findViewById(R.id.frList_btnAlarm).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Random r = new Random();
-				//Notcomplete
-				Intent intent = new Intent(FriendListActivity.this, MessageListActivity.class);
-				intent.putExtra("Flag", r.nextInt(4));
+				Intent intent = new Intent(FriendListActivity.this, AlaramListActivity.class);
 				startActivity(intent);
-
-				//Notcomplete
-				//테스트데이터 만드는거 넣어놓음
-				FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
-				Random ra = new Random();
-				int n = ra.nextInt(1000);
-				friendDAO.addFriend(new FriendDTO("id" + n, "친구지롱" + n, "33F2DD", Constants.Emotion.values()[ra.nextInt(10)]));
-				dataRefresh();
-
 			}
 		});
 

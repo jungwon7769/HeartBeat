@@ -9,9 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="comjungwon7769heartbeat.github.heartbeat.LoginActivity"
-    android:background="@drawable/aurora"
-    android:backgroundTint="@color/colorPrimary"
-    android:backgroundTintMode="multiply">
+    android:background="@drawable/aurora">
 
     <TextView
         android:layout_width="wrap_content"
@@ -57,6 +55,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/selector_button_bgdark"
         android:text="@string/LoginAct_btnLogin"
+        android:textColor="@color/colorLight"
         android:id="@+id/login_btnLogin"
         android:layout_below="@+id/login_txtPWD"
         android:layout_centerHorizontal="true"
@@ -67,6 +66,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/selector_button_bgdark"
         android:text="@string/LoginAct_btnJoin"
+        android:textColor="@color/colorLight"
         android:id="@+id/login_btnJoin"
         android:layout_below="@+id/login_btnLogin"
         android:layout_alignStart="@+id/login_btnLogin"

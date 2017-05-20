@@ -4,47 +4,39 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding = "@dimen/padding1"
     tools:context="comjungwon7769heartbeat.github.heartbeat.FriendRequestActivity">
 
     <TextView
-        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="107dp"
-        android:text="@string/addFriend"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:textColor="@color/colorPrimary"/>
+        android:id="@+id/addfr_txtInfo"
+        android:text="@string/id"
+        android:textSize="25dp"
+        android:textColor="@color/colorPrimary"
+        android:layout_marginBottom="20dp"/>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
-        android:layout_width="300dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
-        android:layout_centerInParent="true"
-        android:layout_marginTop="50dp"
-        android:gravity="center_horizontal"
+        android:layout_below="@id/addfr_txtInfo"
+        android:gravity="center"
         android:orientation="horizontal">
 
         <EditText
             android:id="@+id/addfr_txtNick"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="6"
-            android:hint="ID"/>
+            android:layout_weight="1"
+            android:hint="@string/input_id"/>
 
         <Button
             android:id="@+id/addfr_btnSearch"
             style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:background="@drawable/selector_button"
+            android:background="@drawable/selector_button_bgdark"
             android:text="@string/search"/>
     </LinearLayout>
 
@@ -53,28 +45,27 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerInParent="true"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:gravity="center_horizontal"
-        android:orientation="vertical">
+        android:orientation="horizontal">
 
         <Button
             android:id="@+id/addfr_btnAdd"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:background="@drawable/selector_button"
             android:enabled="false"
-            android:paddingLeft="@dimen/button_padding"
-            android:paddingRight="@dimen/button_padding"
+            android:layout_marginRight="3dp"
             android:text="@string/Request"/>
 
         <Button
             android:id="@+id/addfr_btnCancel"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="3dp"
+            android:layout_marginLeft="3dp"
+            android:layout_weight="1"
             android:background="@drawable/selector_button"
-            android:paddingLeft="@dimen/button_padding"
-            android:paddingRight="@dimen/button_padding"
             android:text="@string/cancel"/>
     </LinearLayout>
 

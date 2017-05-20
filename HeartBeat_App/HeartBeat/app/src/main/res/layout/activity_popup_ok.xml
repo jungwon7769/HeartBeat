@@ -2,13 +2,10 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="250dp"
-    android:layout_height="180dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:gravity="center_vertical|center_horizontal"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding = "@dimen/padding1"
     tools:context="comjungwon7769heartbeat.github.heartbeat.PopupActivity">
 
     <TextView
@@ -25,9 +22,9 @@
         android:id="@+id/popup_ok_btnOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/popup_ok_txt"
         android:background="@drawable/selector_button_bgdark"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentStart="false"
         android:layout_centerHorizontal="true"
         android:text="@string/ok"/>
 </RelativeLayout>

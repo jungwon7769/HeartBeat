@@ -58,7 +58,7 @@
                 android:layout_alignEnd="@+id/join_txtPWD"
                 android:background="@drawable/selector_button_bgdark"
                 android:text="@string/joinAct_btnUsable"
-                android:textColor="@color/colorPrimaryDark"/>
+                android:textColor="@color/colorLight"/>
         </LinearLayout>
 
         <EditText
@@ -95,7 +95,7 @@
             android:background="@drawable/selector_button_bgdark"
             android:padding="3dp"
             android:text="@string/joinAct_btnJoin"
-            android:textColor="@color/colorPrimaryDark"/>
+            android:textColor="@color/colorLight"/>
     </LinearLayout>
 
 

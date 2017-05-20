@@ -56,11 +56,13 @@ public class MessageListActivity extends AppCompatActivity {
 
 		//Test
 		//Notcomplete Test  지우기
+
 		Random r = new Random();
 		for(int i=0; i<10; i++) {
-			MsgDTO testDTO = new MsgDTO(r.nextInt(4), "id10", System.currentTimeMillis(), Constants.Emotion.sad, "");
+			MsgDTO testDTO = new MsgDTO(r.nextInt(4), "id663", System.currentTimeMillis(), Constants.Emotion.sad, "");
 			msgDAO.addMsg(testDTO);
 		}
+
 
 
 		msgList = msgDAO.listMsg(flag);
@@ -188,32 +190,38 @@ public class MessageListActivity extends AppCompatActivity {
 			if(convertView == null) {
 				convertView = inflater.inflate(layout, parent, false);
 			}
+			TextView name = (TextView) convertView.findViewById(R.id.msgItem_txtFriend);      //텍스트뷰와 닉네임 연결
+			ImageView mode = (ImageView) convertView.findViewById(R.id.msgItem_imgMode);
+
 			MsgDTO msgItem = myMsg.get(position);  //position에 해당하는 MsgDTO
 
 			//친구 요청 메세지의 경우(친구관계 아님)
 			if(flag == Constants.msgFlag_Friend){
 				//친구요청한 사람의 ID 표시
-				TextView name = (TextView) convertView.findViewById(R.id.msgItem_txtFriend);      //텍스트뷰와 닉네임 연결
 				name.setText(msgItem.getSender());
 
 			}
-			//다른 메세지인 경우(친구관계임)
+			//다른 메세지인 경우
 			else{
-				FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
-				if(friendDAO == null){
-					return  null;
+				//친구관계인 상태
+				Log.i("Test", msgItem.getSender());
+				if(msgItem.getSender() != null){
+					FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+					FriendDTO friendDTO = friendDAO.getFriend(msgItem.getSender());
+
+					//친구 닉네임 표시
+					name.setText(friendDTO.getNick());
+
+					//기분 표시
+					Constants.Emotion[] e = Constants.Emotion.values();
+					mode.setImageResource(getResources().getIdentifier(e[friendDTO.getModeInt()].toString(), "drawable", getPackageName()));
+					mode.setBackgroundColor(Color.parseColor("#" + e[friendDTO.getModeInt()].getColor()));
 				}
-				FriendDTO friendDTO = friendDAO.getFriend(msgItem.getSender());
-
-				//친구 닉네임 표시
-				TextView name = (TextView) convertView.findViewById(R.id.msgItem_txtFriend);      //텍스트뷰와 닉네임 연결
-				name.setText(friendDTO.getNick());
-
-				//기분 표시
-				ImageView mode = (ImageView) convertView.findViewById(R.id.msgItem_imgMode);
-				Constants.Emotion[] e = Constants.Emotion.values();
-				mode.setImageResource(getResources().getIdentifier(e[friendDTO.getModeInt()].toString(), "drawable", getPackageName()));
-				mode.setBackgroundColor(Color.parseColor("#" + e[friendDTO.getModeInt()].getColor()));
+				//친구관계가 끊어진 상태
+				else{
+					//닉네임 표시
+					name.setText(getText(R.string.noNameFriend));
+				}
 
 			}
 

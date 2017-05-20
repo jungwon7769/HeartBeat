@@ -2,23 +2,25 @@
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!--사용 불가 상태-->
     <item android:state_enabled="false">
-        <shape android:shape="line">
-            <stroke android:color="@color/colorLight" android:width="1dp"></stroke>
+        <shape android:shape="rectangle">
+            <stroke android:color="@color/colorLight" android:width="1dp"/>
+            <solid android:color="#888888"/>
+            <corners android:radius="@dimen/button_radius_high"/>
         </shape>
     </item>
     <!--누른 상태-->
     <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <stroke android:color="@color/colorLight" android:width="1dp"></stroke>
-            <solid android:color="@color/colorPrimaryLight"></solid>
-            <corners android:radius="@dimen/button_radius"></corners>
+            <solid android:color="@color/colorLight"></solid>
+            <corners android:radius="@dimen/button_radius_high"></corners>
         </shape>
     </item>-
     <!--대기 상태-->
     <item android:state_pressed="false">
         <shape android:shape="rectangle">
             <stroke android:color="@color/colorLight" android:width="1dp"></stroke>
-            <corners android:radius="@dimen/button_radius"></corners>
+            <corners android:radius="@dimen/button_radius_high"></corners>
         </shape>
     </item>
 </selector>

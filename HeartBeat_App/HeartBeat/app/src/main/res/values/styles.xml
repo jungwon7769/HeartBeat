@@ -1,12 +1,11 @@
 <resources>
 
     <style name="MyActionBar"
-           parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="android:background">@color/colorPrimaryDark</item>
+           parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:actionBarSize">@dimen/actionBar_Size</item>
     </style>
 
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
         <item name="android:actionBarStyle">@style/MyActionBar</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
@@ -18,7 +17,7 @@
 
     <style name="PopupTheme" parent="Theme.AppCompat.Light.Dialog">
         <item name="android:actionBarStyle">@style/Theme.AppCompat.NoActionBar</item>
-        <item name="android:background">@drawable/aurora</item>
+        <item name="android:background">@color/colorPrimaryDark</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorAccent">@color/colorAccent</item>
         <item name="android:fontFamily">monospace</item>
