@@ -47,7 +47,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 		Cursor cursor = db.rawQuery(sql, null);
 
 		cursor.moveToFirst();
-		if (cursor.isAfterLast()){
+		if (cursor.getCount() < 1){
 			db.close();
 			return null;
 		}
@@ -140,7 +140,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 		Cursor cursor = db.rawQuery("SELECT * FROM " + table_name + " WHERE " + ID + "='" + friendID + "'", null);
 
 		cursor.moveToFirst();
-		if (cursor.isAfterLast()){
+		if (cursor.getCount() < 1){
 			db.close();
 			return null;
 		}

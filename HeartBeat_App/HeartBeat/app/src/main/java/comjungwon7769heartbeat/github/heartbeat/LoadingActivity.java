@@ -1,6 +1,8 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.Manifest;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
@@ -12,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -19,6 +22,9 @@ public class LoadingActivity extends AppCompatActivity {
 	public final int MY_PERMISSION_REQUEST_RECORD_AUDIO = 0;
 	public final int MY_PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
 	public final int MY_PERMISSION_REQUEST_EVERY = 10;
+
+	public final String APP_PERMISSION_LIST[] = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+			android.Manifest.permission.RECORD_AUDIO};
 
 	private boolean Data_Check; //사용자데이터 저장 유무
 	private boolean Login_Check;    //사용자데이터 로그인유효
@@ -40,27 +46,26 @@ public class LoadingActivity extends AppCompatActivity {
 
 	} //OnCreate
 
-	private void oncreateii(){
+	private void oncreateii() {
 		//Android Version Check
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			int chkPermission_Record = ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.RECORD_AUDIO);
-			int chkPermission_Storage = ContextCompat.checkSelfPermission(getApplicationContext(), android.Manifest.permission.WRITE_EXTERNAL_STORAGE);
+			ArrayList<String> arrPms = new ArrayList<>();
 
-			//Audio Record Permission, STORAGE Permission 없음
-			if(chkPermission_Record == PackageManager.PERMISSION_DENIED && chkPermission_Storage == PackageManager.PERMISSION_DENIED) {
-				ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSION_REQUEST_EVERY);
+			//Permission List 중 권한이 없는 경우
+			for(int i = 0; i < APP_PERMISSION_LIST.length; i++) {
+				if(ContextCompat.checkSelfPermission(getApplicationContext(), APP_PERMISSION_LIST[i]) == PackageManager.PERMISSION_DENIED) {
+					arrPms.add(APP_PERMISSION_LIST[i]);     //List에 해당 퍼미션 추가
+				}
 			}
-			//STORAGE Permission 없음
-			else if(chkPermission_Record == PackageManager.PERMISSION_DENIED) {
-				ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.RECORD_AUDIO}, MY_PERMISSION_REQUEST_RECORD_AUDIO);
-			}
-			//STORAGE Permission 없음
-			else if(chkPermission_Storage == PackageManager.PERMISSION_DENIED) {
-				ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, MY_PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE);
-			}
-			//Permission 모두 있음
-			else moveActivityByData();
-		} else moveActivityByData();
+
+			String[] strPms = arrPms.toArray(new String[arrPms.size()]);
+
+			if(strPms.length == 0) moveActivityByData();
+			else ActivityCompat.requestPermissions(this, strPms, 0);    //Permission Request
+
+		}
+		//Version 6.0 이하
+		else moveActivityByData();
 	}
 
 	private void moveActivityByData() {
@@ -75,12 +80,12 @@ public class LoadingActivity extends AppCompatActivity {
 				Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
 				startActivity(intent);
 				finish();
-			}else{
+			} else {
 				Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 				startActivity(intent);
 				finish();
 			}
-		}else {
+		} else {
 			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
 			startActivity(intent);
 			finish();
@@ -91,10 +96,10 @@ public class LoadingActivity extends AppCompatActivity {
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		ID = preference.getString("my_id", "");
 		PWD = preference.getString("my_pwd", "");
-		String nick = preference.getString("my_nick","");
+		String nick = preference.getString("my_nick", "");
 		int mode = preference.getInt("my_mode", 100);
 
-		if(mode == 100 || ID.equals("") || PWD.equals("") || nick.equals(""))  return false;
+		if(mode == 100 || ID.equals("") || PWD.equals("") || nick.equals("")) return false;
 		else return true;
 	}
 
@@ -108,18 +113,30 @@ public class LoadingActivity extends AppCompatActivity {
 	@Override
 	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
 		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
-		if(requestCode == MY_PERMISSION_REQUEST_RECORD_AUDIO) {
-			if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				moveActivityByData();
-			} else finish();
-		} else if(requestCode == MY_PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE) {
-			if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-				moveActivityByData();
-			} else finish();
-		} else if(requestCode == MY_PERMISSION_REQUEST_EVERY) {
-			if(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-				moveActivityByData();
-			} else finish();
-		} //if
+
+		int chkGrant = 0;
+
+		if(grantResults.length < permissions.length){
+			Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+			intent.putExtra("Popup", Constants.popup_ok);
+			intent.putExtra("Message", "HEARTBEAT 이용을 위해 권한을 설정하여주세요");
+			startActivity(intent);
+		}
+
+		for(int i = 0; i < permissions.length; i++){
+			if(grantResults[i] == PackageManager.PERMISSION_DENIED){
+				chkGrant++;
+			}
+		}
+
+		if(chkGrant == 0){
+			moveActivityByData();
+		}else{
+			Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+			intent.putExtra("Popup", Constants.popup_ok);
+			intent.putExtra("Message", "HEARTBEAT 이용을 위해 권한을 설정하여주세요");
+			startActivity(intent);
+		}
+
 	}
 }

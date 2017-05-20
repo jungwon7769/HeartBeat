@@ -1,53 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:layout_width="300dp"
-                android:layout_height="330dp"
-                android:padding="@dimen/activity_vertical_margin">
+                android:padding="@dimen/padding1">
 
-    <Button
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:id="@+id/popup_rv_btnRecord"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/record_start"
-        android:layout_marginTop="20dp"/>
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/popup_rv_btnPlay"
-        android:src="@android:drawable/ic_media_play"
-        android:background="@drawable/selector_button_circle"
-        android:layout_below="@+id/popup_rv_btnRecord"
-        android:layout_alignStart="@+id/popup_rv_btnRecord"
-        android:layout_marginTop="20dp"/>
-
-    <ImageButton
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:id="@+id/popup_rv_btnStop"
-        android:src="@android:drawable/ic_media_pause"
-        android:background="@drawable/selector_button_circle"
-        android:layout_alignTop="@+id/popup_rv_btnPlay"
-        android:layout_toEndOf="@+id/popup_rv_btnPlay"/>
-
-    <Button
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/selector_button_bgdark"
-        android:text="@string/trans"
-        android:id="@+id/popup_rv_btnTrans"
-        android:layout_alignParentBottom="true"
-        android:layout_alignEnd="@+id/popup_rv_btnPlay"
-        android:enabled="false"/>
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/selector_button_bgdark"
-        android:text="@string/cancel"
-        android:id="@+id/popup_rv_btnCancel"
-        android:layout_alignTop="@+id/popup_rv_btnTrans"
-        android:layout_toEndOf="@+id/popup_rv_btnTrans"/>
+        <Button
+            android:id="@+id/popup_rv_btnRecord"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/record_start"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/popup_rv_btnPlay"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="#00000000"
+                android:src="@android:drawable/ic_media_play"/>
+
+            <ImageButton
+                android:id="@+id/popup_rv_btnStop"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="#00000000"
+                android:src="@android:drawable/ic_media_pause"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal">
+
+            <Button
+                android:id="@+id/popup_rv_btnTrans"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/selector_button_bgdark"
+                android:enabled="false"
+                android:text="@string/trans"/>
+
+            <Button
+                android:id="@+id/popup_rv_btnCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="3dp"
+                android:background="@drawable/selector_button_bgdark"
+                android:text="@string/cancel"/>
+        </LinearLayout>
+    </LinearLayout>
 </RelativeLayout>

@@ -26,15 +26,21 @@ public class MsgDAO extends SQLiteOpenHelper {
 		try {
 			//Table Create
 			db.execSQL("CREATE TABLE " + Table_name + "(" +
-					Sender + " STRING REFERENCES " + FriendDAO.table_name + "(" + FriendDAO.ID + ") ON DELETE SET NULL," +
+					Sender + " STRING," +
 					Flag + " INTEGER," +
 					Time + " INTEGER," +
 					Count + " INTEGER," +
 					Mode + " INTEGER," +
-					Sound + " STRING" +
+					Sound + " STRING, " +
+					"FOREIGN KEY(" + Sender +") REFERENCES " + FriendDAO.table_name + "("+ FriendDAO.ID + ") ON DELETE SET NULL" +
 					")");
 		} catch(SQLException e) {
 		}
+	}
+
+	@Override
+	public void onOpen(SQLiteDatabase db){
+		db.execSQL("PRAGMA foreign_keys=ON");
 	}
 
 	@Override
@@ -117,7 +123,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + " AND " + Time + " = " + time, null);
 
-		if(cursor.isNull(0)) {
+		if (cursor.getCount() < 1){
 			db.close();
 			return null;
 		}
@@ -139,7 +145,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + " AND " + Flag + " = " + Constants.msgFlag_Bzz, null);
 
-		return (cursor.isNull(0));
+		return (cursor.getCount() > 0);
 	}
 
 	//진동 카운트 없데이트 Method

@@ -193,7 +193,7 @@ public class PopupActivity extends AppCompatActivity {
 		mode = null;    //선택한 모드 초기화
 
 		//선택가능한 기분을 보여줄 GridView 레이아웃과 연결
-		GridView gridView = (GridView) findViewById(R.id.popup_pickEmotion_grid);
+		final GridView gridView = (GridView) findViewById(R.id.popup_pickEmotion_grid);
 		gridView.setAdapter(new emotionAdapter(this));  //어댑터지정
 
 		//그리드뷰의 기분(아이템)클릭시 동작할 리스너 지정
@@ -208,6 +208,7 @@ public class PopupActivity extends AppCompatActivity {
 				//Change background of Select Emotion
 				mode = Constants.Emotion.values()[position];
 				view.setBackgroundResource(R.drawable.border);
+				gridView.invalidate();
 				try {
 					if(player != null) {
 						player.stop();
@@ -367,7 +368,7 @@ public class PopupActivity extends AppCompatActivity {
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgVoice_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
 		final TextView txtTime = (TextView)findViewById(R.id.popup_msgVoice_txtTime);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd\nHH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 		txtTime.setText(dateFormat.format(Time));
 
 		//팝업 버튼의 리스너 지정
@@ -405,7 +406,7 @@ public class PopupActivity extends AppCompatActivity {
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgEmotion_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
 		final TextView txtTime = (TextView)findViewById(R.id.popup_msgEmotion_txtTime);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd\nHH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 		txtTime.setText(dateFormat.format(Time));
 
 		mode = Constants.Emotion.values()[intent.getIntExtra("Emotion", 0)];
@@ -420,6 +421,19 @@ public class PopupActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				//NotComplete
 				//Bluetooth Comu
+
+				try {
+					if(player != null) {
+						player.stop();
+						player.release();
+						;
+						player = null;
+					}
+					player = MediaPlayer.create(getApplicationContext(), Constants.Emotion_sound[mode.getMode()]);
+					player.start();
+				} catch(Exception e) {
+
+				}
 			}
 		});
 		Button btnDelete = (Button)findViewById(R.id.popup_msgEmotion_btnDelete);
@@ -449,7 +463,7 @@ public class PopupActivity extends AppCompatActivity {
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgBzz_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
 		final TextView txtTime = (TextView)findViewById(R.id.popup_msgBzz_txtTime);
-		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd\nHH:mm:ss");
+		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 		txtTime.setText(dateFormat.format(Time));
 		final TextView txtCount = (TextView) findViewById(R.id.popup_msgBzz_txtCount);
 		txtCount.setText(intent.getIntExtra("Count", 0)+"");

@@ -45,64 +45,62 @@
         android:layout_below="@+id/relativeLayout"
         android:orientation="vertical">
 
-        <LinearLayout
+        <Button
+            android:id="@+id/myDt_btnLEDColor"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:layout_height="@dimen/detail_Button_Size"
+            android:background="@drawable/selector_button"
+            android:backgroundTint="@color/color1"
+            android:textColor="@color/colorLight"
+            android:drawableLeft="@mipmap/ic_color"
+            android:paddingLeft="@dimen/button_padding"
+            android:drawablePadding="30dp"
+            android:textAlignment="textStart"
+            android:text="@string/DetailAct_LEDColor"/>
 
-            <Button
-                android:id="@+id/myDt_btnLEDColor"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_Button_Size"
-                android:layout_weight="1"
-                android:background="@drawable/selector_button"
-                android:drawableLeft="@drawable/icon_pallete"
-                android:drawablePadding="@dimen/button_padding"
-                android:padding="@dimen/button_padding"
-                android:text="@string/DetailAct_LEDColor"/>
-
-            <Button
-                android:id="@+id/myDt_btnSetMode"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_Button_Size"
-                android:layout_weight="1"
-                android:background="@drawable/selector_button"
-                android:drawableLeft="@drawable/icon_emotion"
-                android:drawablePadding="@dimen/button_padding"
-                android:padding="@dimen/button_padding"
-                android:text="@string/DetailAct_setMode"/>
-        </LinearLayout>
-
-        <LinearLayout
+        <Button
+            android:id="@+id/myDt_btnSetMode"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:layout_height="@dimen/detail_Button_Size"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/selector_button"
+            android:backgroundTint="@color/color2"
+            android:textColor="@color/colorLight"
+            android:drawableLeft="@mipmap/ic_emotion"
+            android:paddingLeft="@dimen/button_padding"
+            android:drawablePadding="30dp"
+            android:textAlignment="textStart"
+            android:text="@string/DetailAct_setMode"/>
 
-            <Button
-                android:id="@+id/myDt_btnTransVoice"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_Button_Size"
-                android:layout_weight="1"
-                android:background="@drawable/selector_button"
-                android:drawableLeft="@drawable/icon_sound"
-                android:drawablePadding="@dimen/button_padding"
-                android:padding="@dimen/button_padding"
-                android:text="@string/DetailAct_transVoice"/>
 
-            <Button
-                android:id="@+id/myDt_btnTransBzz"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/detail_Button_Size"
-                android:layout_weight="1"
-                android:background="@drawable/selector_button"
-                android:drawableLeft="@drawable/icon_bzz"
-                android:drawablePadding="@dimen/button_padding"
-                android:padding="@dimen/button_padding"
-                android:text="@string/DetailAct_transBzz"
-                />
-        </LinearLayout>
+        <Button
+            android:id="@+id/myDt_btnTransVoice"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/detail_Button_Size"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/selector_button"
+            android:backgroundTint="@color/color3"
+            android:textColor="@color/colorLight"
+            android:drawableLeft="@mipmap/ic_sound"
+            android:paddingLeft="@dimen/button_padding"
+            android:drawablePadding="30dp"
+            android:textAlignment="textStart"
+            android:text="@string/DetailAct_transVoice"/>
+
+        <Button
+            android:id="@+id/myDt_btnTransBzz"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/detail_Button_Size"
+            android:layout_marginTop="3dp"
+            android:background="@drawable/selector_button"
+            android:backgroundTint="@color/color4"
+            android:textColor="@color/colorLight"
+            android:drawableLeft="@mipmap/ic_bzz"
+            android:paddingLeft="@dimen/button_padding"
+            android:drawablePadding="30dp"
+            android:textAlignment="textStart"
+            android:text="@string/DetailAct_transBzz"
+            />
     </LinearLayout>
 
 </RelativeLayout>

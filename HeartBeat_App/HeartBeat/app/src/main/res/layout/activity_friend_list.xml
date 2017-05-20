@@ -20,8 +20,8 @@
         android:layout_alignParentEnd="true">
 
         <ImageView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
             android:id="@+id/frList_myMode"
             android:src="@drawable/annoy"
             android:layout_gravity="center_vertical"
@@ -33,20 +33,20 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="안현정"
             android:id="@+id/frList_myNick"
-            android:textSize="25dp"
+            android:textSize="20dp"
             android:layout_centerVertical="true"
             android:layout_toEndOf="@+id/frList_myMode"
             android:layout_marginStart="20dp"/>
 
         <ImageButton
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:background="@drawable/selector_button_circle"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="#00000000"
             android:id="@+id/frList_btnSetting"
             android:layout_weight="1"
             android:src="@android:drawable/ic_menu_preferences"
             android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"/>
+            android:layout_toRightOf="@+id/frList_myNick"/>
 
     </RelativeLayout>
 
@@ -55,16 +55,18 @@
         android:layout_height="50dp"
         android:layout_marginTop="@dimen/activity_vertical_margin"
         android:layout_marginBottom="@dimen/activity_vertical_margin"
-        android:background="@drawable/selector_button_line"
+        android:background="@drawable/selector_button"
         android:id="@+id/frList_btnAlarm"
+        android:padding="10dp"
+        android:scaleType="fitCenter"
         android:layout_weight="1"
-        android:src="@android:drawable/sym_action_email"
+        android:src="@drawable/message"
         android:layout_below="@+id/frList_myDetailLayout"/>
 
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/colorPrimaryDark"
+        android:divider="@color/colorPrimary"
         android:dividerHeight="@dimen/frList_listDivider"
         android:id="@+id/frList_list"
         android:layout_alignParentStart="true"

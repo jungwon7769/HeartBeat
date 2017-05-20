@@ -3,6 +3,7 @@ package comjungwon7769heartbeat.github.heartbeat;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,9 +28,9 @@ public class BlueToothCommunication {
 	OutputStream outStream;
 	InputStream inStream;
 
-	public int checkConnect(String name){
-		if(btSock.isConnected()){
-			return  CONNECT_SUCCESS;
+	public int checkConnect(String name) {
+		if(btSock != null) {
+			closeSock();
 		}
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		btDevice = null;
@@ -38,31 +39,32 @@ public class BlueToothCommunication {
 		inStream = null;
 
 		//Device not support bluetooth
-		if(btAdapter == null){
+		if(btAdapter == null) {
 			return CONNECT_NOT_SUPPORT;
 		}
 		//Bluetooth Not Enabled, Request Enabled 필요
-		if(!btAdapter.isEnabled()){
+		if(!btAdapter.isEnabled()) {
 			return CONNECT_NOT_ENABLE;
 		}
 		//Paired Device Search
 		Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
-		if(pairedDevices.size()>0){
-			for(BluetoothDevice device : pairedDevices){
+		if(pairedDevices.size() > 0) {
+			for(BluetoothDevice device : pairedDevices) {
 				//인자값에 해당하는 name 을 가진 device인 경우
-				if(device.getName().contains(name)){
+				if(device.getName().contains(name)) {
 					btDevice = device;
 				}
 			}
 		}
 		//Paired Device 중 name이 일치하는 Device 없음
-		if(btDevice == null){
+		if(btDevice == null) {
 			return CONNECT_FAILD;
 		}
 
 		//Socket Connect
 		UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");    //SPP
 		try {
+			Log.i("Test", "Socket Connect~~");
 			btSock = btDevice.createRfcommSocketToServiceRecord(uuid);
 			btSock.connect();
 			inStream = btSock.getInputStream();
@@ -75,8 +77,8 @@ public class BlueToothCommunication {
 		return CONNECT_FAILD;
 	}
 
-	public boolean sendLED(String color){
-		if(!btSock.isConnected()) return false;
+	public boolean sendLED(String color) {
+		if(btSock == null || !btSock.isConnected()) return false;
 
 		String data = CODE_LED + "/" + color + "//";   //Message Create(정해놓은 Protocol에 따라 만든다)
 		byte buf[] = data.getBytes();
@@ -89,15 +91,21 @@ public class BlueToothCommunication {
 		return false;
 	}
 
-	public boolean sendBzz(String color, boolean my_bzz){
+	public boolean sendBzz(String color, boolean my_bzz) {
 		if(!btSock.isConnected()) return false;
 
 		String data;
-		if(my_bzz = BZZ_MY) {data = CODE_MY_BZZ + "//";}   //Message Create
-		else {data = CODE_BZZ + "/" + color + "//";}
+		//Message Create
+		if(my_bzz = BZZ_MY) {
+			data = CODE_MY_BZZ + "//";
+		}
+		else {
+			data = CODE_BZZ + "/" + color + "//";
+		}
 
 		byte buf[] = data.getBytes();
 		try {
+			Log.i("Test", "Trans~~");
 			outStream.write(buf);
 		} catch(IOException e) {
 			e.printStackTrace();
@@ -106,8 +114,8 @@ public class BlueToothCommunication {
 		return false;
 	}
 
-	public boolean sendEmotion(Constants.Emotion emotion){
-		if(!btSock.isConnected()) return false;
+	public boolean sendEmotion(Constants.Emotion emotion) {
+		if(btSock == null || !btSock.isConnected()) return false;
 
 		String data = CODE_EMOTION + "/" + emotion.getColor() + "//";   //Message Create
 		byte buf[] = data.getBytes();
@@ -120,11 +128,11 @@ public class BlueToothCommunication {
 		return false;
 	}
 
-	public void closeSock(){
+	public void closeSock() {
 		try {
-			inStream.close();
-			outStream.close();
-			btSock.close();
+			if(inStream != null) inStream.close();
+			if(outStream != null) outStream.close();
+			if(btSock != null) btSock.close();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}

@@ -91,6 +91,24 @@ public class MyDetailActivity extends AppCompatActivity {
 	private void transBzzToMe_Click() {
 		//Trans Bzz Using BluetoothComu
 		//Notcomplete
+		BlueToothCommunication btComu = new BlueToothCommunication();
+		int status = btComu.checkConnect("곱창");
+
+		switch(status){
+			case BlueToothCommunication.CONNECT_NOT_SUPPORT :
+				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+				intent.putExtra("Popup", Constants.popup_ok);
+				intent.putExtra("Message", getText(R.string.bt_notSupport));
+				startActivity(intent);
+				break;
+			case BlueToothCommunication.CONNECT_NOT_ENABLE:
+				break;
+			case BlueToothCommunication.CONNECT_FAILD:
+				break;
+			case BlueToothCommunication.CONNECT_SUCCESS:
+				btComu.sendBzz("", BlueToothCommunication.BZZ_MY);
+				break;
+		}
 	}
 
 	private void transSoundMsgToMe_Click() {
@@ -121,7 +139,24 @@ public class MyDetailActivity extends AppCompatActivity {
 		Log.i("Test", "setLED~~" + color);
 		//Bluetooth Comu - color Trans
 		//Notcomplete
+		BlueToothCommunication btComu = new BlueToothCommunication();
+		int status = btComu.checkConnect("곱창");
 
+		switch(status){
+			case BlueToothCommunication.CONNECT_NOT_SUPPORT :
+				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+				intent.putExtra("Popup", Constants.popup_ok);
+				intent.putExtra("Message", getText(R.string.bt_notSupport));
+				startActivity(intent);
+				break;
+			case BlueToothCommunication.CONNECT_NOT_ENABLE:
+				break;
+			case BlueToothCommunication.CONNECT_FAILD:
+				break;
+			case BlueToothCommunication.CONNECT_SUCCESS:
+				btComu.sendLED(color);
+				break;
+		}
 	}
 
 	private void setEmotion(Constants.Emotion e) {

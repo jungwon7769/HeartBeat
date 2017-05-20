@@ -8,8 +8,8 @@
 
 
     <ImageView
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
         android:id="@+id/msgItem_imgMode"
         android:src="@drawable/smile"
         android:layout_gravity="center_vertical"
@@ -19,7 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/msgItem_txtFriend"
-        android:textSize="25dp"
+        android:textSize="20dp"
         android:text="Ahn"
         android:layout_marginLeft="10dp"
         android:layout_weight="1"
@@ -31,7 +31,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/msgItem_txtTime"
-        android:textSize="15dp"
+        android:textSize="12dp"
         android:text="2017.05.17"
         android:layout_marginLeft="10dp"
         android:textAlignment="gravity"

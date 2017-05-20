@@ -4,79 +4,64 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:padding = "@dimen/padding1"
     tools:context="comjungwon7769heartbeat.github.heartbeat.NickSetActivity"
     >
 
-    <TableLayout
+    <TextView
+        android:id="@+id/setting_titleNick"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/nickname"
+        android:textColor="@color/colorPrimary"
+        android:textSize="25dp"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_margin="10dp"
-        >
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_below="@id/setting_titleNick">
 
-        <TableRow
+
+        <EditText
+            android:id="@+id/setting_txtNick"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal">
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:hint="@string/input_nick"
+            android:textColor="@color/colorPrimaryDark"
+            android:textIsSelectable="false"/>
 
-            <TextView
+
+        <LinearLayout
+            android:layout_width="250dp"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="20dp"
+            >
+
+            <Button
+                android:id="@+id/setting_btnNickOK"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="닉네임 설정"
-                android:id="@+id/setting_titleNick"
-                android:textSize="30dp"
-                android:textColor="@color/colorPrimary"
-                android:layout_gravity="center_horizontal"/>
-        </TableRow>
+                android:layout_weight="1"
+                android:layout_marginRight="3dp"
+                android:background="@drawable/selector_button"
+                android:enabled="false"
+                android:text="@string/ok"/>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal">
-
-            <EditText
-                android:layout_width="200dp"
+            <Button
+                android:id="@+id/setting_btnNickCancel"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/setting_txtNick"
-                android:textColor="@color/colorPrimaryDark"
-                android:layout_centerVertical="true"
-                android:layout_centerHorizontal="true"
-                android:hint="Nickname"
-                android:layout_alignParentEnd="false"
-                android:textIsSelectable="false"/>
-        </TableRow>
+                android:layout_marginLeft="3dp"
+                android:layout_weight="1"
+                android:background="@drawable/selector_button"
+                android:text="@string/cancel"/>
+        </LinearLayout>
 
-        <TableRow
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal">
+    </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                >
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/selector_button"
-                    android:text="@string/ok"
-                    android:id="@+id/setting_btnNickOK"
-                    android:layout_weight="1"
-                    android:enabled="false"/>
-
-                <Button
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/selector_button"
-                    android:text="@string/cancel"
-                    android:id="@+id/setting_btnNickCancel"
-                    android:layout_weight="1"/>
-            </LinearLayout>
-        </TableRow>
-    </TableLayout>
 </RelativeLayout>

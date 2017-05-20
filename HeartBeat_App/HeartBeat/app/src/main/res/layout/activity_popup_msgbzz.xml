@@ -47,7 +47,7 @@
             android:textAlignment="center"/>
         <TextView
             android:gravity="center_horizontal"
-            android:drawableTop="@drawable/icon_bzz"
+            android:drawableTop="@drawable/ic_bzz"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/popup_msgBzz_txtCount"
@@ -58,7 +58,7 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_button"
+            android:background="@drawable/selector_button_bgdark"
             android:text="@string/delete"
             android:id="@+id/popup_msgBzz_btnDelete"/>
 
