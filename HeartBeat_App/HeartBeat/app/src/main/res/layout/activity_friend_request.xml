@@ -13,8 +13,7 @@
         android:id="@+id/addfr_txtInfo"
         android:text="@string/id"
         android:textSize="25dp"
-        android:textColor="@color/colorPrimary"
-        android:layout_marginBottom="20dp"/>
+        android:textColor="@color/colorPrimary"/>
 
     <LinearLayout
         android:id="@+id/linearLayout2"
@@ -36,7 +35,7 @@
             style="?android:attr/buttonStyleSmall"
             android:layout_width="60dp"
             android:layout_height="wrap_content"
-            android:background="@drawable/selector_button_bgdark"
+            android:background="@drawable/selector_button_6"
             android:text="@string/search"/>
     </LinearLayout>
 
@@ -45,7 +44,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/linearLayout2"
         android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="10dp"
         android:gravity="center_horizontal"
         android:orientation="horizontal">
 

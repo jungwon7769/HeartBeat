@@ -51,7 +51,7 @@ public class FriendListActivity extends AppCompatActivity {
 		}
 
 		//App Database 에서 친구목록 가져오기
-		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), FriendDAO.DataBase_name, null, 1);
 		friend_list = friendDAO.listFriend();
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
@@ -135,7 +135,7 @@ public class FriendListActivity extends AppCompatActivity {
 		//FrinedList_Load 호출(Server)
 		//Notcomplete
 
-		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
+		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), FriendDAO.DataBase_name, null, 1);
 		friend_list = friendDAO.listFriend();
 
 		adapter.setItemList(friend_list);

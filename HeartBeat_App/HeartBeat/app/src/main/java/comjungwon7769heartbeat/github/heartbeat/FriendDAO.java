@@ -1,5 +1,6 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -13,6 +14,7 @@ import java.util.ArrayList;
  * Created by AH on 2017-05-06.
  */
 public class FriendDAO extends SQLiteOpenHelper {
+	public static final String DataBase_name = "Friend_table.db";
 	public static final String table_name = "Friend_table";
 	public static final String ID = "FRIEND_ID", NICK = "FRIEND_NICK", MODE = "FRIEND_MODE", COLOR = "COLOR";
 
@@ -65,6 +67,25 @@ public class FriendDAO extends SQLiteOpenHelper {
 
 	//ADD Friend Method
 	public boolean addFriend(FriendDTO friend) {
+		long result = -1;
+		SQLiteDatabase db = this.getWritableDatabase();
+
+		try {
+			ContentValues value = new ContentValues();
+			value.put(ID, friend.getID());
+			value.put(NICK, friend.getNick());
+			value.put(MODE, friend.getModeInt());
+			value.put(COLOR, friend.getColor());
+			result = db.insert(table_name, null, value);
+
+		} catch(SQLException e) {
+			e.printStackTrace();
+		}
+		db.close();
+
+		if(result == -1) return false;
+		else return true;
+		/*
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		String sql = "INSERT INTO " + table_name + "(" + ID + "," + NICK + "," + MODE + "," + COLOR + ") VALUES(" +
@@ -78,6 +99,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 			db.close();
 			return false;
 		}
+		*/
 	}
 
 	//DELETE Friend
