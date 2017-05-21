@@ -5,7 +5,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:gravity="center_vertical|center_horizontal"
-    android:padding = "@dimen/padding1"
+    android:padding="@dimen/padding1"
     tools:context="comjungwon7769heartbeat.github.heartbeat.PopupActivity">
 
     <TextView
@@ -22,9 +22,10 @@
         android:id="@+id/popup_ok_btnOK"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
         android:layout_below="@id/popup_ok_txt"
-        android:background="@drawable/selector_button_bgdark"
         android:layout_centerHorizontal="true"
-        android:text="@string/ok"/>
+        android:layout_marginTop="20dp"
+        android:background="@drawable/selector_button_bgdark"
+        android:text="@string/ok"
+        android:textColor="@color/colorLight"/>
 </RelativeLayout>

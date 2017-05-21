@@ -92,7 +92,8 @@ public class MyDetailActivity extends AppCompatActivity {
 		//Trans Bzz Using BluetoothComu
 		//Notcomplete
 		BlueToothCommunication btComu = new BlueToothCommunication();
-		int status = btComu.checkConnect("곱창");
+		int status = btComu.checkConnect("Phoney");
+		Log.i("Test", "tt");
 
 		switch(status){
 			case BlueToothCommunication.CONNECT_NOT_SUPPORT :
@@ -140,7 +141,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		//Bluetooth Comu - color Trans
 		//Notcomplete
 		BlueToothCommunication btComu = new BlueToothCommunication();
-		int status = btComu.checkConnect("곱창");
+		int status = btComu.checkConnect("Phoney");
 
 		switch(status){
 			case BlueToothCommunication.CONNECT_NOT_SUPPORT :

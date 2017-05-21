@@ -51,7 +51,8 @@
                 android:layout_marginRight="3dp"
                 android:background="@drawable/selector_button_bgdark"
                 android:enabled="false"
-                android:text="@string/trans"/>
+                android:text="@string/trans"
+                android:textColor="@color/colorLight"/>
 
             <Button
                 android:id="@+id/popup_rv_btnCancel"
@@ -59,7 +60,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="3dp"
                 android:background="@drawable/selector_button_bgdark"
-                android:text="@string/cancel"/>
+                android:text="@string/cancel"
+                android:textColor="@color/colorLight"/>
         </LinearLayout>
     </LinearLayout>
 </RelativeLayout>

@@ -14,6 +14,7 @@
     <string name="frDetailAct_Label">친구</string>
     <string name="setting_Label">설정</string>
     <string name="frRequestAct_Label">친구 신청</string>
+    <string name="almListAct_Label">메시지종류 선택</string>
 
     <string name="msgList_friend_Label">친구요청메세지</string>
     <string name="msgList_voice_Label">음성메세지</string>

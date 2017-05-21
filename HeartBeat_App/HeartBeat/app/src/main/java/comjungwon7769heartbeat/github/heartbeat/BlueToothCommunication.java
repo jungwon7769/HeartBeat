@@ -32,6 +32,7 @@ public class BlueToothCommunication {
 		if(btSock != null) {
 			closeSock();
 		}
+		Log.i("Test", "tct");
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		btDevice = null;
 		btSock = null;
@@ -40,12 +41,15 @@ public class BlueToothCommunication {
 
 		//Device not support bluetooth
 		if(btAdapter == null) {
+			Log.i("Test", "not Support");
 			return CONNECT_NOT_SUPPORT;
 		}
 		//Bluetooth Not Enabled, Request Enabled 필요
 		if(!btAdapter.isEnabled()) {
+			Log.i("Test", "not Enable");
 			return CONNECT_NOT_ENABLE;
 		}
+		Log.i("Test", "bt connect continue");
 		//Paired Device Search
 		Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 		if(pairedDevices.size() > 0) {

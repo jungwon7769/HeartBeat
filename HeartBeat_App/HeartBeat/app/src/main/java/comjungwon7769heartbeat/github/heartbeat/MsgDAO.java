@@ -1,5 +1,7 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.app.ActionBar;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.SQLException;
@@ -31,16 +33,10 @@ public class MsgDAO extends SQLiteOpenHelper {
 					Time + " INTEGER," +
 					Count + " INTEGER," +
 					Mode + " INTEGER," +
-					Sound + " STRING, " +
-					"FOREIGN KEY(" + Sender +") REFERENCES " + FriendDAO.table_name + "("+ FriendDAO.ID + ") ON DELETE SET NULL" +
+					Sound + " STRING" +
 					")");
 		} catch(SQLException e) {
 		}
-	}
-
-	@Override
-	public void onOpen(SQLiteDatabase db){
-		db.execSQL("PRAGMA foreign_keys=ON");
 	}
 
 	@Override
@@ -50,27 +46,33 @@ public class MsgDAO extends SQLiteOpenHelper {
 
 	//ADD Msg Method
 	public boolean addMsg(MsgDTO message) {
+		long result = -1;
 		SQLiteDatabase db = this.getWritableDatabase();
 
-		String sql = "INSERT INTO " + Table_name + "(" + Sender + "," + Flag + "," + Time + "," + Count + "," + Mode + "," + Sound + ") VALUES(" +
-				"'" + message.getSender() + "'," + message.getFlag() + "," + message.getTime() + "," +
-				message.getCount() + "," + message.getModeInt() + ",'" + message.getSoundPath() + "')";
 		try {
-			db.execSQL(sql);
-			db.close();
-			return true;
-		} catch(Exception e) {
+			ContentValues value = new ContentValues();
+			value.put(Sender, message.getSender());
+			value.put(Flag, message.getFlag());
+			value.put(Time, message.getTime());
+			value.put(Count, message.getCount());
+			value.put(Mode, message.getModeInt());
+			value.put(Sound, message.getSoundPath());
+			result = db.insert(Table_name, null, value);
+
+		} catch(SQLException e) {
 			e.printStackTrace();
-			db.close();
-			return false;
 		}
+		db.close();
+
+		if(result == -1) return false;
+		else return true;
 	}
 
 	//DELETE Message
 	public boolean deleteMsg(String sender, long time) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
-		String sql = "DELETE FROM " + Table_name + " WHERE " + Sender + " = '" + sender + "' AND " + Time + "=" + time;
+		String sql = "DELETE FROM " + Table_name + " WHERE " + Sender + " = '" + sender + "' AND " + Time + "=" + time + "";
 		try {
 			db.execSQL(sql);
 			db.close();
@@ -80,6 +82,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 			db.close();
 			return true;
 		}
+
 	}
 
 	//전체 친구 목록 반환 Method
@@ -123,7 +126,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + " AND " + Time + " = " + time, null);
 
-		if (cursor.getCount() < 1){
+		if(cursor.getCount() < 1) {
 			db.close();
 			return null;
 		}
