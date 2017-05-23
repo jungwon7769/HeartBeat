@@ -60,6 +60,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 		friendDTO.setMode(cursor.getInt(2));
 		friendDTO.setColor(cursor.getString(3));
 
+		cursor.close();
 		db.close();
 
 		return friendDTO;
@@ -151,6 +152,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 			cursor.moveToNext();
 		}
 
+		cursor.close();
 		db.close();
 		return list_friend;
 	}
@@ -167,6 +169,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 			return null;
 		}
 		friendColor = cursor.getString(3);
+		cursor.close();
 		db.close();
 
 		return friendColor;

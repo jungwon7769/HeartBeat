@@ -92,7 +92,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		//Trans Bzz Using BluetoothComu
 		//Notcomplete
 		BlueToothCommunication btComu = new BlueToothCommunication();
-		int status = btComu.checkConnect("Phoney");
+		int status = btComu.checkConnect(Constants.deviceName);
 		Log.i("Test", "tt");
 
 		switch(status){
@@ -141,7 +141,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		//Bluetooth Comu - color Trans
 		//Notcomplete
 		BlueToothCommunication btComu = new BlueToothCommunication();
-		int status = btComu.checkConnect("Phoney");
+		int status = btComu.checkConnect(Constants.deviceName);
 
 		switch(status){
 			case BlueToothCommunication.CONNECT_NOT_SUPPORT :
@@ -179,6 +179,26 @@ public class MyDetailActivity extends AppCompatActivity {
 
 		//List Activity ImgChange
 		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+
+		//Bluetooth Play
+		BlueToothCommunication btComu = new BlueToothCommunication();
+		int status = btComu.checkConnect(Constants.deviceName);
+
+		switch(status){
+			case BlueToothCommunication.CONNECT_NOT_SUPPORT :
+				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+				intent.putExtra("Popup", Constants.popup_ok);
+				intent.putExtra("Message", getText(R.string.bt_notSupport));
+				startActivity(intent);
+				break;
+			case BlueToothCommunication.CONNECT_NOT_ENABLE:
+				break;
+			case BlueToothCommunication.CONNECT_FAILD:
+				break;
+			case BlueToothCommunication.CONNECT_SUCCESS:
+				btComu.sendEmotion(e);
+				break;
+		}
 	}
 
 	private void playSoundMsg(String path) {

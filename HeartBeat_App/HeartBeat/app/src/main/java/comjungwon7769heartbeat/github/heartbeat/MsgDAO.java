@@ -30,7 +30,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 			db.execSQL("CREATE TABLE " + Table_name + "(" +
 					Sender + " STRING," +
 					Flag + " INTEGER," +
-					Time + " INTEGER," +
+					Time + " STRING," +
 					Count + " INTEGER," +
 					Mode + " INTEGER," +
 					Sound + " STRING" +
@@ -53,7 +53,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 			ContentValues value = new ContentValues();
 			value.put(Sender, message.getSender());
 			value.put(Flag, message.getFlag());
-			value.put(Time, message.getTime());
+			value.put(Time, Long.toString(message.getTime()));
 			value.put(Count, message.getCount());
 			value.put(Mode, message.getModeInt());
 			value.put(Sound, message.getSoundPath());
@@ -72,7 +72,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 	public boolean deleteMsg(String sender, long time) {
 		SQLiteDatabase db = this.getWritableDatabase();
 
-		String sql = "DELETE FROM " + Table_name + " WHERE " + Sender + " = '" + sender + "' AND " + Time + "=" + time + "";
+		String sql = "DELETE FROM " + Table_name + " WHERE " + Sender + " = '" + sender + "' AND " + Time + "=" + Long.toString(time) + "";
 		try {
 			db.execSQL(sql);
 			db.close();
@@ -97,7 +97,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 			MsgDTO msgDTO = new MsgDTO();
 			msgDTO.setSender(cursor.getString(0));
 			msgDTO.setFlag(cursor.getInt(1));
-			msgDTO.setTime(cursor.getInt(2));
+			msgDTO.setTime(Long.parseLong(cursor.getString(2)));
 			msgDTO.setCount(cursor.getInt(3));
 			msgDTO.setMode(cursor.getInt(4));
 			msgDTO.setSoundPath(cursor.getString(5));
@@ -106,6 +106,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 			cursor.moveToNext();
 		}
 
+		cursor.close();
 		db.close();
 		return list_msg;
 	}
@@ -116,6 +117,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 
 		Cursor cursor = db.rawQuery("SELECT COUNT(*) FROM " + Table_name + " WHERE " + Flag + " = " + flag, null);
 		int nCount = cursor.getCount();
+		cursor.close();
 		db.close();
 
 		return nCount;
@@ -124,7 +126,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 	//Msg 반환 Method
 	public MsgDTO getMsg(String sender, long time) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + " AND " + Time + " = " + time, null);
+		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + " AND " + Time + " = " + Long.toString(time), null);
 
 		if(cursor.getCount() < 1) {
 			db.close();
@@ -138,6 +140,8 @@ public class MsgDAO extends SQLiteOpenHelper {
 		msgDTO.setCount(cursor.getInt(3));
 		msgDTO.setMode(cursor.getInt(4));
 		msgDTO.setSoundPath(cursor.getString(5));
+
+		cursor.close();
 		db.close();
 
 		return msgDTO;
@@ -159,7 +163,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 			db.close();
 			return;
 		}
-		String sql = "UPDATE " + Table_name + " SET " + Count + "=" + count + "," + Time + "= " + time + "  WHERE " + Sender + "='" + sender + "' AND" + Flag + "=" + flag;
+		String sql = "UPDATE " + Table_name + " SET " + Count + "=" + count + "," + Time + "= " + Long.toString(time) + "  WHERE " + Sender + "='" + sender + "' AND" + Flag + "=" + flag;
 		try {
 			db.execSQL(sql);
 			db.close();

@@ -66,7 +66,7 @@
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:divider="@color/colorPrimary"
+        android:divider="@color/colorGray"
         android:dividerHeight="@dimen/frList_listDivider"
         android:id="@+id/frList_list"
         android:layout_alignParentStart="true"

@@ -31,7 +31,7 @@
             android:layout_marginRight="3dp"
             android:background="@drawable/selector_button_bgdark"
             android:text="@string/ok"
-            android:textColor="@color/colorLight"/>
+            android:textColor="@drawable/selector_button_bgdark"/>
 
         <Button
             android:id="@+id/popup_pickColor_cancel"
@@ -41,7 +41,7 @@
             android:layout_marginLeft="3dp"
             android:background="@drawable/selector_button_bgdark"
             android:text="@string/cancel"
-            android:textColor="@color/colorLight"/>
+            android:textColor="@drawable/selector_button_bgdark"/>
     </LinearLayout>
 
 </RelativeLayout>
