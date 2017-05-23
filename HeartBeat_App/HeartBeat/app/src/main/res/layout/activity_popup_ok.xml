@@ -27,5 +27,5 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/selector_button_bgdark"
         android:text="@string/ok"
-        android:textColor="@color/colorLight"/>
+        android:textColor="@drawable/selector_button_bgdark"/>
 </RelativeLayout>

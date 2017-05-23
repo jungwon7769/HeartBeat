@@ -69,7 +69,7 @@
                 android:layout_marginRight="5dp"
                 android:background="@drawable/selector_button_bgdark"
                 android:text="@string/play"
-                android:textColor="@color/colorLight"/>
+                android:textColor="@drawable/selector_button_bgdark"/>
 
             <Button
                 android:id="@+id/popup_msgVoice_btnDelete"
@@ -78,7 +78,7 @@
                 android:layout_marginLeft="5dp"
                 android:background="@drawable/selector_button_bgdark"
                 android:text="@string/delete"
-                android:textColor="@color/colorLight"/>
+                android:textColor="@drawable/selector_button_bgdark"/>
         </LinearLayout>
 
     </LinearLayout>

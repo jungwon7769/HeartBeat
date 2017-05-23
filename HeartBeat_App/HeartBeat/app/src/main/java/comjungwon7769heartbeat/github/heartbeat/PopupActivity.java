@@ -421,6 +421,24 @@ public class PopupActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				//NotComplete
 				//Bluetooth Comu
+				BlueToothCommunication btComu = new BlueToothCommunication();
+				int status = btComu.checkConnect(Constants.deviceName);
+
+				switch(status){
+					case BlueToothCommunication.CONNECT_NOT_SUPPORT :
+						Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+						intent.putExtra("Popup", Constants.popup_ok);
+						intent.putExtra("Message", getText(R.string.bt_notSupport));
+						startActivity(intent);
+						break;
+					case BlueToothCommunication.CONNECT_NOT_ENABLE:
+						break;
+					case BlueToothCommunication.CONNECT_FAILD:
+						break;
+					case BlueToothCommunication.CONNECT_SUCCESS:
+						btComu.sendEmotion(mode);
+						break;
+				}
 
 				try {
 					if(player != null) {

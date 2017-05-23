@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <selector xmlns:android="http://schemas.android.com/apk/res/android">
     <!--사용 불가 상태-->
-    <item android:state_enabled="false">
+    <item android:state_enabled="false" android:color="@color/colorLight">
         <shape android:shape="rectangle">
             <stroke android:color="@color/colorLight" android:width="1dp"/>
             <solid android:color="#888888"/>
@@ -9,7 +9,7 @@
         </shape>
     </item>
     <!--누른 상태-->
-    <item android:state_pressed="true">
+    <item android:state_pressed="true" android:color="@color/colorPrimaryDark">
         <shape android:shape="rectangle">
             <stroke android:color="@color/colorLight" android:width="1dp"></stroke>
             <solid android:color="@color/colorLight"></solid>
@@ -17,7 +17,7 @@
         </shape>
     </item>-
     <!--대기 상태-->
-    <item android:state_pressed="false">
+    <item android:state_pressed="false" android:color="@color/colorLight">
         <shape android:shape="rectangle">
             <stroke android:color="@color/colorLight" android:width="1dp"></stroke>
             <corners android:radius="@dimen/button_radius_high"></corners>
