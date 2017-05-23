@@ -105,7 +105,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 
 			cursor.moveToNext();
 		}
-
+		//
 		cursor.close();
 		db.close();
 		return list_msg;
