@@ -4,7 +4,7 @@ package comjungwon7769heartbeat.github.heartbeat;
  * Created by AH on 2017-05-02.
  */
 public class Constants {
-	public static final String deviceName = "Phoney";
+	public static final String deviceName = "BK8000L";
 
 	public static final int maxString = 16;
 	public static final int minString = 4;
