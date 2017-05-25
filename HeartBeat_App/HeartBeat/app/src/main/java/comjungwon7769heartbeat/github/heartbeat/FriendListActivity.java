@@ -5,9 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.Image;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,11 +16,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Random;
 
 public class FriendListActivity extends AppCompatActivity {
 	public static Context listContext;
@@ -42,6 +38,7 @@ public class FriendListActivity extends AppCompatActivity {
 		friend_list = new ArrayList<>();
 
 		//Friend List Load ***
+
 		//StoreFriendTime 검사
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		long saveTime = preference.getLong("friend_time", 0);

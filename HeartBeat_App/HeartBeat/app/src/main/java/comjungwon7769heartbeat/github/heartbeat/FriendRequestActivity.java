@@ -1,8 +1,10 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -60,19 +62,28 @@ public class FriendRequestActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				Friend_ID = txtID.getText().toString();
-				if(Friend_ID == "") return;
-				//존재하는 ID 인 경우
-				if(Check = ID_Usable_Check(Friend_ID)) {
-					btnAdd.setEnabled(true);
+				if(Friend_ID.equals("")) {//아이디를 입력하지 않은경우
+					Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
 				}
-				//존재하지 않는 아이디인 경우
 				else {
-					btnAdd.setEnabled(false);
-					//Popup 으로 알림
-					Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-					intent.putExtra("Popup", Constants.popup_ok);
-					intent.putExtra("Message", getText(R.string.addfr_notExistID));
-					startActivity(intent);
+					SharedPreferences pref = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+					//내 아이디를 입력한 경우
+					if(Friend_ID.equals(pref.getString("my_id","0"))){
+						Toast.makeText(getApplicationContext(), "다른사람의 아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
+					}
+					//존재하는 ID 인 경우
+					else if (Check = ID_Usable_Check(Friend_ID)) {
+						btnAdd.setEnabled(true);
+					}
+					//존재하지 않는 아이디인 경우
+					else {
+						btnAdd.setEnabled(false);
+						//Popup 으로 알림
+						Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+						intent.putExtra("Popup", Constants.popup_ok);
+						intent.putExtra("Message", getText(R.string.addfr_notExistID));
+						startActivity(intent);
+					}
 				}
 			}
 		});
@@ -88,17 +99,32 @@ public class FriendRequestActivity extends AppCompatActivity {
 	//ID 존재 여부 검사
 	private boolean ID_Usable_Check(String friend_id) {
 		if(friend_id.length() < Constants.minString) return false;
-		//Server Comu - 아이디 존재여부 검사 요청
-		//Notcomplete
-
-		//존재하는 경우 true
-		return true;
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(friend_id, null, null, null, 11, null, null, 0);
+		sc.start();
+		while(sc.wait){
+			///스레드처리완료 기다리기
+		}
+		if(!(boolean)sc.final_data){//해당 id를 갖는 회원이 존재하지 않는경우
+			return false;
+		}
+		return true; //존재하는 경우
 	}
 
 	//친구요청버튼 클릭시 Handler
 	private void OK_Button(String friend_id) {
 		//Server Comu - 친구요청 메세지 전송
-		//Notcomplete
+		SharedPreferences pref = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(pref.getString("my_id","0"), friend_id, null, null, 3, null, null, 0);
+		sc.start();
+		while(sc.wait){
+			///스레드처리완료 기다리기
+		}
+		if(!(boolean)sc.final_data){//친구요청추가 실패
+			Toast.makeText(getApplicationContext(),"이미친구관계입니다",Toast.LENGTH_SHORT).show();
+		}
+
 
 		//Notcomplete
 		//테스트데이터 만드는거 넣어놓음
@@ -110,4 +136,6 @@ public class FriendRequestActivity extends AppCompatActivity {
 
 		txtID.setText("");
 	}
+
+
 }

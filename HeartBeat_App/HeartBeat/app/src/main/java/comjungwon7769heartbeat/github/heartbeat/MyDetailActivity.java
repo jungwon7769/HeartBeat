@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -162,15 +161,23 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void setEmotion(Constants.Emotion e) {
 		Log.i("Test", e.name());
-		//ServerComu 이용
-		//서버에 내기분변경 정보 전송
-		//Notcomplete
 
 		//SAVE select Mode (Preference Data)
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preference.edit();
-		editor.putInt("my_mode", e.getMode());
-		editor.commit();
+
+		//서버통신_ 내기분변경 정보 전송
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(preference.getString("my_id","0"),null,null,null,5,null,null,e.getMode());
+		sc.start();
+		while(sc.wait){
+			///스레드처리완료 기다리기
+		}
+		if((boolean)sc.final_data) {//기분설정 성공
+			editor.putInt("my_mode", e.getMode());
+			editor.commit();
+		}
+
 
 		//Change Emiton Image
 		ImageView user_mode = (ImageView) findViewById(R.id.myDt_imgMode);
