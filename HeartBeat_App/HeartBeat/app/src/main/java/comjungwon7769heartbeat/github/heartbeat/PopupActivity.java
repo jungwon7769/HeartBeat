@@ -554,7 +554,9 @@ public class PopupActivity extends AppCompatActivity {
 	}
 
 	private void playVoice(String path) {
+		//Toast.makeText(getApplicationContext(), path, Toast.LENGTH_SHORT);
 		File file = new File(path);
+        //Toast.makeText(getApplicationContext(), path,Toast.LENGTH_SHORT).show();//test
 		//파일이 없는 경우
 		if(!file.exists()) {
 			Toast.makeText(getApplicationContext(), "File Path ERROR", Toast.LENGTH_SHORT).show();

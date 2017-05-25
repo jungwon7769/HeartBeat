@@ -11,7 +11,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.graphics.Color;
 
 public class FriendDetailActivity extends AppCompatActivity {
 
@@ -235,7 +234,8 @@ public class FriendDetailActivity extends AppCompatActivity {
 		SharedPreferences pf = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		ServerCommunication sc = new ServerCommunication();
 		//HB 나중에 여기에 파일 넣기!!
-		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 0, null, null, 0);
+		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 0, path, null, 0);
+		//Toast.makeText(getApplicationContext(), Environment.getExternalStorageState(),Toast.LENGTH_SHORT).show();
 		sc.start();
 		while(sc.wait){}//스레드 종료 기다리기
 		if(sc.chkError){

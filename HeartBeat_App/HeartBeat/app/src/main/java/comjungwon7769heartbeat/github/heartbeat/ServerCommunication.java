@@ -1,10 +1,18 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.util.Log;
+
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -16,7 +24,8 @@ public class ServerCommunication extends Thread{
 
 	private final String sv_URL = "1.236.102.161";//내 아이피주소!
 	private final int sv_PORT = 1200;
-
+	public String file_name = null;
+	//private File sound;
 
 	private BufferedReader br = null;
 	private BufferedOutputStream bw = null;
@@ -56,7 +65,7 @@ public class ServerCommunication extends Thread{
 	}
 	//** Constant mode...이부분만 이클립스로하느라 바꿈!! -> ctrl+F : mode 해서 다시 바꾸기
 	// 호빈_ 메소드 추가(매개변수에 ME추가함)
-	public void makeMsg(String ME, String ID, String PWD, String NICK, int Flag, File Sound, String Color, int mode) {
+	public void makeMsg(String ME, String ID, String PWD, String NICK, int Flag, String Sound, String Color, int mode) {
 		msg = Flag + "/";
 		switch (Flag) {
 			case 0:
@@ -66,6 +75,7 @@ public class ServerCommunication extends Thread{
 			case 7:
 			case 8:// 음성전송, 진동전송, 친구추가, 친구요청 수락, 거절, 친구관계삭제
 				msg += ME + "/" + ID + "//";
+				if(Flag==0) file_name=Sound;
 				break;
 			case 1:// 기분전송
 				msg += ME + "/" + ID + "/" + mode + "//";
@@ -97,12 +107,35 @@ public class ServerCommunication extends Thread{
 	//메소드 추가 _호빈
 	public void processMsg() {
 		try {
-			// 송신
-			//out.write(msg.getBytes("utf-8"));
+			// 서버로 메시지 송신
 			bw.write(msg.getBytes("EUC-KR"));
 			bw.flush();
-			// 수신
-			//in.read(buf);
+
+			//2. (음성파일메시지인경우)서버로 파일 송신
+			String[] value = msg.split("/");
+			if(value[0].equals("0")&&file_name!=null) {
+				PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(sv_sock.getOutputStream())), true);
+				out.println(file_name.split("/")[7]);
+				out.flush();
+				//System.out.println("데이터찾는중");
+				DataInputStream dis = new DataInputStream(new FileInputStream(new File(file_name)));
+				DataOutputStream dos = new DataOutputStream(sv_sock.getOutputStream());
+				byte[] buf = new byte[1024];
+				long totalReadBytes = 0;
+				int readBytes;
+				while ((readBytes = dis.read(buf)) > 0) {
+					//길이 정해주고 딱 맞게 서버로 보냅니다.
+					dos.write(buf, 0, readBytes);
+					totalReadBytes += readBytes;
+					Log.d("HBTEST : ",readBytes+"");
+				}
+				/*
+				out.close();
+				dis.close();
+				dos.close();*/
+			}
+
+			//서버로부터 메시지 수신
 			buf = br.readLine().getBytes();
 			parsingMsg(new String(buf).trim());
 		} catch (IOException e) {

@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
 			} else {
 				dto = (MemberDTO) sc.final_data;
 				if(dto == null) {//회원정보있음 : 로그인가능
-					return true;
+					return false;
 				}
 			}
 		}
