@@ -197,7 +197,10 @@ public class MessageListActivity extends AppCompatActivity {
 			if(flag == Constants.msgFlag_Friend) {
 				//친구요청한 사람의 ID 표시
 				name.setText(msgItem.getSender());
-
+				//기분 표시
+				Constants.Emotion[] e = Constants.Emotion.values();
+				mode.setImageResource(getResources().getIdentifier(e[0].toString(), "drawable", getPackageName()));
+				mode.setBackgroundColor(Color.parseColor("#" + e[0].getColor()));
 			}
 			//다른 메세지인 경우
 			else {
@@ -217,6 +220,10 @@ public class MessageListActivity extends AppCompatActivity {
 				else {
 					//닉네임 표시
 					name.setText(getText(R.string.noNameFriend));
+					//기분 표시
+					Constants.Emotion[] e = Constants.Emotion.values();
+					mode.setImageResource(getResources().getIdentifier(e[0].toString(), "drawable", getPackageName()));
+					mode.setBackgroundColor(Color.parseColor("#" + e[0].getColor()));
 				}
 
 			}

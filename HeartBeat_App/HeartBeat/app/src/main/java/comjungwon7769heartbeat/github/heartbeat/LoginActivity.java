@@ -76,21 +76,26 @@ public class LoginActivity extends AppCompatActivity {
 		String inputPWD = txtPwd.getText().toString();*/
 
 		//ID나 PWD가 최소길이보다 작거나 최대길이보다 긴 경우
-		if(id.length() < Constants.minString || id.length() > Constants.maxString || pwd.length() < Constants.minString || pwd.length() > Constants.maxString){
+		if(id.length() < Constants.minString || id.length() > Constants.maxString || pwd.length() < Constants.minString || pwd.length() > Constants.maxString) {
 			return false;
-		} else{ //아이디 PWD 길이가 적당한 경우
+		} else { //아이디 PWD 길이가 적당한 경우
 			//서버통신_ 회원정보유무검사
 			ServerCommunication sc = new ServerCommunication();
 			sc.makeMsg(id, null, pwd, null, 10, null, null, 0);
 			//Toast.makeText(getApplicationContext(),sc.msg,Toast.LENGTH_SHORT).show();
 			sc.start();
-			Toast.makeText(getApplicationContext(),"확인중...",Toast.LENGTH_SHORT).show();
-			while(sc.wait){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+			while(sc.wait) {
 				///스레드처리완료 기다리기
 			}
-			dto = (MemberDTO) sc.final_data;
-			if(dto==null){//회원정보있음 : 로그인가능
+			if(sc.chkError) {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 				return false;
+			} else {
+				dto = (MemberDTO) sc.final_data;
+				if(dto == null) {//회원정보있음 : 로그인가능
+					return true;
+				}
 			}
 		}
 		return true;
@@ -100,7 +105,6 @@ public class LoginActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, JoinActivity.class);
 		startActivity(intent);
 	} //join_button()
-
 
 
 }

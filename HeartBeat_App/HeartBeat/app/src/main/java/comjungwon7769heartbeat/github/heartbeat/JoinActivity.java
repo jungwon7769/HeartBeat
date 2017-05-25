@@ -37,19 +37,23 @@ public class JoinActivity extends Activity {
 					ServerCommunication sc = new ServerCommunication();
 					sc.makeMsg(txtID.getText().toString(), null, null, null, 11, null, null, 0);
 					sc.start();
-					Toast.makeText(getApplicationContext(),"확인중...",Toast.LENGTH_SHORT).show();
-					while(sc.wait){
+					Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+					while(sc.wait) {
 						///스레드처리완료 기다리기
 					}
-					if (!(boolean) sc.final_data) {//아이디 중복안됨!!
-						id = txtID.getText().toString();
-						chkIdUsable = true;
-						Toast.makeText(getApplicationContext(),"사용가능한 아이디입니다",Toast.LENGTH_SHORT).show();
-					} else if ((boolean) sc.final_data){
-						Toast.makeText(getApplicationContext(),"!! 사용할수 없는 아이디 입니다",Toast.LENGTH_SHORT).show();
-					} else{
-						Toast.makeText(getApplication(),"서버통신불가!!",Toast.LENGTH_SHORT).show();
-					}//여기까지가 통신확인
+					if(sc.chkError) {
+						Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+					} else {
+						if(!(boolean) sc.final_data) {//아이디 중복안됨!!
+							id = txtID.getText().toString();
+							chkIdUsable = true;
+							Toast.makeText(getApplicationContext(), "사용가능한 아이디입니다", Toast.LENGTH_SHORT).show();
+						} else if((boolean) sc.final_data) {
+							Toast.makeText(getApplicationContext(), "!! 사용할수 없는 아이디 입니다", Toast.LENGTH_SHORT).show();
+						} else {
+							Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+						}//여기까지가 통신확인
+					}
 				}
 			}
 		});
@@ -116,19 +120,24 @@ public class JoinActivity extends Activity {
 
 	private void Join(String id, String pwd, String Nick) {
 		ServerCommunication sc = new ServerCommunication();
-		sc.makeMsg(id,null,pwd,Nick,12,null,null,0);
+		sc.makeMsg(id, null, pwd, Nick, 12, null, null, 0);
 		sc.start();
-		Toast.makeText(getApplicationContext(),"확인중...",Toast.LENGTH_SHORT).show();
-		while(sc.wait){
+		Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+		while(sc.wait) {
 			///스레드처리완료 기다리기...
 		}
-		if((boolean)sc.final_data){//회원가입성공
-			Toast.makeText(getApplicationContext(),"회원가입성공!!",Toast.LENGTH_SHORT).show();
-		}else if(!(boolean)sc.final_data){//회원가입실패
-			Toast.makeText(getApplicationContext(),"회원가입실패...",Toast.LENGTH_SHORT).show();
-		}else{
-			Toast.makeText(getApplication(),"서버통신불가!!",Toast.LENGTH_SHORT).show();
+		if(sc.chkError) {
+			Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		} else {
+			if((boolean) sc.final_data) {//회원가입성공
+				Toast.makeText(getApplication(), getText(R.string.joinSucces), Toast.LENGTH_SHORT).show();
+			} else if(!(boolean) sc.final_data) {//회원가입실패
+				Toast.makeText(getApplication(), getText(R.string.joinFaild), Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+
+			finish();
 		}
-		finish();
 	} //join()
 }

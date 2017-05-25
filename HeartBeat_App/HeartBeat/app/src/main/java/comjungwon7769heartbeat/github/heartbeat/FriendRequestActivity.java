@@ -63,13 +63,13 @@ public class FriendRequestActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				Friend_ID = txtID.getText().toString();
 				if(Friend_ID.equals("")) {//아이디를 입력하지 않은경우
-					Toast.makeText(getApplicationContext(), "아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
+					Toast.makeText(getApplicationContext(), getText(R.string.notInputID), Toast.LENGTH_SHORT).show();
 				}
 				else {
 					SharedPreferences pref = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 					//내 아이디를 입력한 경우
 					if(Friend_ID.equals(pref.getString("my_id","0"))){
-						Toast.makeText(getApplicationContext(), "다른사람의 아이디를 입력해주세요", Toast.LENGTH_SHORT).show();
+						Toast.makeText(getApplicationContext(), getText(R.string.addfr_inputSelfID), Toast.LENGTH_SHORT).show();
 					}
 					//존재하는 ID 인 경우
 					else if (Check = ID_Usable_Check(Friend_ID)) {
@@ -104,6 +104,9 @@ public class FriendRequestActivity extends AppCompatActivity {
 		sc.start();
 		while(sc.wait){
 			///스레드처리완료 기다리기
+		}if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			return false;
 		}
 		if(!(boolean)sc.final_data){//해당 id를 갖는 회원이 존재하지 않는경우
 			return false;
@@ -121,12 +124,17 @@ public class FriendRequestActivity extends AppCompatActivity {
 		while(sc.wait){
 			///스레드처리완료 기다리기
 		}
-		if(!(boolean)sc.final_data){//친구요청추가 실패
-			Toast.makeText(getApplicationContext(),"이미친구관계입니다",Toast.LENGTH_SHORT).show();
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		}else {
+			if(!(boolean) sc.final_data) {//친구요청추가 실패
+				Toast.makeText(getApplicationContext(), "이미친구관계입니다", Toast.LENGTH_SHORT).show();
+			}
 		}
 
 
 		//Notcomplete
+
 		//테스트데이터 만드는거 넣어놓음
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
 		Random ra = new Random();

@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.graphics.Color;
 
 public class FriendDetailActivity extends AppCompatActivity {
 
@@ -121,8 +122,12 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 2, null, null, 0);
 		sc.start();
 		while(sc.wait){}//스레드 종료 기다리기
-		if(!(boolean)sc.final_data){//진동전송 실패시
-			Toast.makeText(getApplicationContext(),"서버오류",Toast.LENGTH_SHORT).show();//test
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+		}else {
+			if(!(boolean) sc.final_data) {//진동전송 실패시
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+			}
 		}
 	}
 
@@ -198,8 +203,12 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 9, null, selectFriendDTO.getColor(), 0);
 		sc.start();
 		while(sc.wait){}//스레드 종료 기다리기
-		if(!(boolean)sc.final_data){//친구색지정오류
-			Toast.makeText(getApplicationContext(),"서버오류",Toast.LENGTH_SHORT).show();//test
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		}else {
+			if(!(boolean) sc.final_data) {//친구색지정오류
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 
@@ -212,8 +221,12 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 1, null, null, e.getMode());
 		sc.start();
 		while(sc.wait){}//스레드 종료 기다리기
-		if(!(boolean)sc.final_data){//기분전송 실패시
-			Toast.makeText(getApplicationContext(),"서버오류",Toast.LENGTH_SHORT).show();//test
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		}else {
+			if(!(boolean) sc.final_data) {//기분전송 실패시
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 
@@ -225,8 +238,12 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 0, null, null, 0);
 		sc.start();
 		while(sc.wait){}//스레드 종료 기다리기
-		if(!(boolean)sc.final_data){//음성전송 실패시
-			Toast.makeText(getApplicationContext(),"서버오류",Toast.LENGTH_SHORT).show();//test
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		}else {
+			if(!(boolean) sc.final_data) {//음성전송 실패시
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
 		}
 	}
 
@@ -236,9 +253,15 @@ public class FriendDetailActivity extends AppCompatActivity {
 		//HB 나중에 여기에 파일 넣기!!
 		sc.makeMsg(preference.getString("my_id","0"), selectFriendDTO.getID(), null, null, 8, null, null, 0);
 		sc.start();
-		while(sc.wait){}//스레드 종료 기다리기
-		if(!(boolean)sc.final_data){//친구삭제 실패시
-			Toast.makeText(getApplicationContext(),"서버오류",Toast.LENGTH_SHORT).show();//test
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			return;
+		}else {
+			while(sc.wait) {
+			}//스레드 종료 기다리기
+			if(!(boolean) sc.final_data) {//친구삭제 실패시
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
 		}
 
 		//App DataBase

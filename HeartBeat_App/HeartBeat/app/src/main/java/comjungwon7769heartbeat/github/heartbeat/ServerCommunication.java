@@ -14,7 +14,7 @@ import java.util.HashMap;
  */
 public class ServerCommunication extends Thread{
 
-	private final String sv_URL = "192.168.0.13";//내 아이피주소!
+	private final String sv_URL = "1.236.102.161";//내 아이피주소!
 	private final int sv_PORT = 1200;
 
 
@@ -26,12 +26,19 @@ public class ServerCommunication extends Thread{
 	public String msg=null;// 호빈추가 : 서버로 보낼 메시지 정의
 	public Object final_data = null; //서버처리해서 반환된 데이터야~~(boolean / HashMap<String, FriendDTO> 의 형태임)
 	public boolean wait=true; //스레드 종료 알릴 플래그 용도
+	public boolean chkError = false;
 
 	@Override
 	public void run(){
-		this.init();
-		this.processMsg();
-		wait=false;
+		try {
+			this.init();
+			this.processMsg();
+			wait = false;
+		}catch(Exception e){
+			e.printStackTrace();
+			chkError = true;
+			wait = false;
+		}
 	}
 
 	//호빈_ init메소드 삭제
