@@ -22,7 +22,7 @@ import java.util.HashMap;
  */
 public class ServerCommunication extends Thread{
 
-	private final String sv_URL = "223.195.8.245";//내 아이피주소!
+	private final String sv_URL =  "192.168.43.156";//내 아이피주소!
 	private final int sv_PORT = 1200;
 	public String file_name = null;
 	//private File sound;
@@ -50,7 +50,7 @@ public class ServerCommunication extends Thread{
 		}
 	}
 
-	//호빈_ init메소드 삭제
+
 	public void init(){
 		try {
 			sv_sock = new Socket(sv_URL, sv_PORT);
@@ -115,7 +115,8 @@ public class ServerCommunication extends Thread{
 			String[] value = msg.split("/");
 			if(value[0].equals("0")&&file_name!=null) {
 				PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(sv_sock.getOutputStream())), true);
-				Log.d("HBTEST",file_name.split("/")[7]);
+				Log.d("HBTEST_전체파일이름",file_name);
+				Log.d("HBTEST_파일이름",file_name.split("/")[7]);
 				out.println(file_name.split("/")[7]);
 				out.flush();
 				Log.d("HBTEST","데이터 찾는중");
@@ -125,7 +126,7 @@ public class ServerCommunication extends Thread{
 				long totalReadBytes = 0;
 				int readBytes;
 				while ((readBytes = dis.read(buf)) > 0) {
-					//길이 정해주고 딱 맞게 서버로 보냅니다.
+					//길이 정해주고 딱 맞게 서버로 보냄
 					Log.d("HBTEST",new String(buf));
 					dos.write(buf, 0, readBytes);
 					//dos.flush();
@@ -178,10 +179,9 @@ public class ServerCommunication extends Thread{
 		}
 		//Flag 13
 		else if (Flag == 13) {
-			HashMap<String, FriendDTO> res = null;
+			HashMap<String, FriendDTO> res = new HashMap<>();
 			FriendDTO dto =null;
 			if (value.length > 2) {
-				res = new HashMap<>();
 				for (int i = 1; i < value.length; i++) {
 					switch (i % 4) {
 						case 1:
