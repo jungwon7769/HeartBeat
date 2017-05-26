@@ -16,8 +16,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class FriendListActivity extends AppCompatActivity {
 	public static Context listContext;
@@ -44,6 +46,7 @@ public class FriendListActivity extends AppCompatActivity {
 		long saveTime = preference.getLong("friend_time", 0);
 		//if 저장한지 오래된경우 FriendList_Load 호출(서버에서 친구목록 가져옴)
 		if((System.currentTimeMillis() - saveTime) > Constants.friendLoad_Interval) {
+
 			FriendList_Load();
 		}
 
@@ -142,10 +145,23 @@ public class FriendListActivity extends AppCompatActivity {
 	//친구목록 서버로부터 불러오기
 	private ArrayList<FriendDTO> FriendList_Load() {
 		//Notcomplete
-		Log.i("Test", "FriendList_Load");
+		Log.i("HBTest", "FriendList_Load");
+		//서버통신
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(preference.getString("my_id","0"),null, null, null, 13, null, null, 0);
+		sc.start();
+		while(sc.wait){
+			//스레드 기다리기
+		}
+		HashMap<String, FriendDTO> f_list = (HashMap<String, FriendDTO>)sc.final_data;
+		if(f_list==null){//친구없음
+			Toast.makeText(getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
+		}else{
+			Toast.makeText(getApplicationContext(), "친구명수 : "+f_list.size(), Toast.LENGTH_SHORT).show();
+		}
 
 		//"Update Time" 갱신
-		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preference.edit();
 		editor.putLong("friend_time", System.currentTimeMillis());
 		editor.commit();
