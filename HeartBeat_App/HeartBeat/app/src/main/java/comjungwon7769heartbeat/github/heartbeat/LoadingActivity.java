@@ -30,23 +30,12 @@ public class LoadingActivity extends AppCompatActivity {
 	private boolean Login_Check;    //사용자데이터 로그인유효
 	private String ID, PWD;
 
-	/*
-	GUI 확인을 위해 oncreateii 함수를 만들고 onCreate 에 Timer 만들어놓음
-	 */
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_loading);
 
-		new Timer().schedule(new TimerTask() {
-			public void run() {
-				oncreateii();
-			}
-		}, 1000);
-
-	} //OnCreate
-
-	private void oncreateii() {
 		//Android Version Check
 		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 			ArrayList<String> arrPms = new ArrayList<>();
@@ -66,7 +55,7 @@ public class LoadingActivity extends AppCompatActivity {
 		}
 		//Version 6.0 이하
 		else moveActivityByData();
-	}
+	} //OnCreate
 
 	private void moveActivityByData() {
 		Data_Check = false;

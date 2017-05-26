@@ -63,9 +63,14 @@ public class BlueToothCommunication implements Runnable {
                     sendMsg(msg);
                     break;
             }
-        }catch (Exception e){}
+
+            Log.i("Test", "switch end");
+        }catch (Exception e){
+            Log.i("Test", "zz");}
         //블루투스 연결해제
         closeSock();
+
+        Log.i("Test", "closeENd");
         return;
     }
 
@@ -131,6 +136,8 @@ public class BlueToothCommunication implements Runnable {
 
     private boolean sendMsg(String msg) {
         if (btSock == null || !btSock.isConnected()) return false;
+
+        Log.i("Test", "sendMsg");
 
         byte buf[] = msg.getBytes();
         try {
