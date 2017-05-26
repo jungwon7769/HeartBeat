@@ -9,21 +9,18 @@ import android.os.IBinder;
 import android.widget.Toast;
 
 public class MyService extends Service {
+	BackgroundThread backgroundThread;
+
 	public MyService() {
 	}
 
 	@Override
 	public void onCreate() {
+		backgroundThread = new BackgroundThread();
+		backgroundThread.context = getApplicationContext();
 
-		NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(getApplicationContext().NOTIFICATION_SERVICE);
-
-		PendingIntent pendingIntent = PendingIntent.getActivity(getApplicationContext(), 0, new Intent(getApplicationContext(), MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
-		Notification.Builder builder = new Notification.Builder(getApplicationContext());
-		builder.setSmallIcon(R.mipmap.ic_launcher).setTicker("푸시왔어열").setWhen(System.currentTimeMillis()).setNumber(1).setContentTitle("현정이").setContentText("아냐아아ㅏ").setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_VIBRATE).setContentIntent(pendingIntent).setAutoCancel(true);
-
-		notificationManager.notify(1, builder.build());
-
-
+		Thread thread = new Thread(backgroundThread);
+		thread.start();
 	}
 
 	@Override
@@ -31,4 +28,7 @@ public class MyService extends Service {
 		// TODO: Return the communication channel to the service.
 		throw new UnsupportedOperationException("Not yet implemented");
 	}
+
+
+
 }
