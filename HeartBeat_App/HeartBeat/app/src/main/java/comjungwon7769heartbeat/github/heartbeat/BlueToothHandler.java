@@ -1,8 +1,10 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.widget.Toast;
 
 /**
@@ -26,7 +28,7 @@ public class BlueToothHandler extends Handler{
                 Toast.makeText(mContext, "NOT ENABLED", Toast.LENGTH_SHORT).show();
                 break;
             case BlueToothCommunication.CONNECT_NOT_SUPPORT:
-                Toast.makeText(mContext, "NOT SUPPORT", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getText(R.string.bt_notSupport), Toast.LENGTH_SHORT).show();
                 break;
             case BlueToothCommunication.CONNECT_SUCCESS:
                 Toast.makeText(mContext, "CONNECT SUCCES", Toast.LENGTH_SHORT).show();

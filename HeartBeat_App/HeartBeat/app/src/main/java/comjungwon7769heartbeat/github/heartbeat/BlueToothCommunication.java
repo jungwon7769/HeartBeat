@@ -17,7 +17,7 @@ import java.util.UUID;
 public class BlueToothCommunication implements Runnable {
     //상수 정의
     public static final int CONNECT_NOT_SUPPORT = -1, CONNECT_NOT_ENABLE = 2, CONNECT_SUCCESS = 1, CONNECT_FAILD = 0;
-    private static final int CODE_EMOTION = 1, CODE_BZZ = 2, CODE_LED = 3, CODE_MY_BZZ = 4;
+    public static final int CODE_EMOTION = 1, CODE_BZZ = 2, CODE_LED = 3, CODE_MY_BZZ = 4;
     //public static final boolean BZZ_MY = true, BZZ_FR = false;
 
     //변수 정의
@@ -31,37 +31,42 @@ public class BlueToothCommunication implements Runnable {
     private int sendMode = -1;
     private Object data;
 
+    public BlueToothHandler btHander;
+
     @Override
     public void run() {
         String msg;
 
-        if (sendMode == -1) return;
-        //블루투스 연결
-        checkConnect(Constants.deviceName);
-        //메시지 생성
-        switch (sendMode) {
-            case CODE_EMOTION:
-                if (data == null) return;
-                msg = CODE_EMOTION + "/" + ((Constants.Emotion) data).getColor() + "@";
-                sendMsg(msg);
-                break;
-            case CODE_BZZ:
-                if(data == null) return;
-                msg = CODE_BZZ + "/" + data.toString() + "@";
-                sendMsg(msg);
-                break;
-            case CODE_LED:
-                if(data == null) return;
-                msg = CODE_LED + "/" + data.toString() + "@";
-                sendMsg(msg);
-                break;
-            case CODE_MY_BZZ:
-                msg = CODE_MY_BZZ + "@";
-                sendMsg(msg);
-                break;
-        }
+        try {
+            if (sendMode == -1) return;
+            //블루투스 연결
+            checkConnect(Constants.deviceName);
+            //메시지 생성
+            switch (sendMode) {
+                case CODE_EMOTION:
+                    if (data == null) return;
+                    msg = CODE_EMOTION + "/" + ((Constants.Emotion) data).getColor() + "@";
+                    sendMsg(msg);
+                    break;
+                case CODE_BZZ:
+                    if (data == null) return;
+                    msg = CODE_BZZ + "/" + data.toString() + "@";
+                    sendMsg(msg);
+                    break;
+                case CODE_LED:
+                    if (data == null) return;
+                    msg = CODE_LED + "/" + data.toString() + "@";
+                    sendMsg(msg);
+                    break;
+                case CODE_MY_BZZ:
+                    msg = CODE_MY_BZZ + "@";
+                    sendMsg(msg);
+                    break;
+            }
+        }catch (Exception e){}
         //블루투스 연결해제
         closeSock();
+        return;
     }
 
     public boolean setSendMode(int value) {
