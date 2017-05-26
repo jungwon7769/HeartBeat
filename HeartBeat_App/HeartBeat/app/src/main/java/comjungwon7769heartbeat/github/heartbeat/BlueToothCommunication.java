@@ -17,7 +17,7 @@ import java.util.UUID;
 public class BlueToothCommunication implements Runnable {
     //상수 정의
     public static final int CONNECT_NOT_SUPPORT = -1, CONNECT_NOT_ENABLE = 2, CONNECT_SUCCESS = 1, CONNECT_FAILD = 0;
-    public static final int CODE_EMOTION = 1, CODE_BZZ = 2, CODE_LED = 3, CODE_MY_BZZ = 4;
+    public static final int CODE_EMOTION = 1, CODE_BZZ = 2, CODE_LED = 3, CODE_MY_BZZ = 4, CODE_LED_OFF = 5;
     //public static final boolean BZZ_MY = true, BZZ_FR = false;
 
     //변수 정의
@@ -33,6 +33,10 @@ public class BlueToothCommunication implements Runnable {
 
     public BlueToothHandler btHander;
 
+    public BlueToothCommunication(BlueToothHandler btHander){
+        this.btHander = btHander;
+    }
+
     @Override
     public void run() {
         String msg;
@@ -40,7 +44,21 @@ public class BlueToothCommunication implements Runnable {
         try {
             if (sendMode == -1) return;
             //블루투스 연결
-            checkConnect(Constants.deviceName);
+            int chk = checkConnect(Constants.deviceName);
+            switch(chk){
+                case CONNECT_FAILD:
+                    btHander.sendEmptyMessage(CONNECT_FAILD);
+                    break;
+                case CONNECT_NOT_ENABLE:
+                    btHander.sendEmptyMessage(CONNECT_NOT_ENABLE);
+                    break;
+                case CONNECT_NOT_SUPPORT:
+                    btHander.sendEmptyMessage(CONNECT_NOT_SUPPORT);
+                    break;
+                case CONNECT_SUCCESS:
+                    btHander.sendEmptyMessage(CONNECT_SUCCESS);
+                    break;
+            }
             //메시지 생성
             switch (sendMode) {
                 case CODE_EMOTION:
@@ -50,6 +68,7 @@ public class BlueToothCommunication implements Runnable {
                     break;
                 case CODE_BZZ:
                     if (data == null) return;
+                    msg = CODE_LED_OFF + "@";
                     msg = CODE_BZZ + "/" + data.toString() + "@";
                     sendMsg(msg);
                     break;
@@ -63,6 +82,7 @@ public class BlueToothCommunication implements Runnable {
                     sendMsg(msg);
                     break;
             }
+            Thread.sleep(2000);
 
             Log.i("Test", "switch end");
         }catch (Exception e){
@@ -87,9 +107,6 @@ public class BlueToothCommunication implements Runnable {
     }
 
     private int checkConnect(String name) {
-        if (btSock != null && btSock.isConnected()) {
-            return CONNECT_SUCCESS;
-        }
         btAdapter = BluetoothAdapter.getDefaultAdapter();
         btDevice = null;
         btSock = null;

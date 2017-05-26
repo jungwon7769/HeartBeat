@@ -37,8 +37,7 @@ public class PopupActivity extends AppCompatActivity {
 	private MediaRecorder recorder;
 	private String recordFilePath;
 
-	BlueToothHandler btHandler = new BlueToothHandler(this);
-	BlueToothCommunication btComu;
+	public BlueToothHandler btHandler = new BlueToothHandler(this);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +83,6 @@ public class PopupActivity extends AppCompatActivity {
 
 		}
 
-		btComu = new BlueToothCommunication();
-		btComu.btHander = this.btHandler;
 
 	} // onCreate
 
@@ -415,6 +412,7 @@ public class PopupActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				//NotComplete
 				//Bluetooth Comu
+				BlueToothCommunication btComu = new BlueToothCommunication(((PopupActivity)getParent()).btHandler);
 				btComu.setSendMode(btComu.CODE_EMOTION);
 				btComu.setData(mode);
 				Thread thread = new Thread(btComu);

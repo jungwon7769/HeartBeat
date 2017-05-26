@@ -19,7 +19,6 @@ import java.io.File;
 public class MyDetailActivity extends AppCompatActivity {
 	Button btnSetLED, btnSetEmotion, btnTransBzz, btnTransVoice;
 	BlueToothHandler btHandler = new BlueToothHandler(this);
-	BlueToothCommunication btComu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -72,8 +71,6 @@ public class MyDetailActivity extends AppCompatActivity {
 		});
 		//*** Menu Button 연결 및 Listener
 
-		btComu = new BlueToothCommunication();
-		btComu.btHander = this.btHandler;
 	}
 
 	private void setLED_Click() {
@@ -92,6 +89,8 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void transBzzToMe_Click() {
 		//Trans Bzz Using BluetoothComu
+		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		btComu.btHander = this.btHandler;
 		btComu.setSendMode(btComu.CODE_MY_BZZ);
 		Thread thread = new Thread(btComu);
 		thread.start();
@@ -123,6 +122,7 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void setLED(String color) {
 		//Bluetooth Comu - color Trans
+		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
 		btComu.setSendMode(btComu.CODE_LED);
 		btComu.setData(color);
 		Thread thread = new Thread(btComu);
@@ -156,6 +156,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 
 		//Bluetooth Play
+		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
 		btComu.setSendMode(btComu.CODE_EMOTION);
 		btComu.setData(e);
 		Thread thread = new Thread(btComu);
