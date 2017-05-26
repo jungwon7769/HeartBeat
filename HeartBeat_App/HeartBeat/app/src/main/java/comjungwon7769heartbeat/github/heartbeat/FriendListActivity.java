@@ -168,7 +168,7 @@ public class FriendListActivity extends AppCompatActivity {
 				FriendDTO dto = f_list.get(fid);
 				Log.d("HBTEST", dto.getID() + "/" + dto.getNick() + "/" + dto.getColor() + "/" + dto.getModeInt());///test
 				//friendDAO.addFriend(new FriendDTO(dto.getID(), dto.getNick(), dto.getColor(), Constants.Emotion.values()[dto.getModeInt()]));
-				friendDAO.addFriend(new FriendDTO(dto.getID(), dto.getNick(), "33F2DD", Constants.Emotion.values()[dto.getModeInt()]));
+				friendDAO.addFriend(new FriendDTO(dto.getID(), dto.getNick(), dto.getColor(), Constants.Emotion.values()[dto.getModeInt()]));
 				//friendDAO.addFriend(new FriendDTO("id", "친구지롱" , "33F2DD", Constants.Emotion.values()[0]));
 				//((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 				//Log.d("HBTEST", String.valueOf(addchk));///test
