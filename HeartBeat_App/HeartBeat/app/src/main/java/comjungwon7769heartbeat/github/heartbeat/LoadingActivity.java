@@ -19,113 +19,97 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 public class LoadingActivity extends AppCompatActivity {
-	public final int MY_PERMISSION_REQUEST_RECORD_AUDIO = 0;
-	public final int MY_PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
-	public final int MY_PERMISSION_REQUEST_EVERY = 10;
+    public final int MY_PERMISSION_REQUEST_RECORD_AUDIO = 0;
+    public final int MY_PERMISSION_REQUEST_WRITE_EXTERNAL_STORAGE = 1;
+    public final int MY_PERMISSION_REQUEST_EVERY = 10;
 
-	public final String APP_PERMISSION_LIST[] = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
-			android.Manifest.permission.RECORD_AUDIO};
+    public final String APP_PERMISSION_LIST[] = {android.Manifest.permission.BLUETOOTH, android.Manifest.permission.WRITE_EXTERNAL_STORAGE,
+            android.Manifest.permission.RECORD_AUDIO};
 
-	private boolean Data_Check; //사용자데이터 저장 유무
-	private boolean Login_Check;    //사용자데이터 로그인유효
-	private String ID, PWD;
+    private boolean Data_Check; //사용자데이터 저장 유무
+    private String ID, PWD;
 
-	
-	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_loading);
 
-		//Android Version Check
-		if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-			ArrayList<String> arrPms = new ArrayList<>();
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_loading);
 
-			//Permission List 중 권한이 없는 경우
-			for(int i = 0; i < APP_PERMISSION_LIST.length; i++) {
-				if(ContextCompat.checkSelfPermission(getApplicationContext(), APP_PERMISSION_LIST[i]) == PackageManager.PERMISSION_DENIED) {
-					arrPms.add(APP_PERMISSION_LIST[i]);     //List에 해당 퍼미션 추가
-				}
-			}
+        //Android Version Check
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            ArrayList<String> arrPms = new ArrayList<>();
 
-			String[] strPms = arrPms.toArray(new String[arrPms.size()]);
+            //Permission List 중 권한이 없는 경우
+            for (int i = 0; i < APP_PERMISSION_LIST.length; i++) {
+                if (ContextCompat.checkSelfPermission(getApplicationContext(), APP_PERMISSION_LIST[i]) == PackageManager.PERMISSION_DENIED) {
+                    arrPms.add(APP_PERMISSION_LIST[i]);     //List에 해당 퍼미션 추가
+                }
+            }
 
-			if(strPms.length == 0) moveActivityByData();
-			else ActivityCompat.requestPermissions(this, strPms, 0);    //Permission Request
+            String[] strPms = arrPms.toArray(new String[arrPms.size()]);
 
-		}
-		//Version 6.0 이하
-		else moveActivityByData();
-	} //OnCreate
+            if (strPms.length == 0) moveActivityByData();
+            else ActivityCompat.requestPermissions(this, strPms, 0);    //Permission Request
 
-	private void moveActivityByData() {
-		Data_Check = false;
-		Login_Check = false;
+        }
+        //Version 6.0 이하
+        else moveActivityByData();
+    } //OnCreate
 
-		Data_Check = App_Data_Check();
+    private void moveActivityByData() {
+        Data_Check = false;
 
-		if(Data_Check) {
-			Login_Check = Login_Usable_Check();
-			if(Login_Check) {
-				Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
-				startActivity(intent);
-				finish();
-			} else {
-				Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-				startActivity(intent);
-				finish();
-			}
-		} else {
-			Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
-			startActivity(intent);
-			finish();
-		}
-	}
+        Data_Check = App_Data_Check();
 
-	private boolean App_Data_Check() {
-		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		ID = preference.getString("my_id", "");
-		PWD = preference.getString("my_pwd", "");
-		String nick = preference.getString("my_nick", "");
-		int mode = preference.getInt("my_mode", 100);
+        if (Data_Check) {
+            Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
+            startActivity(intent);
+            finish();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+            startActivity(intent);
+            finish();
+        }
+    }
 
-		if(mode == 100 || ID.equals("") || PWD.equals("") || nick.equals("")) return false;
-		else return true;
-	}
+    private boolean App_Data_Check() {
+        SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+        ID = preference.getString("my_id", "");
+        PWD = preference.getString("my_pwd", "");
+        String nick = preference.getString("my_nick", "");
+        int mode = preference.getInt("my_mode", 100);
 
-	private boolean Login_Usable_Check() {
-		//Server Comu
-		//Notcomplete
+        if (mode == 100 || ID.equals("") || PWD.equals("") || nick.equals("")) return false;
+        else return true;
+    }
 
-		return false;
-	}
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
 
-	@Override
-	public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-		super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        int chkGrant = 0;
 
-		int chkGrant = 0;
+        if (grantResults.length < permissions.length) {
+            Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+            intent.putExtra("Popup", Constants.popup_ok);
+            intent.putExtra("Message", "HEARTBEAT 이용을 위해 권한을 설정하여주세요");
+            startActivity(intent);
+        }
 
-		if(grantResults.length < permissions.length){
-			Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-			intent.putExtra("Popup", Constants.popup_ok);
-			intent.putExtra("Message", "HEARTBEAT 이용을 위해 권한을 설정하여주세요");
-			startActivity(intent);
-		}
+        for (int i = 0; i < permissions.length; i++) {
+            if (grantResults[i] == PackageManager.PERMISSION_DENIED) {
+                chkGrant++;
+            }
+        }
 
-		for(int i = 0; i < permissions.length; i++){
-			if(grantResults[i] == PackageManager.PERMISSION_DENIED){
-				chkGrant++;
-			}
-		}
+        if (chkGrant == 0) {
+            moveActivityByData();
+        } else {
+            Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+            intent.putExtra("Popup", Constants.popup_ok);
+            intent.putExtra("Message", "HEARTBEAT 이용을 위해 권한을 설정하여주세요");
+            startActivity(intent);
+        }
 
-		if(chkGrant == 0){
-			moveActivityByData();
-		}else{
-			Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-			intent.putExtra("Popup", Constants.popup_ok);
-			intent.putExtra("Message", "HEARTBEAT 이용을 위해 권한을 설정하여주세요");
-			startActivity(intent);
-		}
-
-	}
+    }
 }
