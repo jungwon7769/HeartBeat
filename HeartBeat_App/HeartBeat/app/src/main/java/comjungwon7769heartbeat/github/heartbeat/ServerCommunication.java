@@ -22,7 +22,7 @@ import java.util.HashMap;
  */
 public class ServerCommunication extends Thread{
 
-	private final String sv_URL = "1.236.102.161";//내 아이피주소!
+	private final String sv_URL = "223.195.8.245";//내 아이피주소!
 	private final int sv_PORT = 1200;
 	public String file_name = null;
 	//private File sound;
@@ -115,9 +115,10 @@ public class ServerCommunication extends Thread{
 			String[] value = msg.split("/");
 			if(value[0].equals("0")&&file_name!=null) {
 				PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(sv_sock.getOutputStream())), true);
+				Log.d("HBTEST",file_name.split("/")[7]);
 				out.println(file_name.split("/")[7]);
 				out.flush();
-				//System.out.println("데이터찾는중");
+				Log.d("HBTEST","데이터 찾는중");
 				DataInputStream dis = new DataInputStream(new FileInputStream(new File(file_name)));
 				DataOutputStream dos = new DataOutputStream(sv_sock.getOutputStream());
 				byte[] buf = new byte[1024];
@@ -125,21 +126,20 @@ public class ServerCommunication extends Thread{
 				int readBytes;
 				while ((readBytes = dis.read(buf)) > 0) {
 					//길이 정해주고 딱 맞게 서버로 보냅니다.
+					Log.d("HBTEST",new String(buf));
 					dos.write(buf, 0, readBytes);
+					//dos.flush();
 					totalReadBytes += readBytes;
-					Log.d("HBTEST : ",readBytes+"");
+					Log.d("HBTEST",readBytes+"");
 				}
-				/*
-				out.close();
-				dis.close();
-				dos.close();*/
+				//dos.close();
 			}
 
 			//서버로부터 메시지 수신
 			buf = br.readLine().getBytes();
 			parsingMsg(new String(buf).trim());
-		} catch (IOException e) {
-			e.printStackTrace();
+		} catch (Exception e) {
+			Log.d("HBTEST",e.getMessage());
 		} finally {
 			try {
 				if (sv_sock != null)
@@ -149,7 +149,7 @@ public class ServerCommunication extends Thread{
 				if(br!=null)
 					br.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				Log.d("HBTEST",e.getMessage());
 			}
 		}
 	}
