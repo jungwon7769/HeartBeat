@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 
 public class FriendListActivity extends AppCompatActivity {
 	public static Context listContext;
@@ -158,7 +159,20 @@ public class FriendListActivity extends AppCompatActivity {
 		if(f_list==null){//친구없음
 			Toast.makeText(getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
 		}else{
-			Toast.makeText(getApplicationContext(), "친구명수 : "+f_list.size(), Toast.LENGTH_SHORT).show();
+			//친구 1명이상
+			FriendDAO friendDAO = new FriendDAO(getApplicationContext(), FriendDAO.DataBase_name, null, 1);
+			friendDAO.deleteAll();
+			Iterator it = f_list.keySet().iterator();
+			while (it.hasNext()) {
+				String fid = (String) it.next();
+				FriendDTO dto = f_list.get(fid);
+				Log.d("HBTEST", dto.getID() + "/" + dto.getNick() + "/" + dto.getColor() + "/" + dto.getModeInt());///test
+				//friendDAO.addFriend(new FriendDTO(dto.getID(), dto.getNick(), dto.getColor(), Constants.Emotion.values()[dto.getModeInt()]));
+				friendDAO.addFriend(new FriendDTO(dto.getID(), dto.getNick(), "33F2DD", Constants.Emotion.values()[dto.getModeInt()]));
+				//friendDAO.addFriend(new FriendDTO("id", "친구지롱" , "33F2DD", Constants.Emotion.values()[0]));
+				//((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+				//Log.d("HBTEST", String.valueOf(addchk));///test
+			}
 		}
 
 		//"Update Time" 갱신

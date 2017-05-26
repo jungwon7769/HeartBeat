@@ -139,7 +139,7 @@ public class FriendRequestActivity extends AppCompatActivity {
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
 		Random ra = new Random();
 		int n = ra.nextInt(1000);
-		friendDAO.addFriend(new FriendDTO("id" + n, "친구지롱" + n, "33F2DD", Constants.Emotion.values()[ra.nextInt(10)]));
+		friendDAO.addFriend(new FriendDTO("id" + n, "친구지롱" + n, "000001", Constants.Emotion.values()[ra.nextInt(10)]));
 		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 
 		txtID.setText("");

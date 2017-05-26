@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -68,6 +69,7 @@ public class FriendDAO extends SQLiteOpenHelper {
 	//ADD Friend Method
 	public boolean addFriend(FriendDTO friend) {
 		long result = -1;
+		Log.d("HBTEST", friend.getID() + "/" + friend.getNick() + "/" + friend.getModeInt() + "/" + friend.getColor());///test
 		SQLiteDatabase db = this.getWritableDatabase();
 
 		try {
@@ -80,11 +82,12 @@ public class FriendDAO extends SQLiteOpenHelper {
 
 		} catch(SQLException e) {
 			e.printStackTrace();
-		}
-		db.close();
+		}finally {
+			db.close();
 
-		if(result == -1) return false;
-		else return true;
+			if (result == -1) return false;
+			else return true;
+		}
 		/*
 		SQLiteDatabase db = this.getWritableDatabase();
 
