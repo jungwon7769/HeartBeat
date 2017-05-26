@@ -112,6 +112,9 @@ public class BluetoothThread implements Runnable {
 		byte buf[] = msg.getBytes();
 		try {
 			outStream.write(buf);
+			outStream.write('\r');
+			outStream.write('\n');
+			outStream.flush();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
