@@ -18,7 +18,7 @@ import java.io.File;
 
 public class MyDetailActivity extends AppCompatActivity {
 	Button btnSetLED, btnSetEmotion, btnTransBzz, btnTransVoice;
-
+	BlueToothHandler
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
