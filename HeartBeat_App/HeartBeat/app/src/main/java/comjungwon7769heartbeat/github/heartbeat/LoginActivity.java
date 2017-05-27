@@ -3,14 +3,11 @@ package comjungwon7769heartbeat.github.heartbeat;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
@@ -18,8 +15,9 @@ public class LoginActivity extends AppCompatActivity {
 	private EditText txtId, txtPwd;
 	private Button btnLogin, btnJoin;
 	private boolean check;
-	private String user_nick;
-	private Constants.Emotion user_mode;
+	//private String user_nick;
+	//private Constants.Emotion user_mode;
+	private MemberDTO dto = new MemberDTO();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -37,20 +35,25 @@ public class LoginActivity extends AppCompatActivity {
 				boolean chk = Login_Usable_Check(txtId.getText().toString(), txtPwd.getText().toString());
 
 				if(chk) {
+					//Toast.makeText(getApplicationContext(),"TRUE",Toast.LENGTH_SHORT).show();
 					//Save User Data
+
 					SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 					SharedPreferences.Editor editor = preference.edit();
-					editor.putString("my_id", txtId.getText().toString());
-					editor.putString("my_pwd", txtPwd.getText().toString());
-					editor.putString("my_nick", user_nick);
-					editor.putInt("my_mode", user_mode.getMode());
+					editor.putString("my_id", dto.getId());
+					editor.putString("my_pwd", dto.getPwd());
+					editor.putString("my_nick", dto.getNick());
+					editor.putInt("my_mode", dto.getMmode());
 					editor.putString("bzz_id", "");
 					editor.putLong("friend_time", 0);
 					editor.commit();
 
+
 					//Move To FriendList Act
 					Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
 					startActivity(intent);
+					Intent intent_back = new Intent(getApplicationContext(), BackgroundService.class);
+					startService(intent_back);
 					finish();
 				} else {
 					//Popup Act
@@ -70,22 +73,33 @@ public class LoginActivity extends AppCompatActivity {
 	} //onCreate()
 
 	private boolean Login_Usable_Check(String id, String pwd) {
-		String inputID = txtId.getText().toString();
-		String inputPWD = txtPwd.getText().toString();
+		//매개변수값이 불필요하게 또 선언돼 있길래 지움_호빈
+		/*String inputID = txtId.getText().toString();
+		String inputPWD = txtPwd.getText().toString();*/
 
 		//ID나 PWD가 최소길이보다 작거나 최대길이보다 긴 경우
-		if(inputID.length() < Constants.minString || inputID.length() > Constants.maxString ||
-				inputPWD.length() < Constants.minString || inputPWD.length() > Constants.maxString) return false;
-
-		//Login Request To Server
-		//Notcomplete
-
-		//if Server 에 회원정보가 없는 경우 return false;
-
-		//Load User Info(nick, mode) From Server
-		user_nick = "현정이지롱";
-		user_mode = Constants.Emotion.overeat;
-
+		if(id.length() < Constants.minString || id.length() > Constants.maxString || pwd.length() < Constants.minString || pwd.length() > Constants.maxString) {
+			return false;
+		} else { //아이디 PWD 길이가 적당한 경우
+			//서버통신_ 회원정보유무검사
+			ServerCommunication sc = new ServerCommunication();
+			sc.makeMsg(id, null, pwd, null, 10, null, null, 0);
+			//Toast.makeText(getApplicationContext(),sc.msg,Toast.LENGTH_SHORT).show();
+			sc.start();
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+			while(sc.wait) {
+				///스레드처리완료 기다리기
+			}
+			if(sc.chkError) {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+				return false;
+			} else {
+				dto = (MemberDTO) sc.final_data;
+				if(dto == null) {//회원정보있음 : 로그인가능
+					return false;
+				}
+			}
+		}
 		return true;
 	} //loginUsableCheck()
 
@@ -93,4 +107,6 @@ public class LoginActivity extends AppCompatActivity {
 		Intent intent = new Intent(this, JoinActivity.class);
 		startActivity(intent);
 	} //join_button()
+
+
 }

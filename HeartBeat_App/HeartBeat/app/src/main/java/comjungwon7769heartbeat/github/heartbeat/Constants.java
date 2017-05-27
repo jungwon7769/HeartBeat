@@ -9,7 +9,8 @@ public class Constants {
 	public static final int maxString = 16;
 	public static final int minString = 4;
 
-	public static final int friendLoad_Interval = 10000;    //millsec -> 5min 300000
+	public static final int friendLoad_Interval = 1000;    //millsec -> 5min 300000
+	public static final int RequestMsg_Interval = 5000;
 
 
 	/*

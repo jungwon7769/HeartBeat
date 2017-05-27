@@ -4,6 +4,7 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
+import android.util.Xml;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,25 +15,110 @@ import java.util.UUID;
 /**
  * Created by AH on 2017-05-16.
  */
-public class BlueToothCommunication {
+public class BlueToothCommunication implements Runnable {
 	//상수 정의
 	public static final int CONNECT_NOT_SUPPORT = -1, CONNECT_NOT_ENABLE = 2, CONNECT_SUCCESS = 1, CONNECT_FAILD = 0;
-	private static final int CODE_EMOTION = 1, CODE_BZZ = 2, CODE_LED = 3, CODE_MY_BZZ = 4;
-	public static final boolean BZZ_MY = true, BZZ_FR = false;
+	public static final int CODE_EMOTION = 1, CODE_BZZ = 2, CODE_LED = 3, CODE_MY_BZZ = 4, CODE_LED_OFF = 5;
+	public static final int CODE_RECEIVE = 6;
+	//public static final boolean BZZ_MY = true, BZZ_FR = false;
 
 	//변수 정의
 	private BluetoothAdapter btAdapter;
 	private BluetoothDevice btDevice;
 	private BluetoothSocket btSock;
 
-	OutputStream outStream;
-	InputStream inStream;
+	private OutputStream outStream;
+	private InputStream inStream;
 
-	public int checkConnect(String name) {
-		if(btSock != null) {
-			closeSock();
+	private int useMode = -1;
+	private Object data;
+	public boolean isRead;
+
+	public BlueToothHandler btHander;
+
+	public BlueToothCommunication(BlueToothHandler btHander) {
+		this.btHander = btHander;
+	}
+
+	@Override
+	public void run() {
+		String msg;
+		isRead = false;
+		try {
+			if(useMode == -1) return;
+			//블루투스 연결
+			int chk = checkConnect(Constants.deviceName);
+
+			switch(chk) {
+				case CONNECT_FAILD:
+					btHander.sendEmptyMessage(CONNECT_FAILD);
+					break;
+				case CONNECT_NOT_ENABLE:
+					btHander.sendEmptyMessage(CONNECT_NOT_ENABLE);
+					break;
+				case CONNECT_NOT_SUPPORT:
+					btHander.sendEmptyMessage(CONNECT_NOT_SUPPORT);
+					break;
+				case CONNECT_SUCCESS:
+					btHander.sendEmptyMessage(CONNECT_SUCCESS);
+					break;
+			}
+			//메시지 생성
+			switch(useMode) {
+				case CODE_EMOTION:
+					if(data == null) return;
+					msg = CODE_EMOTION + "/" + ((Constants.Emotion) data).getColor() + "@";
+					sendMsg(msg);
+					break;
+				case CODE_BZZ:
+					if(data == null) return;
+					msg = CODE_LED_OFF + "@";
+					sendMsg(msg);
+					msg = CODE_BZZ + "/" + data.toString() + "@";
+					sendMsg(msg);
+					break;
+				case CODE_LED:
+					if(data == null) return;
+					msg = CODE_LED + "/" + data.toString() + "@";
+					sendMsg(msg);
+					break;
+				case CODE_MY_BZZ:
+					msg = CODE_MY_BZZ + "@";
+					sendMsg(msg);
+					break;
+				case CODE_LED_OFF:
+					msg = CODE_LED_OFF + "@";
+					sendMsg(msg);
+					break;
+				case CODE_RECEIVE:
+					isRead = readSignal();
+					break;
+			}
+			Thread.sleep(2000);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		Log.i("Test", "tct");
+		//블루투스 연결해제
+		closeSock();
+
+		return;
+
+	}
+
+	public boolean setUseMode(int value) {
+		if(value > 6 || value < 1) return false;
+		else {
+			useMode = value;
+			return true;
+		}
+	}
+
+	public void setData(Object value) {
+		data = value;
+	}
+
+	private int checkConnect(String name) {
+		//if(btSock != null && btSock.isConnected()) return CONNECT_SUCCESS;
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		btDevice = null;
 		btSock = null;
@@ -41,15 +127,12 @@ public class BlueToothCommunication {
 
 		//Device not support bluetooth
 		if(btAdapter == null) {
-			Log.i("Test", "not Support");
 			return CONNECT_NOT_SUPPORT;
 		}
 		//Bluetooth Not Enabled, Request Enabled 필요
 		if(!btAdapter.isEnabled()) {
-			Log.i("Test", "not Enable");
 			return CONNECT_NOT_ENABLE;
 		}
-		Log.i("Test", "bt connect continue");
 		//Paired Device Search
 		Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 		if(pairedDevices.size() > 0) {
@@ -68,7 +151,6 @@ public class BlueToothCommunication {
 		//Socket Connect
 		UUID uuid = UUID.fromString("00001101-0000-1000-8000-00805f9b34fb");    //SPP
 		try {
-			Log.i("Test", "Socket Connect~~");
 			btSock = btDevice.createRfcommSocketToServiceRecord(uuid);
 			btSock.connect();
 			inStream = btSock.getInputStream();
@@ -81,73 +163,37 @@ public class BlueToothCommunication {
 		return CONNECT_FAILD;
 	}
 
-	public boolean sendLED(String color) {
+	private boolean sendMsg(String msg) {
 		if(btSock == null || !btSock.isConnected()) return false;
 
-		String data = CODE_LED + "/" + color + "//";   //Message Create(정해놓은 Protocol에 따라 만든다)
-		byte buf[] = data.getBytes();
+		byte buf[] = msg.getBytes();
 		try {
 			outStream.write(buf);
+			outStream.write('\r');
+			outStream.write('\n');
+			outStream.flush();
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
 
-		try {
-			Thread.sleep(2000);
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		}
-		closeSock();
-		return false;
+		return true;
 	}
 
-	public boolean sendBzz(String color, boolean my_bzz) {
-		if(!btSock.isConnected()) return false;
-
-		String data;
-		//Message Create
-		if(my_bzz = BZZ_MY) {
-			data = CODE_MY_BZZ + "//";
-		}
-		else {
-			data = CODE_BZZ + "/" + color + "//";
-		}
-
-		byte buf[] = data.getBytes();
-		try {
-			Log.i("Test", "Trans~~");
-			outStream.write(buf);
-		} catch(IOException e) {
-			e.printStackTrace();
-		}
-
-		try {
-			Thread.sleep(2000);
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		}
-		closeSock();
-		return false;
-	}
-
-	public boolean sendEmotion(Constants.Emotion emotion) {
+	public boolean readSignal() {
 		if(btSock == null || !btSock.isConnected()) return false;
 
-		String data = CODE_EMOTION + "/" + emotion.getColor() + "//";   //Message Create
-		byte buf[] = data.getBytes();
+		byte[] readBuffer = new byte[10];
 		try {
-			outStream.write(buf);
+			inStream.read(readBuffer);
 		} catch(IOException e) {
 			e.printStackTrace();
 		}
-
-		try {
-			Thread.sleep(2000);
-		} catch(InterruptedException e) {
-			e.printStackTrace();
+		String msg = new String(readBuffer);
+		if(msg.contains("bzz")) {
+			return true;
+		} else {
+			return false;
 		}
-		closeSock();
-		return false;
 	}
 
 	public void closeSock() {

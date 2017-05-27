@@ -3,14 +3,14 @@ package comjungwon7769heartbeat.github.heartbeat;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class FriendDetailActivity extends AppCompatActivity {
 
@@ -116,9 +116,22 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 	//Trans Bzz Button
 	private void transBzz_Click() {
-		//Trans Bzz Using BluetoothComu
-
-		//Notcomplete
+		SharedPreferences pf = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 2, null, null, 0);
+		sc.start();
+		try {
+			sc.join();
+			if(sc.chkError){
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+			}else {
+				if(!(boolean) sc.final_data) {//진동전송 실패시
+					Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+				}
+			}
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 	}
 
 	//Trans Voice Button
@@ -165,6 +178,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 			} else if(data.getIntExtra("Popup", 1) == Constants.popup_recordVoice){
 				String voicePath = data.getStringExtra("voicePath");
 				Log.i("Test", "MyDtail Voice path" + voicePath);
+				transSoundMsg(voicePath);
 			} else if(data.getIntExtra("Popup", 1) == Constants.popup_re){
 				if(data.getBooleanExtra("select", false)) deleteFriend();
 			}
@@ -187,28 +201,77 @@ public class FriendDetailActivity extends AppCompatActivity {
 		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 
 		//Server Comu
-		//Notcomplete
+		SharedPreferences pf = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 9, null, selectFriendDTO.getColor(), 0);
+		sc.start();
+		while(sc.wait){}//스레드 종료 기다리기
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		}else {
+			if(!(boolean) sc.final_data) {//친구색지정오류
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	private void transEmotion(Constants.Emotion e) {
+		//Toast.makeText(getApplicationContext(),selectFriendDTO.getID()+"/"+selectFriendDTO.getNick()+"/"+selectFriendDTO.getColor()+"/"+selectFriendDTO.getModeInt(),Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(),e.getMode()+"",Toast.LENGTH_SHORT).show();
 		//ServerComu 이용
-		//Notcomplete
+		SharedPreferences pf = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 1, null, null, e.getMode());
+		sc.start();
+		while(sc.wait){}//스레드 종료 기다리기
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		}else {
+			if(!(boolean) sc.final_data) {//기분전송 실패시
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
-	private void transSoundMsg(){
-		//Server Comu
-		//Notcomplete
+	private void transSoundMsg(String path){
+		//Toast.makeText(getApplicationContext(),path,Toast.LENGTH_SHORT).show();//test
+		SharedPreferences pf = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		//HB 나중에 여기에 파일 넣기!!
+		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 0, path, null, 0);
+		//Toast.makeText(getApplicationContext(), Environment.getExternalStorageState(),Toast.LENGTH_SHORT).show();
+		sc.start();
+		while(sc.wait){}//스레드 종료 기다리기
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		}else {
+			if(!(boolean) sc.final_data) {//음성전송 실패시
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+		}
 	}
 
 	private void deleteFriend(){
-		//Server Comu
-		//Notcomplete
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		//HB 나중에 여기에 파일 넣기!!
+		sc.makeMsg(preference.getString("my_id","0"), selectFriendDTO.getID(), null, null, 8, null, null, 0);
+		sc.start();
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			return;
+		}else {
+			while(sc.wait) {
+			}//스레드 종료 기다리기
+			if(!(boolean) sc.final_data) {//친구삭제 실패시
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+		}
 
 		//App DataBase
 		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
 		friendDAO.deleteFriend(selectFriendDTO.getID());
 		//App Data
-		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		if(selectFriendDTO.getID().equals(preference.getString("bzz_id", ""))) {
 			SharedPreferences.Editor editor = preference.edit();
 			editor.putString("bzz_id", "");

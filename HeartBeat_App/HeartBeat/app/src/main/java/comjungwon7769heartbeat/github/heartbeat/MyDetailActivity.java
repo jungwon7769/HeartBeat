@@ -5,10 +5,8 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
-import android.media.MediaRecorder;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +17,7 @@ import java.io.File;
 
 public class MyDetailActivity extends AppCompatActivity {
 	Button btnSetLED, btnSetEmotion, btnTransBzz, btnTransVoice;
-
+	BlueToothHandler btHandler = new BlueToothHandler(this);
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -90,26 +88,11 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void transBzzToMe_Click() {
 		//Trans Bzz Using BluetoothComu
-		//Notcomplete
-		BlueToothCommunication btComu = new BlueToothCommunication();
-		int status = btComu.checkConnect(Constants.deviceName);
-		Log.i("Test", "tt");
-
-		switch(status){
-			case BlueToothCommunication.CONNECT_NOT_SUPPORT :
-				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-				intent.putExtra("Popup", Constants.popup_ok);
-				intent.putExtra("Message", getText(R.string.bt_notSupport));
-				startActivity(intent);
-				break;
-			case BlueToothCommunication.CONNECT_NOT_ENABLE:
-				break;
-			case BlueToothCommunication.CONNECT_FAILD:
-				break;
-			case BlueToothCommunication.CONNECT_SUCCESS:
-				btComu.sendBzz("", BlueToothCommunication.BZZ_MY);
-				break;
-		}
+		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		btComu.btHander = this.btHandler;
+		btComu.setUseMode(btComu.CODE_MY_BZZ);
+		Thread thread = new Thread(btComu);
+		thread.start();
 	}
 
 	private void transSoundMsgToMe_Click() {
@@ -137,40 +120,31 @@ public class MyDetailActivity extends AppCompatActivity {
 	} //onActivityResult
 
 	private void setLED(String color) {
-		Log.i("Test", "setLED~~" + color);
 		//Bluetooth Comu - color Trans
-		//Notcomplete
-		BlueToothCommunication btComu = new BlueToothCommunication();
-		int status = btComu.checkConnect(Constants.deviceName);
-
-		switch(status){
-			case BlueToothCommunication.CONNECT_NOT_SUPPORT :
-				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-				intent.putExtra("Popup", Constants.popup_ok);
-				intent.putExtra("Message", getText(R.string.bt_notSupport));
-				startActivity(intent);
-				break;
-			case BlueToothCommunication.CONNECT_NOT_ENABLE:
-				break;
-			case BlueToothCommunication.CONNECT_FAILD:
-				break;
-			case BlueToothCommunication.CONNECT_SUCCESS:
-				btComu.sendLED(color);
-				break;
-		}
+		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		btComu.setUseMode(btComu.CODE_LED);
+		btComu.setData(color);
+		Thread thread = new Thread(btComu);
+		thread.start();
 	}
 
 	private void setEmotion(Constants.Emotion e) {
-		Log.i("Test", e.name());
-		//ServerComu 이용
-		//서버에 내기분변경 정보 전송
-		//Notcomplete
-
 		//SAVE select Mode (Preference Data)
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preference.edit();
-		editor.putInt("my_mode", e.getMode());
-		editor.commit();
+
+		//서버통신_ 내기분변경 정보 전송
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(preference.getString("my_id","0"),null,null,null,5,null,null,e.getMode());
+		sc.start();
+		while(sc.wait){
+			///스레드처리완료 기다리기
+		}
+		if((boolean)sc.final_data) {//기분설정 성공
+			editor.putInt("my_mode", e.getMode());
+			editor.commit();
+		}
+
 
 		//Change Emiton Image
 		ImageView user_mode = (ImageView) findViewById(R.id.myDt_imgMode);
@@ -181,24 +155,11 @@ public class MyDetailActivity extends AppCompatActivity {
 		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
 
 		//Bluetooth Play
-		BlueToothCommunication btComu = new BlueToothCommunication();
-		int status = btComu.checkConnect(Constants.deviceName);
-
-		switch(status){
-			case BlueToothCommunication.CONNECT_NOT_SUPPORT :
-				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-				intent.putExtra("Popup", Constants.popup_ok);
-				intent.putExtra("Message", getText(R.string.bt_notSupport));
-				startActivity(intent);
-				break;
-			case BlueToothCommunication.CONNECT_NOT_ENABLE:
-				break;
-			case BlueToothCommunication.CONNECT_FAILD:
-				break;
-			case BlueToothCommunication.CONNECT_SUCCESS:
-				btComu.sendEmotion(e);
-				break;
-		}
+		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		btComu.setUseMode(btComu.CODE_EMOTION);
+		btComu.setData(e);
+		Thread thread = new Thread(btComu);
+		thread.start();
 	}
 
 	private void playSoundMsg(String path) {

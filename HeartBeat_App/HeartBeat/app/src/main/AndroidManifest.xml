@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
     <uses-permission android:name="android.permission.BLUETOOTH_ADMIN"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
@@ -56,9 +57,16 @@
         </activity>
         <activity android:name=".MessageListActivity">
         </activity>
-        <activity android:name=".AlaramListActivity"
+        <activity
+            android:name=".AlaramListActivity"
             android:label="@string/almListAct_Label">
         </activity>
+
+        <service
+            android:name=".BackgroundService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>

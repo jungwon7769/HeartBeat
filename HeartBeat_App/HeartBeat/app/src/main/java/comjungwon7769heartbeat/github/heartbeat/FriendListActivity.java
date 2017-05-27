@@ -5,9 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.media.Image;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +18,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Random;
+import java.util.HashMap;
+import java.util.Iterator;
 
 public class FriendListActivity extends AppCompatActivity {
 	public static Context listContext;
@@ -42,11 +41,13 @@ public class FriendListActivity extends AppCompatActivity {
 		friend_list = new ArrayList<>();
 
 		//Friend List Load ***
+
 		//StoreFriendTime 검사
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		long saveTime = preference.getLong("friend_time", 0);
 		//if 저장한지 오래된경우 FriendList_Load 호출(서버에서 친구목록 가져옴)
 		if((System.currentTimeMillis() - saveTime) > Constants.friendLoad_Interval) {
+
 			FriendList_Load();
 		}
 
@@ -145,10 +146,36 @@ public class FriendListActivity extends AppCompatActivity {
 	//친구목록 서버로부터 불러오기
 	private ArrayList<FriendDTO> FriendList_Load() {
 		//Notcomplete
-		Log.i("Test", "FriendList_Load");
+		Log.i("HBTest", "FriendList_Load");
+		//서버통신
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(preference.getString("my_id","0"),null, null, null, 13, null, null, 0);
+		sc.start();
+		while(sc.wait){
+			//스레드 기다리기
+		}
+		HashMap<String, FriendDTO> f_list = (HashMap<String, FriendDTO>)sc.final_data;
+		if(f_list==null){//친구없음
+			Toast.makeText(getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
+		}else{
+			//친구 1명이상
+			FriendDAO friendDAO = new FriendDAO(getApplicationContext(), FriendDAO.DataBase_name, null, 1);
+			friendDAO.deleteAll();
+			Iterator it = f_list.keySet().iterator();
+			while (it.hasNext()) {
+				String fid = (String) it.next();
+				FriendDTO dto = f_list.get(fid);
+				Log.d("HBTEST", dto.getID() + "/" + dto.getNick() + "/" + dto.getColor() + "/" + dto.getModeInt());///test
+				//friendDAO.addFriend(new FriendDTO(dto.getID(), dto.getNick(), dto.getColor(), Constants.Emotion.values()[dto.getModeInt()]));
+				friendDAO.addFriend(new FriendDTO(dto.getID(), dto.getNick(), dto.getColor(), Constants.Emotion.values()[dto.getModeInt()]));
+				//friendDAO.addFriend(new FriendDTO("id", "친구지롱" , "33F2DD", Constants.Emotion.values()[0]));
+				//((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+				//Log.d("HBTEST", String.valueOf(addchk));///test
+			}
+		}
 
 		//"Update Time" 갱신
-		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preference.edit();
 		editor.putLong("friend_time", System.currentTimeMillis());
 		editor.commit();

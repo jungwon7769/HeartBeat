@@ -37,6 +37,8 @@ public class PopupActivity extends AppCompatActivity {
 	private MediaRecorder recorder;
 	private String recordFilePath;
 
+	public BlueToothHandler btHandler = new BlueToothHandler(this);
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -77,18 +79,7 @@ public class PopupActivity extends AppCompatActivity {
 			case Constants.popup_msgBzz:
 				popup_msgBzz(intent);
 				break;
-			/*
-			public static final int popup_re = 1;   //Popup = 1, To(Message = String), From(select = boolean)
 
-	public static final int popup_pickEmotion = 10;  //Popup = 10, To (), From (selectedEmotion = int)
-	public static final int popup_pickColor = 11;    //Popup = 11, To (), From (selectedColor = String)
-	public static final int popup_recordVoice = 12;     //Popup = 12, To(), From(??) 녹음부분 좀더 공부한 뒤에 다시 적겠음
-
-	public static final int popup_msgFriend = 20;   //Popup = 20, To(ID = String, Time = long), From(ID = String, Time = long, select = boolean)
-	public static final int popup_msgVoice = 21;    //Popup = 21, To(ID = String, Nick = String, Time = long, Path = String), From(ID = String, Time = long, select = boolean)
-	public static final int popup_msgEmotion = 22;  //Popup = 22, To(ID = String, Nick = String, Emotion = int, Time = long), From(ID = String, Time = long, select = boolean)
-	public static final int popup_msgBzz = 23;      //Popup = 23, To(ID = String, Nick = String, Count = int, Time = long), From(ID = String, Time = long, select = boolean)
-			 */
 
 		}
 
@@ -421,24 +412,11 @@ public class PopupActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				//NotComplete
 				//Bluetooth Comu
-				BlueToothCommunication btComu = new BlueToothCommunication();
-				int status = btComu.checkConnect(Constants.deviceName);
-
-				switch(status){
-					case BlueToothCommunication.CONNECT_NOT_SUPPORT :
-						Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-						intent.putExtra("Popup", Constants.popup_ok);
-						intent.putExtra("Message", getText(R.string.bt_notSupport));
-						startActivity(intent);
-						break;
-					case BlueToothCommunication.CONNECT_NOT_ENABLE:
-						break;
-					case BlueToothCommunication.CONNECT_FAILD:
-						break;
-					case BlueToothCommunication.CONNECT_SUCCESS:
-						btComu.sendEmotion(mode);
-						break;
-				}
+				BlueToothCommunication btComu = new BlueToothCommunication(((PopupActivity)getParent()).btHandler);
+				btComu.setUseMode(btComu.CODE_EMOTION);
+				btComu.setData(mode);
+				Thread thread = new Thread(btComu);
+				thread.start();
 
 				try {
 					if(player != null) {
@@ -554,7 +532,9 @@ public class PopupActivity extends AppCompatActivity {
 	}
 
 	private void playVoice(String path) {
+		//Toast.makeText(getApplicationContext(), path, Toast.LENGTH_SHORT);
 		File file = new File(path);
+        //Toast.makeText(getApplicationContext(), path,Toast.LENGTH_SHORT).show();//test
 		//파일이 없는 경우
 		if(!file.exists()) {
 			Toast.makeText(getApplicationContext(), "File Path ERROR", Toast.LENGTH_SHORT).show();

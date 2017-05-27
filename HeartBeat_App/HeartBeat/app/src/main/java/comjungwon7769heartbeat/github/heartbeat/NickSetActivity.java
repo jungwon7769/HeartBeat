@@ -3,8 +3,8 @@ package comjungwon7769heartbeat.github.heartbeat;
 import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
@@ -58,34 +58,39 @@ public class NickSetActivity extends AppCompatActivity {
 	}
 
 	private void OK_Button(String nick){
-		//Chcek Length
-		if(nick.length() > Constants.maxString) {
-			Toast.makeText(getApplicationContext(), "닉네임의 길이는 " + Constants.maxString + "보다 짧아야합니다", Toast.LENGTH_SHORT).show();
-			return;
-		}
-		else if(nick.length() < Constants.minString) {
-			Toast.makeText(getApplicationContext(), "닉네임의 길이는 " + Constants.minString + "보다 길어야합니다", Toast.LENGTH_SHORT).show();
-			return;
-		}
-
 		//Preference Save
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preference.edit();
-		editor.putString("my_nick", nick);
-		editor.commit();
 
-		//Server Comu
-		//Notcomplete
-
-
-		//popup
-		Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-		intent.putExtra("Popup", Constants.popup_ok);
-		intent.putExtra("Message", getText(R.string.NickSetSuccess));
-		startActivity(intent);
-		txtNick.setText("");
-		btnNickOK.setEnabled(false);
-		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+		//서버통신
+		//ServerCommunication
+		String my_id = preference.getString("my_id","0");
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(my_id, null, null, nick, 4, null, null, 0);
+		//Toast.makeText(getApplicationContext(),sc.msg,Toast.LENGTH_SHORT).show();//test
+		sc.start();
+		Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+		while(sc.wait){
+			///스레드처리완료 기다리기
+		}
+		if(sc.chkError){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		}else {
+			if((boolean) sc.final_data) {//닉네임설정 성공
+				editor.putString("my_nick", nick);
+				editor.commit();
+				//popup
+				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+				intent.putExtra("Popup", Constants.popup_ok);
+				intent.putExtra("Message", getText(R.string.NickSetSuccess));
+				startActivity(intent);
+				txtNick.setText("");
+				btnNickOK.setEnabled(false);
+				((FriendListActivity) FriendListActivity.listContext).dataRefresh();
+			} else {
+				Toast.makeText(getApplicationContext(), "닉네임변경 실패..server", Toast.LENGTH_SHORT).show();
+			}
+		}
 
 	}
 }
