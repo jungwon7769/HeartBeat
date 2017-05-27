@@ -14,10 +14,15 @@ public class BackgroundService extends Service {
 
 	@Override
 	public void onCreate(){
-		Log.i("Test","service~~");
+		//Start Bluetooth Signal Receiver Thread
 		btThread = new BTSignalThread(getApplicationContext());
 		Thread thread_bt = new Thread(btThread);
 		thread_bt.start();
+
+		//Start Message Receive From Server Thread
+		svThread = new RequestMsgThread(getApplicationContext());
+		Thread thread_sv = new Thread(svThread);
+		thread_sv.start();
 	}
 
 	@Override

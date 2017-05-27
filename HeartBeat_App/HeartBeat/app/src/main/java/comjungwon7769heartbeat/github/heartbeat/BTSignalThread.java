@@ -64,7 +64,7 @@ public class BTSignalThread implements Runnable {
 		svComu.makeMsg(preference.getString("my_id", "0"), id, null, null, 2, null, null, 0);   //msg 만듬
 		svComu.start();
 		try {
-			svComu.join();  //wait
+			svComu.join();  //thread wait
 			if(svComu.chkError) {   //진동전송 실패시
 				return false;
 			} else {

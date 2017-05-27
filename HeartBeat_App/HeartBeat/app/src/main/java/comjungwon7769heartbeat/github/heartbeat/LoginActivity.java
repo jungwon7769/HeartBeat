@@ -52,6 +52,8 @@ public class LoginActivity extends AppCompatActivity {
 					//Move To FriendList Act
 					Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
 					startActivity(intent);
+					Intent intent_back = new Intent(getApplicationContext(), BackgroundService.class);
+					startService(intent_back);
 					finish();
 				} else {
 					//Popup Act
