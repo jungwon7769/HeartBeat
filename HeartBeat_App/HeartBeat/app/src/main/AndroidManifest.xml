@@ -57,9 +57,16 @@
         </activity>
         <activity android:name=".MessageListActivity">
         </activity>
-        <activity android:name=".AlaramListActivity"
+        <activity
+            android:name=".AlaramListActivity"
             android:label="@string/almListAct_Label">
         </activity>
+
+        <service
+            android:name=".BackgroundService"
+            android:enabled="true"
+            android:exported="true">
+        </service>
     </application>
 
 </manifest>

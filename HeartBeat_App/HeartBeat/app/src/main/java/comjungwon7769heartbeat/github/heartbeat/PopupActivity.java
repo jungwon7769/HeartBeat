@@ -413,7 +413,7 @@ public class PopupActivity extends AppCompatActivity {
 				//NotComplete
 				//Bluetooth Comu
 				BlueToothCommunication btComu = new BlueToothCommunication(((PopupActivity)getParent()).btHandler);
-				btComu.setSendMode(btComu.CODE_EMOTION);
+				btComu.setUseMode(btComu.CODE_EMOTION);
 				btComu.setData(mode);
 				Thread thread = new Thread(btComu);
 				thread.start();

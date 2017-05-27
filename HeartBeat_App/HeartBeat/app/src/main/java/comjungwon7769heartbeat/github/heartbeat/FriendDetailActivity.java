@@ -120,13 +120,17 @@ public class FriendDetailActivity extends AppCompatActivity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 2, null, null, 0);
 		sc.start();
-		while(sc.wait){}//스레드 종료 기다리기
-		if(sc.chkError){
-			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
-		}else {
-			if(!(boolean) sc.final_data) {//진동전송 실패시
+		try {
+			sc.join();
+			if(sc.chkError){
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+			}else {
+				if(!(boolean) sc.final_data) {//진동전송 실패시
+					Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+				}
 			}
+		} catch(InterruptedException e) {
+			e.printStackTrace();
 		}
 	}
 

@@ -20,6 +20,7 @@ public class BlueToothHandler extends Handler{
 
     @Override
     public void handleMessage(Message msg) {
+        if(mContext == null) return;
         switch(msg.what) {
             case BlueToothCommunication.CONNECT_FAILD:
                 Toast.makeText(mContext, "FAILD", Toast.LENGTH_SHORT).show();

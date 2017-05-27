@@ -34,7 +34,8 @@ public class LoadingActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loading);
-
+        Intent intent = new Intent(getApplicationContext(), BackgroundService.class);
+        startService(intent);
         //Android Version Check
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             ArrayList<String> arrPms = new ArrayList<>();

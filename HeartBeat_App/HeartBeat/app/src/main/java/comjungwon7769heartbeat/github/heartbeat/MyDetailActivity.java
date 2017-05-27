@@ -7,7 +7,6 @@ import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -91,7 +90,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		//Trans Bzz Using BluetoothComu
 		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
 		btComu.btHander = this.btHandler;
-		btComu.setSendMode(btComu.CODE_MY_BZZ);
+		btComu.setUseMode(btComu.CODE_MY_BZZ);
 		Thread thread = new Thread(btComu);
 		thread.start();
 	}
@@ -123,7 +122,7 @@ public class MyDetailActivity extends AppCompatActivity {
 	private void setLED(String color) {
 		//Bluetooth Comu - color Trans
 		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
-		btComu.setSendMode(btComu.CODE_LED);
+		btComu.setUseMode(btComu.CODE_LED);
 		btComu.setData(color);
 		Thread thread = new Thread(btComu);
 		thread.start();
@@ -157,7 +156,7 @@ public class MyDetailActivity extends AppCompatActivity {
 
 		//Bluetooth Play
 		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
-		btComu.setSendMode(btComu.CODE_EMOTION);
+		btComu.setUseMode(btComu.CODE_EMOTION);
 		btComu.setData(e);
 		Thread thread = new Thread(btComu);
 		thread.start();
