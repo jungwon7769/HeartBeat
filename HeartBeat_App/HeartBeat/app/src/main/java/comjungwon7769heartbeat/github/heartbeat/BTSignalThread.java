@@ -34,6 +34,11 @@ public class BTSignalThread implements Runnable {
 					while(count > 0) {          //10번까지 시도
 						if(svTrans(bzz_id)) break;  //전송성공시 그만시도
 						count--;
+						try {
+							Thread.sleep(1000);
+						} catch(InterruptedException e) {
+							e.printStackTrace();
+						}
 					}
 				} //try trans
 
