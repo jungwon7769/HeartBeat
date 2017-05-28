@@ -23,16 +23,16 @@ public class BlueToothHandler extends Handler{
         if(mContext == null) return;
         switch(msg.what) {
             case BlueToothCommunication.CONNECT_FAILD:
-                Toast.makeText(mContext, "FAILD", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getText(R.string.bt_notConnect), Toast.LENGTH_SHORT).show();
                 break;
             case BlueToothCommunication.CONNECT_NOT_ENABLE:
-                Toast.makeText(mContext, "NOT ENABLED", Toast.LENGTH_SHORT).show();
+                Toast.makeText(mContext, mContext.getText(R.string.bt_notEnable), Toast.LENGTH_SHORT).show();
                 break;
             case BlueToothCommunication.CONNECT_NOT_SUPPORT:
                 Toast.makeText(mContext, mContext.getText(R.string.bt_notSupport), Toast.LENGTH_SHORT).show();
                 break;
             case BlueToothCommunication.CONNECT_SUCCESS:
-                Toast.makeText(mContext, "CONNECT SUCCES", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(mContext, "CONNECT SUCCES", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

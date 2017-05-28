@@ -17,6 +17,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -53,7 +54,7 @@ public class FriendListFragment extends Fragment {
 		//if 저장한지 오래된경우 FriendList_Load 호출(서버에서 친구목록 가져옴)
 		if((System.currentTimeMillis() - saveTime) > Constants.friendLoad_Interval) {
 
-			//FriendList_Load();
+			FriendList_Load();
 		}
 
 		//App Database 에서 친구목록 가져오기
@@ -137,7 +138,7 @@ public class FriendListFragment extends Fragment {
 		displayUserInfo();
 
 		//FrinedList_Load 호출(Server)
-		//FriendList_Load();
+		FriendList_Load();
 
 		FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
 		friend_list = friendDAO.listFriend();
@@ -160,7 +161,7 @@ public class FriendListFragment extends Fragment {
 		}
 		HashMap<String, FriendDTO> f_list = (HashMap<String, FriendDTO>) sc.final_data;
 		if(f_list == null) {//친구없음
-			//Toast.makeText(getActivity().getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(getActivity().getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
 		} else {
 			//친구 1명이상
 			FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);

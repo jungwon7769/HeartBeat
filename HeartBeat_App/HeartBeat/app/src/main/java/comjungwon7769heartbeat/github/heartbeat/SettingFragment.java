@@ -4,21 +4,23 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class SettingFragment extends Fragment {
 	EditText txtNick;
 	Button btnNickOK;
+	TextView txtBTName;
+	View btNameView;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -29,6 +31,12 @@ public class SettingFragment extends Fragment {
 	public void onStart() {
 		super.onStart();
 
+		nickLayoutSetting();
+		btNameLayoutSetting();
+
+	}
+
+	private void nickLayoutSetting(){
 		//Layout Link
 		txtNick = (EditText) getView().findViewById(R.id.setting_txtNick);
 		btnNickOK = (Button) getView().findViewById(R.id.setting_btnNickOK);
@@ -36,7 +44,7 @@ public class SettingFragment extends Fragment {
 		btnNickOK.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				OK_Button(txtNick.getText().toString());
+				nick_OK_Button(txtNick.getText().toString());
 			}
 		});
 
@@ -63,25 +71,25 @@ public class SettingFragment extends Fragment {
 		txtNick.setText(preference.getString("my_nick", "0"));
 	}
 
-	private void OK_Button(String nick) {
+	private void nick_OK_Button(String nick) {
 		//Preference Save
 		SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		SharedPreferences.Editor editor = preference.edit();
 
 		//서버통신
 		//ServerCommunication
-		String my_id = preference.getString("my_id", "0");
+		String my_id = preference.getString("my_id","0");
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(my_id, null, null, nick, 4, null, null, 0);
 		//Toast.makeText(getApplicationContext(),sc.msg,Toast.LENGTH_SHORT).show();//test
 		sc.start();
 		Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
-		while(sc.wait) {
+		while(sc.wait){
 			///스레드처리완료 기다리기
 		}
-		if(sc.chkError) {
+		if(sc.chkError){
 			Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
-		} else {
+		}else {
 			if((boolean) sc.final_data) {//닉네임설정 성공
 				editor.putString("my_nick", nick);
 				editor.commit();
@@ -92,11 +100,28 @@ public class SettingFragment extends Fragment {
 				startActivity(intent);
 				txtNick.setText("");
 				btnNickOK.setEnabled(false);
-				((MainActivity) MainActivity.mainContext).frListRefresh();
+				((MainActivity)MainActivity.mainContext).frListRefresh();
 			} else {
-				Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getActivity().getApplicationContext(), getActivity().getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			}
 		}
 
 	}
+
+	private void btNameLayoutSetting(){
+		txtBTName = (TextView) getView().findViewById(R.id.setting_ViewBT);
+		SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		txtBTName.setText(preference.getString("btName", "0"));
+
+		btNameView = (View)getView().findViewById(R.id.setting_ViewBT);
+		btNameView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+
+			}
+		});
+
+
+	}
+
 }

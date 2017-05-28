@@ -22,7 +22,7 @@ import java.util.HashMap;
  */
 public class ServerCommunication extends Thread{
 
-	private final String sv_URL =  "192.168.43.156";//내 아이피주소!
+	private final String sv_URL =  "1.236.102.161";//내 아이피주소!
 	private final int sv_PORT = 1200;
 	public String file_name = null;
 	//private File sound;

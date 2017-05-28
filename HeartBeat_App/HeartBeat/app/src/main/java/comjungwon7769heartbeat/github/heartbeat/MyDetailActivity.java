@@ -88,7 +88,8 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void transBzzToMe_Click() {
 		//Trans Bzz Using BluetoothComu
-		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
 		btComu.btHander = this.btHandler;
 		btComu.setUseMode(btComu.CODE_MY_BZZ);
 		Thread thread = new Thread(btComu);
@@ -121,7 +122,8 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void setLED(String color) {
 		//Bluetooth Comu - color Trans
-		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_LED);
 		btComu.setData(color);
 		Thread thread = new Thread(btComu);
@@ -140,9 +142,15 @@ public class MyDetailActivity extends AppCompatActivity {
 		while(sc.wait){
 			///스레드처리완료 기다리기
 		}
-		if((boolean)sc.final_data) {//기분설정 성공
-			editor.putInt("my_mode", e.getMode());
-			editor.commit();
+		if(sc.chkError) {
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		} else {
+			if((boolean) sc.final_data) {//닉네임설정 성공
+				editor.putInt("my_mode", e.getMode());
+				editor.commit();
+			} else {
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
 		}
 
 
@@ -155,7 +163,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		((MainActivity)MainActivity.mainContext).frListRefresh();
 
 		//Bluetooth Play
-		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_EMOTION);
 		btComu.setData(e);
 		Thread thread = new Thread(btComu);

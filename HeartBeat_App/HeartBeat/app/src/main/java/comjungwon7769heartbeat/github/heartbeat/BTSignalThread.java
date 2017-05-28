@@ -20,15 +20,15 @@ public class BTSignalThread implements Runnable {
 
 	@Override
 	public void run() {
+		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		int count;
-		btComu = new BlueToothCommunication(this.btHandler);
+		btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_RECEIVE);
 
 		while(true) {
 			count = 10;
 			if(btSignalReceive()) {  //if Receive Bluetooth Signal
 				//Bzz Friend ID Load From PreferenceData
-				SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 				String bzz_id = preference.getString("bzz_id", null);
 				if(bzz_id != null) {         //Trans To Server
 					while(count > 0) {          //10번까지 시도

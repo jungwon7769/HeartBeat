@@ -75,6 +75,13 @@ public class RequestMsgThread implements Runnable {
 
 	//푸시알림 띄움
 	public void pushAllarm(MsgDTO message) {
+		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		int setPush = preference.getInt("set_push", 0);
+
+		if(setPush == Constants.set_push_no) {
+			return;
+		}
+
 		NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(mContext.NOTIFICATION_SERVICE);
 
 		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, new Intent(mContext, LoadingActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
@@ -86,8 +93,13 @@ public class RequestMsgThread implements Runnable {
 		if(message.getFlag() == Constants.msgFlag_Bzz) builder.setNumber(message.getCount());
 		builder.setContentTitle(message.getSender());
 		builder.setContentText("내용");
-		builder.setDefaults(Notification.DEFAULT_ALL);
 		builder.setContentIntent(pendingIntent).setAutoCancel(true);
+
+		if(setPush == Constants.set_push_bzz)
+			builder.setDefaults(Notification.DEFAULT_VIBRATE | Notification.DEFAULT_LIGHTS);
+		else if(setPush == Constants.set_push_sound)
+			builder.setDefaults(Notification.DEFAULT_SOUND | Notification.DEFAULT_LIGHTS);
+		else if(setPush == Constants.set_push_both) builder.setDefaults(Notification.DEFAULT_ALL);
 
 		notificationManager.notify(1, builder.build());
 	}

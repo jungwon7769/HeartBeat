@@ -78,6 +78,8 @@
     <string name="msg_friend_title">친구요청</string>
 
     <string name="bt_notSupport">해당 기기가 블루투스를 지원하지 않습니다</string>
+    <string name="bt_notEnable">블루투스가 활성화되어있지 않습니다</string>
+    <string name="bt_notConnect">블루투스가 연결되어있지 않습니다</string>
 
     <string name="sv_notConnect">서버와 연결할 수 없습니다</string>
     <string name="sv_waiting">서버로 요청중...</string>
@@ -87,4 +89,7 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="setting_btName">기기</string>
+    <string name="setting_select_push">푸시알림</string>
+    <string name="setting_select_BTbzz">기기진동수신</string>
 </resources>

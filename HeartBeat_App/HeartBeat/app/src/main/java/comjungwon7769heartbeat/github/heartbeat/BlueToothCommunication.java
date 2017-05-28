@@ -3,8 +3,6 @@ package comjungwon7769heartbeat.github.heartbeat;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.util.Log;
-import android.util.Xml;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +21,8 @@ public class BlueToothCommunication implements Runnable {
 	//public static final boolean BZZ_MY = true, BZZ_FR = false;
 
 	//변수 정의
+	private String btName;
+
 	private BluetoothAdapter btAdapter;
 	private BluetoothDevice btDevice;
 	private BluetoothSocket btSock;
@@ -36,7 +36,8 @@ public class BlueToothCommunication implements Runnable {
 
 	public BlueToothHandler btHander;
 
-	public BlueToothCommunication(BlueToothHandler btHander) {
+	public BlueToothCommunication(String name, BlueToothHandler btHander) {
+		this.btName = name;
 		this.btHander = btHander;
 	}
 
@@ -47,7 +48,7 @@ public class BlueToothCommunication implements Runnable {
 		try {
 			if(useMode == -1) return;
 			//블루투스 연결
-			int chk = checkConnect(Constants.deviceName);
+			int chk = checkConnect(btName);
 
 			switch(chk) {
 				case CONNECT_FAILD:

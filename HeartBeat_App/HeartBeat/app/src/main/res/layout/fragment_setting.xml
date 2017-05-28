@@ -16,67 +16,129 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"
-        android:dividerPadding="1dp"
         android:divider="@drawable/divider"
+        android:orientation="vertical"
         android:showDividers="middle">
 
-        <TextView
-            android:id="@+id/setting_titleNick"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="@string/nickname"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/textSize_regular"/>
+            android:paddingTop="@dimen/margin_layout"
+            android:paddingBottom="@dimen/margin_layout"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/setting_titleNick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/nickname"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_mini"/>
+
+            <LinearLayout
+                android:id="@+id/setting_layout_nick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/setting_txtNick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/input_nick"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/textSize_xmini"/>
+
+
+                <Button
+                    android:id="@+id/setting_btnNickOK"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="#00000000"
+                    android:enabled="false"
+                    android:text="@string/ok"
+                    android:textSize="@dimen/textSize_xmini"/>
+
+            </LinearLayout>
+        </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/setting_layout_nick"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+            android:paddingTop="@dimen/margin_layout"
+            android:paddingBottom="@dimen/margin_layout"
+            android:orientation="vertical">
 
+            <TextView
+                android:id="@+id/setting_titleBT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/setting_btName"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_mini"/>
 
-            <EditText
-                android:id="@+id/setting_txtNick"
+            <TextView
+                android:id="@+id/setting_ViewBT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:hint="@string/input_nick"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/textSize_mini"/>
-
-
-            <Button
-                android:id="@+id/setting_btnNickOK"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/selector_button"
-                android:enabled="false"
-                android:text="@string/ok"
-                android:textSize="@dimen/textSize_mini"/>
+                android:textSize="@dimen/textSize_xmini"/>
 
         </LinearLayout>
 
-
-        <TextView
-            android:id="@+id/setting_titleBT"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:text="기기"
-            android:textColor="@color/colorPrimary"
-            android:textSize="@dimen/textSize_regular"/>
+            android:paddingTop="@dimen/margin_layout"
+            android:paddingBottom="@dimen/margin_layout"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
-        <TextView
-            android:id="@+id/setting_ViewBT"
-            android:layout_width="wrap_content"
+            <TextView
+                android:id="@+id/setting_titlePush"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/setting_select_push"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_mini"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_search_accent_24dp"/>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="ddd"
-            android:textColor="@color/colorPrimaryText"
-            android:textSize="@dimen/textSize_mini"/>
+            android:paddingTop="@dimen/margin_layout"
+            android:paddingBottom="@dimen/margin_layout"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
+            <TextView
+                android:id="@+id/setting_titleBTbzz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/setting_select_BTbzz"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_mini"/>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:src="@drawable/ic_search_accent_24dp"/>
+
+        </RelativeLayout>
     </LinearLayout>
 </RelativeLayout>

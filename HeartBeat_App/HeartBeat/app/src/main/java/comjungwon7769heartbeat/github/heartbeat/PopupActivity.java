@@ -1,7 +1,9 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -412,7 +414,8 @@ public class PopupActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				//NotComplete
 				//Bluetooth Comu
-				BlueToothCommunication btComu = new BlueToothCommunication(((PopupActivity)getParent()).btHandler);
+				SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+				BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), ((PopupActivity)getParent()).btHandler);
 				btComu.setUseMode(btComu.CODE_EMOTION);
 				btComu.setData(mode);
 				Thread thread = new Thread(btComu);

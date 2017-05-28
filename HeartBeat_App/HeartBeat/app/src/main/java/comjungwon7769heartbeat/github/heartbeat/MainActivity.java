@@ -21,6 +21,9 @@ public class MainActivity extends AppCompatActivity {
 		setContentView(R.layout.activity_main);
 
 		mainContext = this;
+		tab_frList = new FriendListFragment();
+		tab_msgFlagList = new AlaramListFragment();
+		tab_setting = new SettingFragment();
 
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tab);
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_group_white_50dp));
@@ -53,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public void frListRefresh(){
-		this.tab_frList.dataRefresh();
+//		this.tab_frList.dataRefresh();
 	}
 
 	public class PagerAdapter extends FragmentStatePagerAdapter {
@@ -68,13 +71,10 @@ public class MainActivity extends AppCompatActivity {
 		public Fragment getItem(int position) {
 			switch(position) {
 				case 0:
-					tab_frList = new FriendListFragment();
 					return tab_frList;
 				case 1:
-					tab_msgFlagList = new AlaramListFragment();
 					return tab_msgFlagList;
 				case 2:
-					tab_setting = new SettingFragment();
 					return tab_setting;
 			}
 			return null;

@@ -46,6 +46,9 @@ public class LoginActivity extends AppCompatActivity {
 					editor.putInt("my_mode", dto.getMmode());
 					editor.putString("bzz_id", "");
 					editor.putLong("friend_time", 0);
+					editor.putString("btName", Constants.defaultDeviceName);
+					editor.putBoolean("set_btBzz", Constants.set_btBzz_ok);
+					editor.putInt("set_push", Constants.set_push_both);
 					editor.commit();
 
 
