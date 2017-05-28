@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +17,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 	private FriendDTO selectFriendDTO;
 	private Button btnBzzColor, btnTransEmotion, btnTransBzz, btnTransVoice, btnBzzFriend, btnDeleteFriend;
+	private FloatingActionButton btnMsg;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +36,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 		btnTransVoice = (Button) findViewById(R.id.frDt_btnTransVoice);
 		btnBzzFriend = (Button)findViewById(R.id.frDt_btnBzzFriend);
 		btnDeleteFriend = (Button)findViewById(R.id.frDt_btnDeleteFriend);
+		btnMsg = (FloatingActionButton)findViewById(R.id.frDt_btnMsg);
 
 		btnBzzColor.setOnClickListener(new Button.OnClickListener() {
 			@Override
@@ -71,6 +74,16 @@ public class FriendDetailActivity extends AppCompatActivity {
 				deleteFriend_Click();
 			}
 		});
+		btnMsg.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(FriendDetailActivity.this, MessageListActivity.class);
+				intent.putExtra("Flag", Constants.msgFlag_any_id);
+				intent.putExtra("FriendID", selectFriendDTO.getID());
+				startActivity(intent);
+			}
+		});
+
 	} //OnCreate
 
 	//Friend Info Load Method

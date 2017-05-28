@@ -80,7 +80,7 @@ public class RequestMsgThread implements Runnable {
 		PendingIntent pendingIntent = PendingIntent.getActivity(mContext, 0, new Intent(mContext, LoadingActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
 		Notification.Builder builder = new Notification.Builder(mContext);
 
-		builder.setSmallIcon(R.drawable.heartbeat_icon);
+		builder.setSmallIcon(R.mipmap.ico);
 		builder.setTicker(mContext.getText(R.string.app_name) + " " + message.getSender());
 		builder.setWhen(System.currentTimeMillis());
 		if(message.getFlag() == Constants.msgFlag_Bzz) builder.setNumber(message.getCount());

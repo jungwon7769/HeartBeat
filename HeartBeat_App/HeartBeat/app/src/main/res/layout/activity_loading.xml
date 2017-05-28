@@ -27,7 +27,7 @@
         android:layout_width="100dp"
         android:layout_height="100dp"
         android:id="@+id/loading_image"
-        android:src="@drawable/heartbeat_icon"
+        android:src="@mipmap/ico"
         android:layout_above="@+id/loading_txt"
         android:layout_alignStart="@+id/loading_txt"
         android:layout_alignEnd="@+id/loading_txt"/>

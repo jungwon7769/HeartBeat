@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 	public static Context mainContext;
 	FriendListFragment tab_frList;
 	AlaramListFragment tab_msgFlagList;
+	SettingFragment tab_setting;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +25,7 @@ public class MainActivity extends AppCompatActivity {
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tab);
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_group_white_50dp));
 		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_mail_outline_white_50dp));
+		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_settings_white_50dp));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewPager);
@@ -71,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
 				case 1:
 					tab_msgFlagList = new AlaramListFragment();
 					return tab_msgFlagList;
+				case 2:
+					tab_setting = new SettingFragment();
+					return tab_setting;
 			}
 			return null;
 		}

@@ -27,11 +27,13 @@ public class MessageListActivity extends AppCompatActivity {
 	private ArrayList<MsgDTO> msgList;
 	private int flag;
 	private MsgListAdapter adapter;
+	private String frinedID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_message_list);
+		frinedID = null;
 
 		//get intent -> Flag check
 		Intent intent = getIntent();
@@ -49,21 +51,16 @@ public class MessageListActivity extends AppCompatActivity {
 			case Constants.msgFlag_Bzz:
 				setTitle(getText(R.string.msgList_bzz_Label));
 				break;
+			case Constants.msgFlag_any_id:
+				frinedID = intent.getStringExtra("FriendID");
+				setTitle(frinedID);
+				break;
 		}
 
 		//Msg Load Using MsgDAO
 		MsgDAO msgDAO = new MsgDAO(getApplicationContext(), MsgDAO.DataBase_name, null, 1);
 
-		//Notcomplete Test  지우기
-		Random r = new Random();
-		for(int i = 0; i < 1; i++) {
-			MsgDTO testDTO = new MsgDTO(r.nextInt(4), "id" + r.nextInt(1000), System.currentTimeMillis(), Constants.Emotion.sad, "");
-			msgDAO.addMsg(testDTO);
-		}
-
-
-
-		msgList = msgDAO.listMsg(flag);
+		msgList = msgDAO.listMsg(flag, frinedID);
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
 		final ListView msgListView = (ListView) findViewById(R.id.msglistView);
@@ -81,7 +78,7 @@ public class MessageListActivity extends AppCompatActivity {
 				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
 				TextView txtNick = (TextView) view.findViewById(R.id.msgItem_txtFriend);
 
-				switch(flag) {
+				switch(selectMsg.getFlag()) {
 					case Constants.msgFlag_Friend:
 						intent.putExtra("Popup", Constants.popup_msgFriend);
 						break;
@@ -113,7 +110,7 @@ public class MessageListActivity extends AppCompatActivity {
 		MsgDAO msgDAO = new MsgDAO(getApplicationContext(), MsgDAO.DataBase_name, null, 1);
 		msgDAO.deleteMsg(id, time);
 
-		msgList = msgDAO.listMsg(flag);
+		msgList = msgDAO.listMsg(flag, frinedID);
 		adapter.setItemList(msgList);
 		adapter.notifyDataSetChanged();
 	} //delete_msg()
@@ -234,7 +231,7 @@ public class MessageListActivity extends AppCompatActivity {
 			long msgTime = msgItem.getTime();
 			long currentTime = System.currentTimeMillis();
 
-			if((msgTime - currentTime) > 86400) {
+			if((currentTime - msgTime) < 86400000) {
 				DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 				txtTime.setText(dateFormat.format(msgTime));
 			} else {

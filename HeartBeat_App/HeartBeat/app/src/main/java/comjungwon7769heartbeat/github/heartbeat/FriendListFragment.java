@@ -13,10 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -27,6 +27,7 @@ public class FriendListFragment extends Fragment {
 	ListView frList;
 	ArrayList<FriendDTO> friend_list;
 	FriendListAdapter adapter;
+	EditText txtSearch;
 
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -41,7 +42,7 @@ public class FriendListFragment extends Fragment {
 		//User Info Load and Display ***
 		displayUserInfo();
 
-		frList = (ListView)getView().findViewById(R.id.frList_list);
+		frList = (ListView) getView().findViewById(R.id.frList_list);
 		friend_list = new ArrayList<>();
 
 		//Friend List Load ***
@@ -52,11 +53,16 @@ public class FriendListFragment extends Fragment {
 		//if 저장한지 오래된경우 FriendList_Load 호출(서버에서 친구목록 가져옴)
 		if((System.currentTimeMillis() - saveTime) > Constants.friendLoad_Interval) {
 
-			FriendList_Load();
+			//FriendList_Load();
 		}
 
 		//App Database 에서 친구목록 가져오기
 		FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
+
+		//for(int i = 0; i < 10; i++) {
+		//	friendDAO.addFriend(new FriendDTO("id" + i, "nick" + i, "66ccff", Constants.Emotion.sleep));
+		//}
+
 		friend_list = friendDAO.listFriend();
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
@@ -79,6 +85,7 @@ public class FriendListFragment extends Fragment {
 		//*** Friend List Load END
 
 		//Button Handler Setting ***
+		txtSearch = (EditText)getView().findViewById(R.id.frList_editSearch);
 		//MyDetail Activity Button
 		getView().findViewById(R.id.frList_myDetailLayout).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -98,12 +105,13 @@ public class FriendListFragment extends Fragment {
 			}
 		});
 
-		//Setting Page Button
-		getView().findViewById(R.id.frList_btnSetting).setOnClickListener(new View.OnClickListener() {
+		getView().findViewById(R.id.frList_btnSearch).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent(getActivity(), NickSetActivity.class);
-				startActivity(intent);
+				FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
+				friend_list = friendDAO.listFriend_contain(txtSearch.getText().toString());
+				adapter.setItemList(friend_list);
+				adapter.notifyDataSetChanged();
 			}
 		});
 
@@ -113,8 +121,8 @@ public class FriendListFragment extends Fragment {
 
 	private void displayUserInfo() {
 		//User Info Load and Display ***
-		ImageView imgMyMode = (ImageView)getView().findViewById(R.id.frList_myMode);
-		TextView txtMyNick = (TextView)getView().findViewById(R.id.frList_myNick);
+		ImageView imgMyMode = (ImageView) getView().findViewById(R.id.frList_myMode);
+		TextView txtMyNick = (TextView) getView().findViewById(R.id.frList_myNick);
 
 		SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		txtMyNick.setText(preference.getString("my_nick", "DataLoadError"));
@@ -129,7 +137,7 @@ public class FriendListFragment extends Fragment {
 		displayUserInfo();
 
 		//FrinedList_Load 호출(Server)
-		//Notcomplete
+		//FriendList_Load();
 
 		FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
 		friend_list = friendDAO.listFriend();
@@ -152,7 +160,7 @@ public class FriendListFragment extends Fragment {
 		}
 		HashMap<String, FriendDTO> f_list = (HashMap<String, FriendDTO>) sc.final_data;
 		if(f_list == null) {//친구없음
-			Toast.makeText(getActivity().getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getActivity().getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
 		} else {
 			//친구 1명이상
 			FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
@@ -245,7 +253,6 @@ public class FriendListFragment extends Fragment {
 		}
 
 	} //ListAdapter
-
 
 
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".SettingFragment"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:dividerPadding="1dp"
+        android:divider="@drawable/divider"
+        android:showDividers="middle">
+
+        <TextView
+            android:id="@+id/setting_titleNick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="@string/nickname"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSize_regular"/>
+
+        <LinearLayout
+            android:id="@+id/setting_layout_nick"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <EditText
+                android:id="@+id/setting_txtNick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:hint="@string/input_nick"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/textSize_mini"/>
+
+
+            <Button
+                android:id="@+id/setting_btnNickOK"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_button"
+                android:enabled="false"
+                android:text="@string/ok"
+                android:textSize="@dimen/textSize_mini"/>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/setting_titleBT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="기기"
+            android:textColor="@color/colorPrimary"
+            android:textSize="@dimen/textSize_regular"/>
+
+        <TextView
+            android:id="@+id/setting_ViewBT"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="ddd"
+            android:textColor="@color/colorPrimaryText"
+            android:textSize="@dimen/textSize_mini"/>
+
+    </LinearLayout>
+</RelativeLayout>

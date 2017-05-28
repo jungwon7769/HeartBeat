@@ -85,12 +85,17 @@ public class MsgDAO extends SQLiteOpenHelper {
 
 	}
 
-	//전체 친구 목록 반환 Method
-	public ArrayList<MsgDTO> listMsg(int flag) {
+	//전체 메시지 목록 반환 Method
+	public ArrayList<MsgDTO> listMsg(int flag, String id) {
+		Cursor cursor;
 		ArrayList<MsgDTO> list_msg = new ArrayList<MsgDTO>();
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Flag + "=" + flag + " ORDER BY " + Time + " DESC", null);
+		if(flag == Constants.msgFlag_any_id) {
+			cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + id + "' ORDER BY " + Time + " DESC", null);
+		} else {
+			cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Flag + "=" + flag + " ORDER BY " + Time + " DESC", null);
+		}
 
 		cursor.moveToFirst();
 		while(!cursor.isAfterLast()) {

@@ -135,6 +135,30 @@ public class FriendDAO extends SQLiteOpenHelper {
 		}
 	}
 
+	//닉네임 포함하는 친구 목록 반환 Method
+	public ArrayList<FriendDTO> listFriend_contain(String nick) {
+		ArrayList<FriendDTO> list_friend = new ArrayList<FriendDTO>();
+		SQLiteDatabase db = this.getReadableDatabase();
+
+		Cursor cursor = db.rawQuery("SELECT * FROM " + table_name + " WHERE " + NICK + " LIKE '%" + nick + "%' ORDER BY " + NICK + " ASC", null);
+
+		cursor.moveToFirst();
+		while(!cursor.isAfterLast()) {
+			FriendDTO friendDTO = new FriendDTO();
+			friendDTO.setID(cursor.getString(0));
+			friendDTO.setNick(cursor.getString(1));
+			friendDTO.setMode(cursor.getInt(2));
+			friendDTO.setColor(cursor.getString(3));
+			list_friend.add(friendDTO);
+
+			cursor.moveToNext();
+		}
+
+		cursor.close();
+		db.close();
+		return list_friend;
+	}
+
 	//전체 친구 목록 반환 Method
 	public ArrayList<FriendDTO> listFriend() {
 		ArrayList<FriendDTO> list_friend = new ArrayList<FriendDTO>();

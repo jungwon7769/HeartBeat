@@ -9,7 +9,7 @@ public class Constants {
 	public static final int maxString = 16;
 	public static final int minString = 4;
 
-	public static final int friendLoad_Interval = 1000;    //millsec -> 5min 300000
+	public static final int friendLoad_Interval = 300000;    //millsec -> 5min 300000
 	public static final int RequestMsg_Interval = 5000;
 
 
@@ -37,6 +37,7 @@ public class Constants {
 	public static final int msgFlag_Emotion = 1;
 	public static final int msgFlag_Bzz = 2;
 	public static final int msgFlag_Friend = 3;
+	public static final int msgFlag_any_id = 4;
 
 
 	public static final int Emotion_sound[] = {R.raw.emotion_00_smile, R.raw.emotion_01_laugh, R.raw.emotion_02_sad, R.raw.emotion_03_annoy, R.raw.emotion_04_angry,

@@ -1,6 +1,6 @@
 <resources>
 
-    <style name="AppTheme" parent="Theme.AppCompat.DayNight.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorTextAndIcon</item>
@@ -10,7 +10,7 @@
         <item name="android:textColorHint">@color/colorDivider</item>
         <item name="android:divider">@color/colorDivider</item>
         <item name="android:windowBackground">@color/colorLight</item>
-        <item name="android:fontFamily">monospace</item>
+        <item name="android:fontFamily">sans-serif</item>
         <item name="android:actionBarSize">@dimen/actionBar_Size</item>
     </style>
 
@@ -20,7 +20,7 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="android:textColor">@color/colorPrimaryLight</item>
-        <item name="android:fontFamily">monospace</item>
+        <item name="android:fontFamily">sans-serif</item>
 
     </style>
 

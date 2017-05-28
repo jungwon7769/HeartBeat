@@ -45,16 +45,6 @@
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:textSize="20dp"/>
 
-            <ImageButton
-                android:id="@+id/frList_btnSetting"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_alignParentTop="true"
-                android:layout_toRightOf="@+id/frList_myNick"
-                android:layout_weight="1"
-                android:background="#00000000"
-                android:src="@android:drawable/ic_menu_preferences"/>
-
         </RelativeLayout>
 
         <LinearLayout
