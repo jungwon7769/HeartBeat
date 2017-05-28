@@ -22,9 +22,7 @@
             android:fitsSystemWindows="true"
             app:contentScrim="?attr/colorPrimary"
             app:title="dddd"
-            title
-            app:expandedTitleMarginEnd="64dp"
-            app:expandedTitleMarginStart="48dp"
+            app:expandedTitleGravity="center_horizontal|bottom"
             app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
             <RelativeLayout
@@ -40,23 +38,17 @@
                     android:layout_width="50dp"
                     android:layout_height="50dp"
                     android:background="#f2b8a1"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="50dp"
                     android:src="@drawable/laugh"/>
-
-                <TextView
-                    android:id="@+id/frDt_txtNick"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_below="@+id/frDt_imgMode"
-                    android:text="hj"
-                    android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:textColor="@color/colorLight"/>
 
                 <TextView
                     android:id="@+id/frDt_txtID"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_below="@+id/frDt_txtNick"
                     android:text="hjjjong"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/colorLight"/>
             </RelativeLayout>

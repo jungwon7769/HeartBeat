@@ -1,41 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="horizontal"
-              android:layout_width="fill_parent"
-              android:layout_height="wrap_content"
-              android:padding="3dp"
-              android:gravity="center_vertical">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:padding="10dp">
 
 
     <ImageView
-        android:layout_width="40dp"
-        android:layout_height="40dp"
         android:id="@+id/msgItem_imgMode"
-        android:src="@drawable/smile"
-        android:layout_gravity="center_vertical"
-        android:background="#FFFFFF"/>
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="#FFFFFF"
+        android:src="@drawable/smile"/>
 
     <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/msgItem_txtFriend"
-        android:textSize="20dp"
-        android:text="Ahn"
-        android:layout_marginLeft="10dp"
-        android:layout_weight="1"
-        android:textAlignment="gravity"
-        android:gravity="left"/>
-
-
-    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/msgItem_txtTime"
-        android:textSize="12dp"
-        android:text="2017.05.17"
         android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:textAlignment="gravity"
-        android:gravity="left"/>
+        android:layout_toRightOf="@+id/msgItem_imgMode"
+        android:text="Ahn"
+        android:textColor="@color/colorPrimaryText"
+        android:textSize="@dimen/textSize_mini"
+        />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/msgItem_txtContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/msgItem_txtFriend"
+        android:layout_marginLeft="10dp"
+        android:layout_toRightOf="@id/msgItem_imgMode"
+        android:textColor="@color/colorSecondaryText"
+        android:text="Ahn"
+        android:textSize="@dimen/textSize_xmini"
+        />
+
+    <TextView
+        android:id="@+id/msgItem_txtTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="2017.05.17"
+        android:textSize="12dp"/>
+
+</RelativeLayout>

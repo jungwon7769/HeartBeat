@@ -68,6 +68,13 @@ public class RequestMsgThread implements Runnable {
 	//Message 저장
 	public boolean saveMsg(MsgDTO message) {
 		MsgDAO msgDAO = new MsgDAO(mContext, MsgDAO.DataBase_name, null, 1);
+		if(message.getFlag() == Constants.msgFlag_Bzz){
+			int count = msgDAO.existBzz(message.getSender());
+			if(count > 0){
+				msgDAO.updateMsg(message.getSender(), message.getFlag(), count+1, message.getTime());
+				return true;
+			}
+		}
 		msgDAO.addMsg(message);
 
 		return true;

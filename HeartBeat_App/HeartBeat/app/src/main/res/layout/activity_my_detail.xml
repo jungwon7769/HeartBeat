@@ -1,102 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:clickable="false"
-    android:contextClickable="false"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="comjungwon7769heartbeat.github.heartbeat.MyDetailActivity">
+    android:fitsSystemWindows="true"
+    tools:context="comjungwon7769heartbeat.github.heartbeat.FriendDetailActivity">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout"
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:padding="20dp">
+        android:layout_height="200dp"
+        android:fitsSystemWindows="true"
+        android:theme="@style/AppTheme.AppBarOverlay">
 
-        <ImageView
-            android:id="@+id/myDt_imgMode"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true"
-            android:background="#f2b8a1"
-            android:src="@drawable/laugh"/>
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/frDt_toolbar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:fitsSystemWindows="true"
+            app:contentScrim="?attr/colorPrimary"
+            app:expandedTitleGravity="center_horizontal|bottom"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed"
+            app:title="dddd">
 
-        <TextView
-            android:id="@+id/myDt_txtNick"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/myDt_imgMode"
-            android:layout_centerHorizontal="true"
-            android:text="NickName"
-            android:textAppearance="?android:attr/textAppearanceMedium"/>
-    </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/myDt_Info"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@drawable/aurora"
+                android:gravity="bottom"
+                android:padding="20dp">
 
-    <LinearLayout
+                <ImageView
+                    android:id="@+id/myDt_imgMode"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:layout_centerInParent="true"
+                    android:layout_marginBottom="50dp"
+                    android:background="#f2b8a1"
+                    android:src="@drawable/laugh"/>
+
+            </RelativeLayout>
+
+            <android.support.v7.widget.Toolbar
+                android:id="@+id/frDt_toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:layout_collapseMode="pin"
+                app:popupTheme="@style/AppTheme.PopupOverlay"/>
+
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@+id/relativeLayout"
-        android:orientation="vertical">
+        android:padding="@dimen/activity_vertical_margin"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
 
-        <Button
-            android:id="@+id/myDt_btnLEDColor"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:background="@drawable/selector_button_1"
-            android:textColor="@color/colorLight"
-            android:drawableLeft="@drawable/ic_wb_sunny_white_50dp"
-            android:paddingLeft="@dimen/button_padding"
-            android:drawablePadding="30dp"
-            android:textAlignment="textStart"
-            android:text="@string/DetailAct_LEDColor"/>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/relativeLayout"
+            android:orientation="vertical">
 
-        <Button
-            android:id="@+id/myDt_btnSetMode"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/selector_button_2"
-            android:textColor="@color/colorLight"
-            android:drawableLeft="@drawable/ic_mood_white_50dp"
-            android:paddingLeft="@dimen/button_padding"
-            android:drawablePadding="30dp"
-            android:textAlignment="textStart"
-            android:text="@string/DetailAct_setMode"/>
+            <Button
+                android:id="@+id/myDt_btnLEDColor"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:background="@drawable/selector_button_1"
+                android:drawableLeft="@drawable/ic_wb_sunny_white_50dp"
+                android:drawablePadding="30dp"
+                android:paddingLeft="@dimen/button_padding"
+                android:text="@string/DetailAct_LEDColor"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorLight"/>
+
+            <Button
+                android:id="@+id/myDt_btnSetMode"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/selector_button_2"
+                android:drawableLeft="@drawable/ic_mood_white_50dp"
+                android:drawablePadding="30dp"
+                android:paddingLeft="@dimen/button_padding"
+                android:text="@string/DetailAct_setMode"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorLight"/>
 
 
-        <Button
-            android:id="@+id/myDt_btnTransVoice"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/selector_button_3"
-            android:textColor="@color/colorLight"
-            android:drawableLeft="@drawable/ic_mic_white_50dp"
-            android:paddingLeft="@dimen/button_padding"
-            android:drawablePadding="30dp"
-            android:textAlignment="textStart"
-            android:text="@string/DetailAct_transVoice"/>
+            <Button
+                android:id="@+id/myDt_btnTransVoice"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/selector_button_3"
+                android:drawableLeft="@drawable/ic_mic_white_50dp"
+                android:drawablePadding="30dp"
+                android:paddingLeft="@dimen/button_padding"
+                android:text="@string/DetailAct_transVoice"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorLight"/>
 
-        <Button
-            android:id="@+id/myDt_btnTransBzz"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/detail_Button_Size"
-            android:layout_marginTop="3dp"
-            android:background="@drawable/selector_button_4"
-            android:textColor="@color/colorLight"
-            android:drawableLeft="@drawable/ic_vibration_white_50dp"
-            android:paddingLeft="@dimen/button_padding"
-            android:drawablePadding="30dp"
-            android:textAlignment="textStart"
-            android:text="@string/DetailAct_transBzz"
-            />
-    </LinearLayout>
+            <Button
+                android:id="@+id/myDt_btnTransBzz"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/detail_Button_Size"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/selector_button_4"
+                android:drawableLeft="@drawable/ic_vibration_white_50dp"
+                android:drawablePadding="30dp"
+                android:paddingLeft="@dimen/button_padding"
+                android:text="@string/DetailAct_transBzz"
+                android:textAlignment="textStart"
+                android:textColor="@color/colorLight"
+                />
+        </LinearLayout>
+    </android.support.v4.widget.NestedScrollView>
 
-</RelativeLayout>
+</android.support.design.widget.CoordinatorLayout>

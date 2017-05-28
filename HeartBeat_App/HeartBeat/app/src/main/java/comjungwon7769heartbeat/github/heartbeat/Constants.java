@@ -46,6 +46,9 @@ public class Constants {
 	public static final int Emotion_sound[] = {R.raw.emotion_00_smile, R.raw.emotion_01_laugh, R.raw.emotion_02_sad, R.raw.emotion_03_annoy, R.raw.emotion_04_angry,
 			R.raw.emotion_05_wink, R.raw.emotion_06_love, R.raw.emotion_07_wow, R.raw.emotion_08_overeat, R.raw.emotion_09_sleep};
 
+	public static final int Emotion_content[] = {R.string.msg_content_e_smile, R.string.msg_content_e_laugh, R.string.msg_content_e_sad, R.string.msg_content_e_annoy,
+			R.string.msg_content_e_angry, R.string.msg_content_e_wink, R.string.msg_content_e_love, R.string.msg_content_e_wow, R.string.msg_content_e_overeat, R.string.msg_content_e_sleep};
+
 	public static enum Emotion {
 		smile(0, "59BE7F"), laugh(1, "FFFF00"), sad(2, "0000FF"), annoy(3, "FF9900"), angry(4, "FF0000"),
 		wink(5, "8041D9"), love(6, "FF93B2"), wow(7, "7393D5"), overeat(8, "D9CA74"), sleep(9, "FFFFFF");

@@ -187,17 +187,20 @@ public class MessageListActivity extends AppCompatActivity {
 			}
 			TextView name = (TextView) convertView.findViewById(R.id.msgItem_txtFriend);      //텍스트뷰와 닉네임 연결
 			ImageView mode = (ImageView) convertView.findViewById(R.id.msgItem_imgMode);
+			TextView content = (TextView)convertView.findViewById(R.id.msgItem_txtContent);
 
 			MsgDTO msgItem = myMsg.get(position);  //position에 해당하는 MsgDTO
 
 			//친구 요청 메세지의 경우(친구관계 아님)
-			if(flag == Constants.msgFlag_Friend) {
+			if(msgItem.getFlag() == Constants.msgFlag_Friend) {
 				//친구요청한 사람의 ID 표시
 				name.setText(msgItem.getSender());
 				//기분 표시
 				Constants.Emotion[] e = Constants.Emotion.values();
 				mode.setImageResource(getResources().getIdentifier(e[0].toString(), "drawable", getPackageName()));
 				mode.setBackgroundColor(Color.parseColor("#" + e[0].getColor()));
+				//내용
+				content.setText(getText(R.string.msg_content_friend));
 			}
 			//다른 메세지인 경우
 			else {
@@ -222,6 +225,9 @@ public class MessageListActivity extends AppCompatActivity {
 					mode.setImageResource(getResources().getIdentifier(e[0].toString(), "drawable", getPackageName()));
 					mode.setBackgroundColor(Color.parseColor("#" + e[0].getColor()));
 				}
+				if(msgItem.getFlag() == Constants.msgFlag_Bzz){content.setText(getText(R.string.msg_content_bzz));}
+				else if(msgItem.getFlag() == Constants.msgFlag_Emotion){content.setText(getText(Constants.Emotion_content[msgItem.getModeInt()]));}
+				else if(msgItem.getFlag() == Constants.msgFlag_Voice){content.setText(getText(R.string.msg_content_friend));}
 
 			}
 

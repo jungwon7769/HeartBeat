@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +25,12 @@ public class MyDetailActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_detail);
 
-		TextView user_nick = (TextView) findViewById(R.id.myDt_txtNick);
+		CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.frDt_toolbar_layout);
 		ImageView user_mode = (ImageView) findViewById(R.id.myDt_imgMode);
 
 		//User Nick, Emotion Load From PreferenceData ***
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		user_nick.setText(preference.getString("my_nick", "DataLoadError"));
+		toolbarLayout.setTitle(preference.getString("my_nick", "DataLoadError"));
 		int myMode = preference.getInt("my_mode", 1);
 
 		Constants.Emotion[] e = Constants.Emotion.values();

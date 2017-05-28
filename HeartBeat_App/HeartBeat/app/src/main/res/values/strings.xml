@@ -77,6 +77,22 @@
     <string name="msg_voice_title">음성메세지</string>
     <string name="msg_friend_title">친구요청</string>
 
+    <string name="msg_content_friend">친구요청해요~</string>
+    <string name="msg_content_bzz">진동</string>
+    <string name="msg_content_voice">음성</string>
+
+    <string name="msg_content_e_smile">기분좋아요</string>
+    <string name="msg_content_e_laugh">즐거워요</string>
+    <string name="msg_content_e_sad">엉엉엉</string>
+    <string name="msg_content_e_annoy">기분이 안좋아요</string>
+    <string name="msg_content_e_angry">저 화났어요</string>
+
+    <string name="msg_content_e_wink">윙크!</string>
+    <string name="msg_content_e_love">사랑해요</string>
+    <string name="msg_content_e_wow">으앗</string>
+    <string name="msg_content_e_overeat">토할것같아요...</string>
+    <string name="msg_content_e_sleep">졸려....</string>
+
     <string name="bt_notSupport">해당 기기가 블루투스를 지원하지 않습니다</string>
     <string name="bt_notEnable">블루투스가 활성화되어있지 않습니다</string>
     <string name="bt_notConnect">블루투스가 연결되어있지 않습니다</string>
@@ -92,4 +108,13 @@
     <string name="setting_btName">기기</string>
     <string name="setting_select_push">푸시알림</string>
     <string name="setting_select_BTbzz">기기진동수신</string>
+
+    <string name="setting_push_no">알림 끔</string>
+    <string name="setting_push_sound">소리만</string>
+    <string name="setting_push_bzz">진동만</string>
+    <string name="setting_push_both">소리+진동</string>
+
+    <string name="setting_bzz_yes">수신</string>
+    <string name="setting_bzz_no">해제</string>
+
 </resources>

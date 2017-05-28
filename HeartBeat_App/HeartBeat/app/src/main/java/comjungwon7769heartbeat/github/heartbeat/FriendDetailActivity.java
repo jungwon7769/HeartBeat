@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -95,7 +96,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 		//View Setting
 		((TextView) findViewById(R.id.frDt_txtID)).setText(selectFriendDTO.getID());
-		((TextView) findViewById(R.id.frDt_txtNick)).setText(selectFriendDTO.getNick());
+		((CollapsingToolbarLayout)findViewById(R.id.frDt_toolbar_layout)).setTitle(selectFriendDTO.getNick());
 
 		ImageView imgMode = (ImageView) findViewById(R.id.frDt_imgMode);
 		imgMode.setImageResource(getResources().getIdentifier(selectFriendDTO.getMode().toString(), "drawable", this.getPackageName()));

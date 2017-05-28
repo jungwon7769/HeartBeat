@@ -152,12 +152,23 @@ public class MsgDAO extends SQLiteOpenHelper {
 		return msgDTO;
 	}
 
-	//진동 메세지 존재 여부 반환 Method
-	public boolean existBzz(String sender) {
+	//진동 메세지 카운트 반환 Method
+	public int existBzz(String sender) {
 		SQLiteDatabase db = this.getReadableDatabase();
 		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + " AND " + Flag + " = " + Constants.msgFlag_Bzz, null);
 
-		return (cursor.getCount() > 0);
+		if(cursor.getCount() < 1) {
+			cursor.close();
+			return 0;
+		} else {
+			cursor.moveToFirst();
+			int count = cursor.getInt(3);
+
+			cursor.close();
+			db.close();
+
+			return count;
+		}
 	}
 
 	//진동 카운트 없데이트 Method

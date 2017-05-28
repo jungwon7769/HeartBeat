@@ -5,7 +5,7 @@
         <color android:color="#EEEEEE"/>
     </item>
     <!--누른 상태-->
-    <item android:state_pressed="false">
+    <item android:state_pressed="true">
         <shape android:shape="rectangle">
             <gradient android:type="radial" android:gradientRadius="100dp" android:startColor="@color/colorPrimary"/>
         </shape>

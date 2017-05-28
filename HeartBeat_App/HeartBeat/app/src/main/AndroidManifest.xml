@@ -40,6 +40,7 @@
         </activity>
         <activity
             android:name=".MyDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/myDetailAct_Label">
         </activity>
         <activity
