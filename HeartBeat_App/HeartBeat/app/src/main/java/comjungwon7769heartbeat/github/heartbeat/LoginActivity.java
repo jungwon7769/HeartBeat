@@ -90,15 +90,17 @@ public class LoginActivity extends AppCompatActivity {
 			//Toast.makeText(getApplicationContext(),sc.msg,Toast.LENGTH_SHORT).show();
 			sc.start();
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
-			while(sc.wait) {
-				///스레드처리완료 기다리기
+			try {
+				sc.join(10000);
+			} catch(InterruptedException e) {
+				e.printStackTrace();
 			}
 			if(sc.chkError) {
 				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 				return false;
 			} else {
 				dto = (MemberDTO) sc.final_data;
-				if(dto == null) {//회원정보있음 : 로그인가능
+				if(dto == null) {
 					return false;
 				}
 			}

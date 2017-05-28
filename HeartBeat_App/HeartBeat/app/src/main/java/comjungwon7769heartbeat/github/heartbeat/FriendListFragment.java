@@ -53,15 +53,10 @@ public class FriendListFragment extends Fragment {
 		long saveTime = preference.getLong("friend_time", 0);
 		//if 저장한지 오래된경우 FriendList_Load 호출(서버에서 친구목록 가져옴)
 		if((System.currentTimeMillis() - saveTime) > Constants.friendLoad_Interval) {
-			//FriendList_Load();
+			FriendList_Load();
 		}
-
 		//App Database 에서 친구목록 가져오기
 		FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
-
-		//for(int i = 0; i < 10; i++) {
-		//	friendDAO.addFriend(new FriendDTO("id" + i, "nick" + i, "66ccff", Constants.Emotion.sleep));
-		//}
 
 		friend_list = friendDAO.listFriend();
 
@@ -133,19 +128,6 @@ public class FriendListFragment extends Fragment {
 		imgMyMode.setBackgroundColor(Color.parseColor("#" + e[myMode].getColor()));
 	}
 
-	public void dataRefresh() {
-		displayUserInfo();
-
-		//FrinedList_Load 호출(Server)
-		//FriendList_Load();
-
-		FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
-		friend_list = friendDAO.listFriend();
-
-		adapter.setItemList(friend_list);
-		adapter.notifyDataSetChanged();
-	}
-
 	//친구목록 서버로부터 불러오기
 	private ArrayList<FriendDTO> FriendList_Load() {
 		//Notcomplete
@@ -155,12 +137,14 @@ public class FriendListFragment extends Fragment {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(preference.getString("my_id", "0"), null, null, null, 13, null, null, 0);
 		sc.start();
-		while(sc.wait) {
-			//스레드 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
 		}
 		HashMap<String, FriendDTO> f_list = (HashMap<String, FriendDTO>) sc.final_data;
 		if(f_list == null) {//친구없음
-			Toast.makeText(getActivity().getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
+			//Toast.makeText(getActivity().getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
 		} else {
 			//친구 1명이상
 			FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);

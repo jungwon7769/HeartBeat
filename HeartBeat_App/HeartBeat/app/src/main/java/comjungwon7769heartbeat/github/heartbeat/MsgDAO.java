@@ -155,7 +155,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 	//진동 메세지 카운트 반환 Method
 	public int existBzz(String sender) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + " AND " + Flag + " = " + Constants.msgFlag_Bzz, null);
+		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + "' AND " + Flag + " = " + Constants.msgFlag_Bzz, null);
 
 		if(cursor.getCount() < 1) {
 			cursor.close();

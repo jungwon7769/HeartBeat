@@ -140,8 +140,10 @@ public class MyDetailActivity extends AppCompatActivity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(preference.getString("my_id","0"),null,null,null,5,null,null,e.getMode());
 		sc.start();
-		while(sc.wait){
-			///스레드처리완료 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException ex) {
+			ex.printStackTrace();
 		}
 		if(sc.chkError) {
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();

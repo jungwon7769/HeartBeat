@@ -415,7 +415,8 @@ public class PopupActivity extends AppCompatActivity {
 				//NotComplete
 				//Bluetooth Comu
 				SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-				BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), ((PopupActivity)getParent()).btHandler);
+				BlueToothHandler bth = (PopupActivity.this).btHandler;
+				BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), bth);
 				btComu.setUseMode(btComu.CODE_EMOTION);
 				btComu.setData(mode);
 				Thread thread = new Thread(btComu);

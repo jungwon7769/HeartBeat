@@ -135,7 +135,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 2, null, null, 0);
 		sc.start();
 		try {
-			sc.join();
+			sc.join(10000);
 			if(sc.chkError){
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 			}else {
@@ -219,7 +219,11 @@ public class FriendDetailActivity extends AppCompatActivity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 9, null, selectFriendDTO.getColor(), 0);
 		sc.start();
-		while(sc.wait){}//스레드 종료 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
@@ -237,7 +241,11 @@ public class FriendDetailActivity extends AppCompatActivity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 1, null, null, e.getMode());
 		sc.start();
-		while(sc.wait){}//스레드 종료 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException ex) {
+			ex.printStackTrace();
+		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
@@ -255,7 +263,11 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 0, path, null, 0);
 		//Toast.makeText(getApplicationContext(), Environment.getExternalStorageState(),Toast.LENGTH_SHORT).show();
 		sc.start();
-		while(sc.wait){}//스레드 종료 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
@@ -271,12 +283,15 @@ public class FriendDetailActivity extends AppCompatActivity {
 		//HB 나중에 여기에 파일 넣기!!
 		sc.makeMsg(preference.getString("my_id","0"), selectFriendDTO.getID(), null, null, 8, null, null, 0);
 		sc.start();
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			return;
 		}else {
-			while(sc.wait) {
-			}//스레드 종료 기다리기
 			if(!(boolean) sc.final_data) {//친구삭제 실패시
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			}

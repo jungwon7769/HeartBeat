@@ -227,7 +227,7 @@ public class MessageListActivity extends AppCompatActivity {
 				}
 				if(msgItem.getFlag() == Constants.msgFlag_Bzz){content.setText(getText(R.string.msg_content_bzz));}
 				else if(msgItem.getFlag() == Constants.msgFlag_Emotion){content.setText(getText(Constants.Emotion_content[msgItem.getModeInt()]));}
-				else if(msgItem.getFlag() == Constants.msgFlag_Voice){content.setText(getText(R.string.msg_content_friend));}
+				else if(msgItem.getFlag() == Constants.msgFlag_Voice){content.setText(getText(R.string.msg_content_voice));}
 
 			}
 

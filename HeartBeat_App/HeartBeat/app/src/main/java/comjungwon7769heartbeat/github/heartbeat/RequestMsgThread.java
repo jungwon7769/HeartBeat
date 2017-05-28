@@ -8,6 +8,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import java.util.Random;
+
 /**
  * Created by AH on 2017-05-27.
  */
@@ -24,12 +26,13 @@ public class RequestMsgThread implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-			//MsgDTO message = serverMsgReceive();
-			//saveMsg(message);
-			//pushAllarm(message);
+			MsgDTO message = serverMsgReceive();
+			saveMsg(message);
+			pushAllarm(message);
 
 			try {
-				Thread.sleep(Constants.RequestMsg_Interval);
+				//Thread.sleep(Constants.RequestMsg_Interval);
+				Thread.sleep(30000);
 			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -54,11 +57,12 @@ public class RequestMsgThread implements Runnable {
 		*/
 
 		//test Data
+		Random r = new Random();
 		msgDTO.setSender("현정이");
-		msgDTO.setFlag(Constants.msgFlag_Bzz);
+		msgDTO.setFlag(r.nextInt(4));
 		msgDTO.setCount(3);
 		msgDTO.setTime(System.currentTimeMillis());
-		msgDTO.setMode(3);
+		msgDTO.setMode(r.nextInt(10));
 		msgDTO.setSoundPath("");
 
 
