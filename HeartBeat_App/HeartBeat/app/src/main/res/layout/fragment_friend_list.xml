@@ -14,6 +14,8 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         tools:context="comjungwon7769heartbeat.github.heartbeat.FriendListActivity"
+        android:focusable="true"
+        android:focusableInTouchMode="true"
         >
 
         <RelativeLayout
@@ -59,10 +61,12 @@
             android:orientation="horizontal"
             android:id="@+id/frList_search"
             android:layout_below="@+id/frList_myDetailLayout"
-            android:layout_marginTop="5dp"
-            android:layout_marginBottom="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
             android:paddingLeft="@dimen/padding_text"
             android:paddingRight="@dimen/padding_text"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/background_text"
@@ -71,7 +75,7 @@
             <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/editText"
+                android:id="@+id/frList_editSearch"
                 android:textColor="@color/colorAccent"
                 android:background="@color/colorPrimary"
                 android:textSize="@dimen/textSize_mini"
@@ -80,7 +84,9 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton"/>
+                android:background="#00000000"
+                android:src="@drawable/ic_search_accent_24dp"
+                android:id="@+id/frList_btnSearch"/>
         </LinearLayout>
 
         <ListView
@@ -104,5 +110,5 @@
         android:layout_gravity="bottom|right"
         android:layout_margin="@dimen/fab_margin"
         android:scaleType="fitCenter"
-        android:src="@mipmap/ic_friend_add"/>
+        android:src="@drawable/ic_add_white_50dp"/>
 </FrameLayout>

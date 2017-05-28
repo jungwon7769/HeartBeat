@@ -52,7 +52,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
             <Button
-                android:drawableLeft="@mipmap/ic_color"
+                android:drawableLeft="@drawable/ic_wb_sunny_white_50dp"
                 android:paddingLeft="@dimen/button_padding"
                 android:drawablePadding="30dp"
                 android:textAlignment="textStart"
@@ -64,7 +64,7 @@
                 android:text="@string/DetailAct_BzzColor"
                 />
             <Button
-                android:drawableLeft="@mipmap/ic_emotion"
+                android:drawableLeft="@drawable/ic_mood_white_50dp"
                 android:paddingLeft="@dimen/button_padding"
                 android:drawablePadding="30dp"
                 android:textAlignment="textStart"
@@ -76,7 +76,7 @@
                 android:id="@+id/frDt_btnTransEmotion"
                 android:text="@string/DetailAct_transMode"/>
             <Button
-                android:drawableLeft="@mipmap/ic_bzz"
+                android:drawableLeft="@drawable/ic_vibration_white_50dp"
                 android:paddingLeft="@dimen/button_padding"
                 android:drawablePadding="30dp"
                 android:textAlignment="textStart"
@@ -89,7 +89,7 @@
                 android:text="@string/DetailAct_transBzz"/>
 
             <Button
-                android:drawableLeft="@mipmap/ic_sound"
+                android:drawableLeft="@drawable/ic_mic_white_50dp"
                 android:paddingLeft="@dimen/button_padding"
                 android:drawablePadding="30dp"
                 android:textAlignment="textStart"
@@ -101,7 +101,7 @@
                 android:id="@+id/frDt_btnTransVoice"
                 android:text="@string/DetailAct_transVoice"/>
             <Button
-                android:drawableLeft="@mipmap/ic_friend_delete"
+                android:drawableLeft="@drawable/ic_person_white_50dp"
                 android:paddingLeft="@dimen/button_padding"
                 android:drawablePadding="30dp"
                 android:textAlignment="textStart"
@@ -114,7 +114,7 @@
                 android:text="@string/DetailAct_DeleteFriend"/>
 
             <Button
-                android:drawableLeft="@mipmap/ic_heart"
+                android:drawableLeft="@drawable/ic_favorite_white_50dp"
                 android:paddingLeft="@dimen/button_padding"
                 android:drawablePadding="30dp"
                 android:textAlignment="textStart"

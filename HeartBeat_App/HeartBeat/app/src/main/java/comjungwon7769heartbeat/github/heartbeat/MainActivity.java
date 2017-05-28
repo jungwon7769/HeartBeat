@@ -22,8 +22,8 @@ public class MainActivity extends AppCompatActivity {
 		mainContext = this;
 
 		TabLayout tabLayout = (TabLayout) findViewById(R.id.main_tab);
-		tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_friend_add));
-		tabLayout.addTab(tabLayout.newTab().setIcon(R.mipmap.ic_launcher));
+		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_group_white_50dp));
+		tabLayout.addTab(tabLayout.newTab().setIcon(R.drawable.ic_mail_outline_white_50dp));
 		tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 		final ViewPager viewPager = (ViewPager) findViewById(R.id.main_viewPager);
