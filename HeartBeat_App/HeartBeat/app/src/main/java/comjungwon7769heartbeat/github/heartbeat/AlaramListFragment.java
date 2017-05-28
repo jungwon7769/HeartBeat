@@ -1,22 +1,28 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 
-public class AlaramListActivity extends AppCompatActivity {
+public class AlaramListFragment extends Fragment {
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_alaram_list);
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+		return inflater.inflate(R.layout.fragment_alaram_list, container, false);
+	}
 
-		Button btnFriend = (Button)findViewById(R.id.almList_btnFriend);
-		final Button btnVoice = (Button)findViewById(R.id.almList_btnVoice);
-		Button btnEmotion = (Button)findViewById(R.id.almList_btnEmotion);
-		Button btnBzz = (Button)findViewById(R.id.almList_btnBzz);
+	@Override
+	public void onStart() {
+		super.onStart();
+
+		final Button btnFriend = (Button)getView().findViewById(R.id.almList_btnFriend);
+		final Button btnVoice = (Button)getView().findViewById(R.id.almList_btnVoice);
+		final Button btnEmotion = (Button)getView().findViewById(R.id.almList_btnEmotion);
+		final Button btnBzz = (Button)getView().findViewById(R.id.almList_btnBzz);
 
 		btnFriend.setOnClickListener(new Button.OnClickListener(){
 			@Override
@@ -46,7 +52,7 @@ public class AlaramListActivity extends AppCompatActivity {
 	}   //onCreate
 
 	private  void btnMsg_Click(int select){
-		Intent intent = new Intent(AlaramListActivity.this, MessageListActivity.class);
+		Intent intent = new Intent(getActivity(), MessageListActivity.class);
 		intent.putExtra("Flag", select);
 		startActivity(intent);
 

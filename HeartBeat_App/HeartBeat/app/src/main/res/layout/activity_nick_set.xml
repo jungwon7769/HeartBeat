@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:hint="@string/input_nick"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/colorPrimaryText"
             android:textIsSelectable="false"/>
 
 

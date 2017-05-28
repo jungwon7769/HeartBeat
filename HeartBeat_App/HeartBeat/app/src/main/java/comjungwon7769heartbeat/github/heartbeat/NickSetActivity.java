@@ -86,7 +86,7 @@ public class NickSetActivity extends AppCompatActivity {
 				startActivity(intent);
 				txtNick.setText("");
 				btnNickOK.setEnabled(false);
-				((FriendListActivity) FriendListActivity.listContext).dataRefresh();
+				((MainActivity)MainActivity.mainContext).frListRefresh();
 			} else {
 				Toast.makeText(getApplicationContext(), "닉네임변경 실패..server", Toast.LENGTH_SHORT).show();
 			}

@@ -152,7 +152,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		user_mode.setBackgroundColor(Color.parseColor("#" + e.getColor()));
 
 		//List Activity ImgChange
-		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+		((MainActivity)MainActivity.mainContext).frListRefresh();
 
 		//Bluetooth Play
 		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);

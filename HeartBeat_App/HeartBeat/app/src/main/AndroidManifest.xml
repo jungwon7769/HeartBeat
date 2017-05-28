@@ -58,7 +58,7 @@
         <activity android:name=".MessageListActivity">
         </activity>
         <activity
-            android:name=".AlaramListActivity"
+            android:name=".AlaramListFragment"
             android:label="@string/almListAct_Label">
         </activity>
 
@@ -67,6 +67,9 @@
             android:enabled="true"
             android:exported="true">
         </service>
+
+        <activity android:name=".MainActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -62,7 +62,7 @@ public class LoadingActivity extends AppCompatActivity {
         Data_Check = App_Data_Check();
 
         if (Data_Check) {
-            Intent intent = new Intent(getApplicationContext(), FriendListActivity.class);
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
             startActivity(intent);
             Intent intent_back = new Intent(getApplicationContext(), BackgroundService.class);
             startService(intent_back);

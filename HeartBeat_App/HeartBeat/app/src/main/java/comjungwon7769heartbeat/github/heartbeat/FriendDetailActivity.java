@@ -152,7 +152,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 			btnBzzFriend.setText(getResources().getString(R.string.DetailAct_BzzFriend) + " ON");
 
 			//List Activity ImgChange
-			((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+			((MainActivity)MainActivity.mainContext).frListRefresh();
 		}
 
 	}
@@ -198,7 +198,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 		imgMode.setBackgroundColor(android.graphics.Color.parseColor("#" + color));
 
 		//List Activity ImgChange
-		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+		((MainActivity)MainActivity.mainContext).frListRefresh();
 
 		//Server Comu
 		SharedPreferences pf = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
@@ -278,7 +278,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 			editor.commit();
 		}
 		//List Activity ImgChange
-		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+		((MainActivity)MainActivity.mainContext).frListRefresh();
 		finish();
 	}
 }

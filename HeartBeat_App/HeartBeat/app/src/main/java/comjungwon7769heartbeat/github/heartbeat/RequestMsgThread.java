@@ -24,9 +24,9 @@ public class RequestMsgThread implements Runnable {
 	@Override
 	public void run() {
 		while(true) {
-			MsgDTO message = serverMsgReceive();
-			saveMsg(message);
-			pushAllarm(message);
+			//MsgDTO message = serverMsgReceive();
+			//saveMsg(message);
+			//pushAllarm(message);
 
 			try {
 				Thread.sleep(Constants.RequestMsg_Interval);
