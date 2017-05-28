@@ -53,8 +53,7 @@ public class FriendListFragment extends Fragment {
 		long saveTime = preference.getLong("friend_time", 0);
 		//if 저장한지 오래된경우 FriendList_Load 호출(서버에서 친구목록 가져옴)
 		if((System.currentTimeMillis() - saveTime) > Constants.friendLoad_Interval) {
-
-			FriendList_Load();
+			//FriendList_Load();
 		}
 
 		//App Database 에서 친구목록 가져오기
@@ -138,7 +137,7 @@ public class FriendListFragment extends Fragment {
 		displayUserInfo();
 
 		//FrinedList_Load 호출(Server)
-		FriendList_Load();
+		//FriendList_Load();
 
 		FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
 		friend_list = friendDAO.listFriend();

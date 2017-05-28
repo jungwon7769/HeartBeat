@@ -44,11 +44,8 @@
         </activity>
         <activity
             android:name=".FriendDetailActivity"
+            android:theme="@style/AppTheme.NoActionBar"
             android:label="@string/frDetailAct_Label">
-        </activity>
-        <activity
-            android:name=".SettingFragment"
-            android:label="@string/setting_Label">
         </activity>
         <activity
             android:name=".FriendRequestActivity"
