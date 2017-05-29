@@ -21,10 +21,10 @@ public class BlueToothCommunication implements Runnable {
 	//public static final boolean BZZ_MY = true, BZZ_FR = false;
 
 	//변수 정의
-	private String btName;
+	static private String btName;
 
-	private BluetoothAdapter btAdapter;
-	private BluetoothDevice btDevice;
+	static private BluetoothAdapter btAdapter;
+	static private BluetoothDevice btDevice;
 	static private BluetoothSocket btSock;
 
 	static private OutputStream outStream;
@@ -116,8 +116,8 @@ public class BlueToothCommunication implements Runnable {
 		data = value;
 	}
 
-	private int checkConnect(String name) {
-		if(btSock != null && btSock.isConnected()) return CONNECT_SUCCESS;
+	public int checkConnect(String name) {
+		if(btSock != null && btSock.isConnected() && btDevice.getName().equals(name)) return CONNECT_SUCCESS;
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		btDevice = null;
 		btSock = null;

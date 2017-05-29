@@ -190,10 +190,8 @@ public class SettingFragment extends Fragment {
 				editor.putString("btName", selectedText);
 				editor.commit();
 				txtBTName.setText(selectedText);
-
-				Intent intent_back = new Intent(getActivity().getApplicationContext(), BackgroundService.class);
-				getActivity().stopService(intent_back);
-				getActivity().startService(intent_back);
+				BlueToothCommunication btComu = new BlueToothCommunication(selectedText, null);
+				btComu.checkConnect(selectedText);
 			}
 		});
 		builder.show();
