@@ -69,6 +69,9 @@ public class BTSignalThread implements Runnable {
 			if(svComu.chkError) {   //진동전송 실패시
 				return false;
 			} else {
+				if(svComu.final_data == null){
+					return false;
+				}
 				if(!(boolean) svComu.final_data) {  //진동전송 실패시
 					return false;
 				}

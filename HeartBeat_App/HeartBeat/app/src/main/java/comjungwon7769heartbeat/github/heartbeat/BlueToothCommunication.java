@@ -189,7 +189,7 @@ public class BlueToothCommunication implements Runnable {
 			e.printStackTrace();
 		}
 		String msg = new String(readBuffer);
-		if(msg.contains("bzz")) {
+		if(msg.contains("6@")) {
 			return true;
 		} else {
 			return false;
