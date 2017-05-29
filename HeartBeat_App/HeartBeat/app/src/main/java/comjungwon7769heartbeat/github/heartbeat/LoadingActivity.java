@@ -76,19 +76,6 @@ public class LoadingActivity extends AppCompatActivity {
 
     private boolean App_Data_Check() {
         SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-
-        SharedPreferences.Editor editor = preference.edit();
-        editor.putString("my_id", "test");
-        editor.putString("my_pwd", "test");
-        editor.putString("my_nick", "testNick");
-        editor.putInt("my_mode", 1);
-        editor.putString("bzz_id", "");
-        editor.putLong("friend_time", 0);
-        editor.putString("btName", Constants.defaultDeviceName);
-        editor.putBoolean("set_btBzz", Constants.set_btBzz_ok);
-        editor.putInt("set_push", Constants.set_push_both);
-        editor.commit();
-
         ID = preference.getString("my_id", "");
         PWD = preference.getString("my_pwd", "");
         String nick = preference.getString("my_nick", "");

@@ -81,7 +81,7 @@ public class BTSignalThread implements Runnable {
 	}
 
 	public void stopThread(){
-		
+		btComu.closeSock();
 	}
 
 }
