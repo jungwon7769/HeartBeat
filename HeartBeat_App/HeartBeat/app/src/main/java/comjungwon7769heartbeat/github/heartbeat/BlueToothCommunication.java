@@ -25,10 +25,10 @@ public class BlueToothCommunication implements Runnable {
 
 	private BluetoothAdapter btAdapter;
 	private BluetoothDevice btDevice;
-	private BluetoothSocket btSock;
+	static private BluetoothSocket btSock;
 
-	private OutputStream outStream;
-	private InputStream inStream;
+	static private OutputStream outStream;
+	static private InputStream inStream;
 
 	private int useMode = -1;
 	private Object data;
@@ -99,8 +99,6 @@ public class BlueToothCommunication implements Runnable {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		//블루투스 연결해제
-		closeSock();
 
 		return;
 
@@ -119,7 +117,7 @@ public class BlueToothCommunication implements Runnable {
 	}
 
 	private int checkConnect(String name) {
-		//if(btSock != null && btSock.isConnected()) return CONNECT_SUCCESS;
+		if(btSock != null && btSock.isConnected()) return CONNECT_SUCCESS;
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		btDevice = null;
 		btSock = null;
@@ -139,14 +137,15 @@ public class BlueToothCommunication implements Runnable {
 		if(pairedDevices.size() > 0) {
 			for(BluetoothDevice device : pairedDevices) {
 				//인자값에 해당하는 name 을 가진 device인 경우
-				if(device.getName().contains(name)) {
+				if(device.getName().equals(name)) {
 					btDevice = device;
 				}
 			}
 		}
 		//Paired Device 중 name이 일치하는 Device 없음
 		if(btDevice == null) {
-			return CONNECT_FAILD;
+			btDevice = btAdapter.getRemoteDevice(name);
+			if(btDevice == null) return CONNECT_FAILD;
 		}
 
 		//Socket Connect

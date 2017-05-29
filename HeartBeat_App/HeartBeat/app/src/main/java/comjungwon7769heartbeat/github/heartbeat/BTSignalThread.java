@@ -29,6 +29,7 @@ public class BTSignalThread implements Runnable {
 			count = 10;
 			if(btSignalReceive()) {  //if Receive Bluetooth Signal
 				//Bzz Friend ID Load From PreferenceData
+				Log.i("Test", "receive");
 				String bzz_id = preference.getString("bzz_id", null);
 				if(bzz_id != null) {         //Trans To Server
 					while(count > 0) {          //10번까지 시도
@@ -64,7 +65,7 @@ public class BTSignalThread implements Runnable {
 		svComu.makeMsg(preference.getString("my_id", "0"), id, null, null, 2, null, null, 0);   //msg 만듬
 		svComu.start();
 		try {
-			svComu.join();  //thread wait
+			svComu.join(2000);  //thread wait
 			if(svComu.chkError) {   //진동전송 실패시
 				return false;
 			} else {
@@ -78,4 +79,9 @@ public class BTSignalThread implements Runnable {
 		}
 		return true;    //진동전송 성공
 	}
+
+	public void stopThread(){
+		
+	}
+
 }
