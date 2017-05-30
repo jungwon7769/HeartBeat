@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -29,6 +30,7 @@ public class MessageListActivity extends AppCompatActivity {
 	private MsgListAdapter adapter;
 	private String frinedID;
 	private boolean selectMode = false;
+	private ListView msgListView = null;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class MessageListActivity extends AppCompatActivity {
 		msgList = msgDAO.listMsg(flag, frinedID);
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
-		final ListView msgListView = (ListView) findViewById(R.id.msglistView);
+		msgListView = (ListView) findViewById(R.id.msglistView);
 
 		adapter = new MsgListAdapter(this, R.layout.item_message, msgList);
 		msgListView.setAdapter(adapter);
@@ -336,9 +338,26 @@ public class MessageListActivity extends AppCompatActivity {
 
 	} //ListAdapter
 
+	@Override
+	public void onBackPressed() {
+		if(selectMode) {
+			selectMode = false;
+			adapter.notifyDataSetChanged();
+
+		}else{
+			super.onBackPressed();
+		}
+	}
+
 	/*
 	@Override
-	public void onBackPressed(){
-		Log.i("Test","back");
+	public boolean onTouchEvent(MotionEvent event) {
+		if(event.getAction()== MotionEvent.BUTTON_BACK) {
+			if(selectMode) {
+				selectMode = false;
+				return false;
+			}
+		}
+		return true;
 	}*/
 }
