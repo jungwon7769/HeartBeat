@@ -68,13 +68,15 @@ public class ServerCommunication extends Thread{
 		msg = Flag + "/";
 		switch (Flag) {
 			case 0:
+				msg += ME + "/" + ID +"/"+Sound.split("/")[7]+"//";
+				file_name=Sound;
+				break;
 			case 2:
 			case 3:
 			case 6:
 			case 7:
 			case 8:// 음성전송, 진동전송, 친구추가, 친구요청 수락, 거절, 친구관계삭제
 				msg += ME + "/" + ID + "//";
-				if(Flag==0) file_name=Sound;
 				break;
 			case 1:// 기분전송
 				msg += ME + "/" + ID + "/" + mode + "//";
@@ -185,7 +187,12 @@ public class ServerCommunication extends Thread{
 			MsgDTO res = null;
 			if(value.length>2){
 				res = new MsgDTO();
-				res.setMode(Integer.parseInt(value[4]));
+				if(value[1].equals("0")){//음성메시지 수신인경우
+					Log.d("PATHTEST",value[4]);
+					res.setSoundPath(value[4]);
+				}else {//진동, 기분, 친구요청인경우
+					res.setMode(Integer.parseInt(value[4]));
+				}
 				res.setSender(value[2]);
 				res.setTime(Long.parseLong(value[3]));
 				res.setCount(1);

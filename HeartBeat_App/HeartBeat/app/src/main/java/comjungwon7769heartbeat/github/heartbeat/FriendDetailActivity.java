@@ -261,6 +261,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 		ServerCommunication sc = new ServerCommunication();
 		//HB 나중에 여기에 파일 넣기!!
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 0, path, null, 0);
+		Log.d("TTEST",path);//test
 		//Toast.makeText(getApplicationContext(), Environment.getExternalStorageState(),Toast.LENGTH_SHORT).show();
 		sc.start();
 		try {
