@@ -301,8 +301,13 @@ public class FriendDetailActivity extends AppCompatActivity {
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			return;
 		}else {
-			if(!(boolean) sc.final_data) {//친구삭제 실패시
+			if(sc.final_data == null){
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+				return;
+			}
+			else if(!(boolean) sc.final_data) {//친구삭제 실패시
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+				return;
 			}
 		}
 
