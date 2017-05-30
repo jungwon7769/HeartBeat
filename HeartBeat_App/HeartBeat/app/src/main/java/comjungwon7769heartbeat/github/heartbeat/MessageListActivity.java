@@ -263,7 +263,7 @@ public class MessageListActivity extends AppCompatActivity {
 					//기분 표시
 					Constants.Emotion[] e = Constants.Emotion.values();
 					mode.setImageResource(getResources().getIdentifier(e[friendDTO.getModeInt()].toString(), "drawable", getPackageName()));
-					mode.setBackgroundColor(Color.parseColor("#" + e[friendDTO.getModeInt()].getColor()));
+					mode.setBackgroundColor(Color.parseColor("#" + friendDTO.getColor()));
 				}
 				//친구관계가 끊어진 상태
 				else {
