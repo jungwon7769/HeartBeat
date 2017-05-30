@@ -28,12 +28,13 @@ public class RequestMsgThread implements Runnable {
 	public void run() {
 		while(true) {
 			MsgDTO message = serverMsgReceive();
-			saveMsg(message);
-			pushAllarm(message);
+			if(message != null) {
+				saveMsg(message);
+				pushAllarm(message);
+			}
 
 			try {
-				//Thread.sleep(Constants.RequestMsg_Interval);
-				Thread.sleep(30000);
+				Thread.sleep(Constants.RequestMsg_Interval);
 			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -52,39 +53,22 @@ public class RequestMsgThread implements Runnable {
 			svComu.makeMsg(preference.getString("my_id","0"),null, null, null, 14, null, null, 0);
 			//Log.d("MSGTEST",svComu.msg);
 			svComu.start();     //thread Start
-			while(svComu.wait){
-			}
-			MsgDTO res = (MsgDTO)svComu.final_data;
-			if(res==null){
+			svComu.join();
+			msgDTO = (MsgDTO)svComu.final_data;
+			if(msgDTO==null){
 				Log.d("MSGTEST", "수신할 메시지 없음");
 			}else{
 				//Log.d("MSGTEST", "메시지 수신완료");
-				res.setSoundPath(res.getSender()+"_"+preference.getString("my_id","0")+"_"+res.getTime());
-				//Log.d("MSGTEST", res.getSender()+"/"+res.getModeInt()+"/"+res.getFlag()+"/"+res.getTime()+"/"+res.getSoundPath());
-				//msg 디비에 저장
-				MsgDAO msgDAO = new MsgDAO(mContext.getApplicationContext(), MsgDAO.DataBase_name, null, 1);
-				msgDAO.addMsg(res);
-				if(res.getFlag()==Constants.msgFlag_Voice){//음성파일인경우 수신하기
+				msgDTO.setSoundPath(msgDTO.getSender()+"_"+preference.getString("my_id","0")+"_"+msgDTO.getTime());
+				if(msgDTO.getFlag()==Constants.msgFlag_Voice){//음성파일인경우 수신하기
 
 				}
+				return msgDTO;
 			}
-			svComu.join();  //thread end Wait...
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-
-
-		//test Data
-		Random r = new Random();
-		msgDTO.setSender("현정이");
-		msgDTO.setFlag(r.nextInt(4));
-		msgDTO.setCount(3);
-		msgDTO.setTime(System.currentTimeMillis());
-		msgDTO.setMode(r.nextInt(10));
-		msgDTO.setSoundPath("");
-
-
-		return msgDTO;
+		return null;
 	}
 
 	//Message 저장
