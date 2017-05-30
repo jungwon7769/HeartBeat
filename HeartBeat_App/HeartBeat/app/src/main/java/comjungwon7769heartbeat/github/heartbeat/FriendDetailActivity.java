@@ -141,8 +141,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 			}else {
 				if(sc.final_data == null){
 					Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
-				}
-				if(!(boolean) sc.final_data) {//진동전송 실패시
+				}else if(!(boolean) sc.final_data) {//진동전송 실패시
 					Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 				}
 			}
