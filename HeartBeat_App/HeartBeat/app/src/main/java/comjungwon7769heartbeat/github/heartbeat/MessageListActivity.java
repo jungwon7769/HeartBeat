@@ -5,8 +5,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,8 +22,6 @@ import android.widget.Toast;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Random;
 
 public class MessageListActivity extends AppCompatActivity {
 	private ArrayList<MsgDTO> msgList;
@@ -89,7 +87,8 @@ public class MessageListActivity extends AppCompatActivity {
 						case Constants.msgFlag_Voice:
 							intent.putExtra("Popup", Constants.popup_msgVoice);
 							intent.putExtra("Nick", txtNick.getText());
-							intent.putExtra("Path", selectMsg.getSoundPath());
+							intent.putExtra("Path", "/storage/emulated/0/HeartBeat/tmp/myVoice/"+selectMsg.getSoundPath());
+							Log.d("PLAYTEST",selectMsg.getSoundPath());
 							break;
 						case Constants.msgFlag_Emotion:
 							intent.putExtra("Popup", Constants.popup_msgEmotion);
