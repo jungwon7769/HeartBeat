@@ -276,7 +276,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 			}else{//true반환되면
 				//////음성데이터 보내기
 				Log.d("MP3TEST",path);
-				SendMP3 sm = new SendMP3();
+				SendMP3 sm = new SendMP3(pf.getString("my_id","0"),selectFriendDTO.getID() );
 				Log.d("MP3TEST","...1");
 				sm.filename=path;
 				Log.d("MP3TEST","...2 " + sm.filename);

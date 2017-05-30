@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -44,17 +45,34 @@ public class RequestMsgThread implements Runnable {
 		MsgDTO msgDTO = new MsgDTO();
 
 		//NotComplete
-		/*
+
 		try {
 			svComu = new ServerCommunication();
 			SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-			//svComu.makeMsg(preference.getString("my_id", "0"),,,,,);
+			svComu.makeMsg(preference.getString("my_id","0"),null, null, null, 14, null, null, 0);
+			//Log.d("MSGTEST",svComu.msg);
 			svComu.start();     //thread Start
+			while(svComu.wait){
+			}
+			MsgDTO res = (MsgDTO)svComu.final_data;
+			if(res==null){
+				Log.d("MSGTEST", "수신할 메시지 없음");
+			}else{
+				//Log.d("MSGTEST", "메시지 수신완료");
+				res.setSoundPath(res.getSender()+"_"+preference.getString("my_id","0")+"_"+res.getTime());
+				//Log.d("MSGTEST", res.getSender()+"/"+res.getModeInt()+"/"+res.getFlag()+"/"+res.getTime()+"/"+res.getSoundPath());
+				//msg 디비에 저장
+				MsgDAO msgDAO = new MsgDAO(mContext.getApplicationContext(), MsgDAO.DataBase_name, null, 1);
+				msgDAO.addMsg(res);
+				if(res.getFlag()==Constants.msgFlag_Voice){//음성파일인경우 수신하기
+
+				}
+			}
 			svComu.join();  //thread end Wait...
-		} catch(InterruptedException e) {
+		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		*/
+
 
 		//test Data
 		Random r = new Random();
