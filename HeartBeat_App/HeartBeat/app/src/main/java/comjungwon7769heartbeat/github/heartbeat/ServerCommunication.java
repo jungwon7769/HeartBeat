@@ -188,6 +188,8 @@ public class ServerCommunication extends Thread{
 				res.setMode(Integer.parseInt(value[1]));
 				res.setSender(value[2]);
 				res.setTime(Long.parseLong(value[3]));
+				res.setCount(1);
+				res.setFlag(Integer.parseInt(value[4]));
 				//res.setSoundPath(value[4]);
 				/*for(int i=1;i<value.length;i++){
 					switch(i%4){
