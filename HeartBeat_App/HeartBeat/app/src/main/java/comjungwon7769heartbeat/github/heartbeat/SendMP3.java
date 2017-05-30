@@ -31,7 +31,7 @@ public class SendMP3 extends Thread {
     public void run() {
         try {
             init();
-            //sendMP3();
+            sendMP3();
         }
         catch(Exception e){
             Log.d("TEST_ SendMP3", e.getMessage());
@@ -55,7 +55,7 @@ public class SendMP3 extends Thread {
         }
     }
 
-/*    private void sendMP3(){
+    private void sendMP3(){
         try {
             int ch = 0;
             while ((ch = bis.read()) != -1) {
@@ -69,5 +69,5 @@ public class SendMP3 extends Thread {
         }catch(Exception e){
             //Log.d("TEST_ SendMP3", e.getMessage());
         }
-    }*/
+    }
 }
