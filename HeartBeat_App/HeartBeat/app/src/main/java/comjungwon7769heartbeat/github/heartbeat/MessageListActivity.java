@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ public class MessageListActivity extends AppCompatActivity {
 	private int flag;
 	private MsgListAdapter adapter;
 	private String frinedID;
+	private boolean selectMode = false;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,34 +76,56 @@ public class MessageListActivity extends AppCompatActivity {
 		msgListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-				MsgDTO selectMsg = msgList.get(position);
-				//Popup
-				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-				TextView txtNick = (TextView) view.findViewById(R.id.msgItem_txtFriend);
+				if(!selectMode) {
+					MsgDTO selectMsg = msgList.get(position);
+					//Popup
+					Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
+					TextView txtNick = (TextView) view.findViewById(R.id.msgItem_txtFriend);
 
-				switch(selectMsg.getFlag()) {
-					case Constants.msgFlag_Friend:
-						intent.putExtra("Popup", Constants.popup_msgFriend);
-						break;
-					case Constants.msgFlag_Voice:
-						intent.putExtra("Popup", Constants.popup_msgVoice);
-						intent.putExtra("Nick", txtNick.getText());
-						intent.putExtra("Path", selectMsg.getSoundPath());
-						break;
-					case Constants.msgFlag_Emotion:
-						intent.putExtra("Popup", Constants.popup_msgEmotion);
-						intent.putExtra("Nick", txtNick.getText());
-						intent.putExtra("Emotion", selectMsg.getModeInt());
-						break;
-					case Constants.msgFlag_Bzz:
-						intent.putExtra("Popup", Constants.popup_msgBzz);
-						intent.putExtra("Nick", txtNick.getText());
-						intent.putExtra("Count", selectMsg.getCount());
-						break;
+					switch(selectMsg.getFlag()) {
+						case Constants.msgFlag_Friend:
+							intent.putExtra("Popup", Constants.popup_msgFriend);
+							break;
+						case Constants.msgFlag_Voice:
+							intent.putExtra("Popup", Constants.popup_msgVoice);
+							intent.putExtra("Nick", txtNick.getText());
+							intent.putExtra("Path", selectMsg.getSoundPath());
+							break;
+						case Constants.msgFlag_Emotion:
+							intent.putExtra("Popup", Constants.popup_msgEmotion);
+							intent.putExtra("Nick", txtNick.getText());
+							intent.putExtra("Emotion", selectMsg.getModeInt());
+							break;
+						case Constants.msgFlag_Bzz:
+							intent.putExtra("Popup", Constants.popup_msgBzz);
+							intent.putExtra("Nick", txtNick.getText());
+							intent.putExtra("Count", selectMsg.getCount());
+							break;
+					}
+					intent.putExtra("ID", selectMsg.getSender());
+					intent.putExtra("Time", selectMsg.getTime());
+					startActivityForResult(intent, 1);
+				}else{
+					CheckBox cb = (CheckBox)view.findViewById(R.id.msgItem_check);
+					if(cb.isChecked()){
+						msgListView.setItemChecked(position, false);
+						cb.setChecked(false);
+					}else {
+						msgListView.setItemChecked(position, true);
+						cb.setChecked(true);
+					}
 				}
-				intent.putExtra("ID", selectMsg.getSender());
-				intent.putExtra("Time", selectMsg.getTime());
-				startActivityForResult(intent, 1);
+			}
+		});
+
+		msgListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				msgListView.setItemChecked(position, true);
+				CheckBox cb = (CheckBox)view.findViewById(R.id.msgItem_check);
+				cb.setChecked(true);
+				selectMode = true;
+				return true;
 			}
 		});
 
@@ -237,6 +261,7 @@ public class MessageListActivity extends AppCompatActivity {
 			TextView name = (TextView) convertView.findViewById(R.id.msgItem_txtFriend);      //텍스트뷰와 닉네임 연결
 			ImageView mode = (ImageView) convertView.findViewById(R.id.msgItem_imgMode);
 			TextView content = (TextView) convertView.findViewById(R.id.msgItem_txtContent);
+			CheckBox checkBox = (CheckBox)convertView.findViewById(R.id.msgItem_check);
 
 			MsgDTO msgItem = myMsg.get(position);  //position에 해당하는 MsgDTO
 
@@ -263,7 +288,7 @@ public class MessageListActivity extends AppCompatActivity {
 					//기분 표시
 					Constants.Emotion[] e = Constants.Emotion.values();
 					mode.setImageResource(getResources().getIdentifier(e[friendDTO.getModeInt()].toString(), "drawable", getPackageName()));
-					mode.setBackgroundColor(Color.parseColor("#" + e[friendDTO.getModeInt()].getColor()));
+					mode.setBackgroundColor(Color.parseColor("#" + friendDTO.getColor()));
 				}
 				//친구관계가 끊어진 상태
 				else {
@@ -298,9 +323,23 @@ public class MessageListActivity extends AppCompatActivity {
 				txtTime.setText(dateFormat.format(msgTime));
 			}
 
+			if(selectMode) {
+				((View) txtTime).setVisibility(View.GONE);
+				((View) checkBox).setVisibility(View.VISIBLE);
+			}
+			else {
+				((View) txtTime).setVisibility(View.VISIBLE);
+				((View) checkBox).setVisibility(View.GONE);
+			}
 
 			return convertView;
 		}
 
 	} //ListAdapter
+
+	/*
+	@Override
+	public void onBackPressed(){
+		Log.i("Test","back");
+	}*/
 }
