@@ -4,14 +4,14 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
 import android.widget.Checkable;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 /**
  * Created by AH on 2017-05-30.
  */
-public class CheckableFrameLayout extends FrameLayout implements Checkable{
+public class CheckableRelativeLayout extends RelativeLayout implements Checkable{
 
-	public CheckableFrameLayout(Context context, AttributeSet attrs){
+	public CheckableRelativeLayout(Context context, AttributeSet attrs){
 		super(context, attrs);
 	}
 

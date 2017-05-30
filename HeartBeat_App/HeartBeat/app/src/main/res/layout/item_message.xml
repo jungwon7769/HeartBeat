@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<comjungwon7769heartbeat.github.heartbeat.CheckableRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -55,4 +56,4 @@
         android:focusable="false"
         android:checked="false"
         android:clickable="true"/>
-</RelativeLayout>
+</comjungwon7769heartbeat.github.heartbeat.CheckableRelativeLayout>

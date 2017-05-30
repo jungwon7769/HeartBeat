@@ -70,6 +70,9 @@ public class MessageListActivity extends AppCompatActivity {
 		//Msg Load Using MsgDAO
 		MsgDAO msgDAO = new MsgDAO(getApplicationContext(), MsgDAO.DataBase_name, null, 1);
 
+		for(int i=0; i<20; i++) {
+			msgDAO.addMsg(new MsgDTO(2, "g"+i, 10, Constants.Emotion.sad, ""));
+		}
 		msgList = msgDAO.listMsg(flag, frinedID);
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
@@ -113,15 +116,6 @@ public class MessageListActivity extends AppCompatActivity {
 					intent.putExtra("ID", selectMsg.getSender());
 					intent.putExtra("Time", selectMsg.getTime());
 					startActivityForResult(intent, 1);
-				}else{
-					CheckBox cb = (CheckBox)view.findViewById(R.id.msgItem_check);
-					if(cb.isChecked()){
-						msgListView.setItemChecked(position, false);
-						cb.setChecked(false);
-					}else {
-						msgListView.setItemChecked(position, true);
-						cb.setChecked(true);
-					}
 				}
 			}
 		});
@@ -129,9 +123,8 @@ public class MessageListActivity extends AppCompatActivity {
 		msgListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 			@Override
 			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				msgListView.clearChoices();
 				msgListView.setItemChecked(position, true);
-				CheckBox cb = (CheckBox)view.findViewById(R.id.msgItem_check);
-				cb.setChecked(true);
 				selectMode = true;
 				selectMenu.setVisibility(View.VISIBLE);
 				return true;
@@ -144,7 +137,9 @@ public class MessageListActivity extends AppCompatActivity {
 		btnSelectAll.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				msgListView.clearChoices();
+				for (int i=0; i<adapter.getCount(); i++) {
+					msgListView.setItemChecked(i, true) ;
+				}
 				adapter.notifyDataSetChanged();
 			}
 		});
@@ -154,15 +149,17 @@ public class MessageListActivity extends AppCompatActivity {
 				MsgDTO selectMsg;
 				SparseBooleanArray sb = msgListView.getCheckedItemPositions();
 				if(sb.size() != 0){
-					for(int i=0; i< msgListView.getCount(); i++){
+					for(int i=msgListView.getCount()-1; i>=0; i--){
 						if(sb.get(i)){
 							selectMsg = msgList.get(i);
+							msgList.remove(i);
 							delete_msg(selectMsg.getSender(), selectMsg.getTime());
 						}
 					}
 					msgListView.clearChoices();
 					selectMode = false;
 					adapter.notifyDataSetChanged();
+					selectMenu.setVisibility(View.GONE);
 				} //if
 			}
 		});
