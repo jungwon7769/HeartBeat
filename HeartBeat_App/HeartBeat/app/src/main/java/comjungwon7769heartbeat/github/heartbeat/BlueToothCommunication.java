@@ -118,6 +118,7 @@ public class BlueToothCommunication implements Runnable {
 
 	public int checkConnect(String name) {
 		if(btSock != null && btSock.isConnected() && btDevice.getName().equals(name)) return CONNECT_SUCCESS;
+		closeSock();
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		btDevice = null;
 		btSock = null;
