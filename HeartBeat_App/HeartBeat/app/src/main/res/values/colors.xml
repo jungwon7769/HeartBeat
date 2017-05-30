@@ -6,8 +6,8 @@
     <color name="colorTextAndIcon">#FFFFFF</color>
 
     <color name="colorAccent">#8f78be</color>
-    <color name="colorPrimaryText">#FEFEFE</color>
-    <color name="colorSecondaryText">#F1F1F1</color>
+    <color name="colorPrimaryText">#3d3d3d</color>
+    <color name="colorSecondaryText">#787878</color>
     <color name="colorDivider">#BFBFBF</color>
 
     <color name="colorLight">#FFFFFF</color>

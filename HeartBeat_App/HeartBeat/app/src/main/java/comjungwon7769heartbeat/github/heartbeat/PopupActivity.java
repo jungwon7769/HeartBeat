@@ -491,7 +491,7 @@ public class PopupActivity extends AppCompatActivity {
 		if(recorder == null) {
 			((Button) findViewById(R.id.popup_rv_btnTrans)).setEnabled(false);   //전송버튼 사용불가
 			//Set FilePath AND Create
-			recordFilePath = dirPath + "/" + System.currentTimeMillis() + ".mp3";
+			recordFilePath = dirPath + "/" + System.currentTimeMillis() + ".3gp";
 			File file = new File(dirPath);
 			file.mkdirs();
 
@@ -511,8 +511,8 @@ public class PopupActivity extends AppCompatActivity {
 			//Recorder Setting
 			recorder = new MediaRecorder();
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			recorder.setOutputFile(recordFilePath);
 
 			//Record Start

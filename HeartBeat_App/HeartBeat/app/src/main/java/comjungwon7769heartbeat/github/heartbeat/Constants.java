@@ -18,6 +18,10 @@ public class Constants {
 
 	//서버주소
 	public static final String SERVERURL =  "1.236.102.161";
+<<<<<<< HEAD
+=======
+	//public static final String SERVERURL =  "192.168.0.4";
+>>>>>>> origin/HEARTBEAT_APP
 	/*
 	PopupActivity 의 Type 정의
 	 */
