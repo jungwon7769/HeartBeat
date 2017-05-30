@@ -85,12 +85,17 @@ public class MsgDAO extends SQLiteOpenHelper {
 
 	}
 
-	//전체 친구 목록 반환 Method
-	public ArrayList<MsgDTO> listMsg(int flag) {
+	//전체 메시지 목록 반환 Method
+	public ArrayList<MsgDTO> listMsg(int flag, String id) {
+		Cursor cursor;
 		ArrayList<MsgDTO> list_msg = new ArrayList<MsgDTO>();
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Flag + "=" + flag + " ORDER BY " + Time + " DESC", null);
+		if(flag == Constants.msgFlag_any_id) {
+			cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + id + "' ORDER BY " + Time + " DESC", null);
+		} else {
+			cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Flag + "=" + flag + " ORDER BY " + Time + " DESC", null);
+		}
 
 		cursor.moveToFirst();
 		while(!cursor.isAfterLast()) {
@@ -147,12 +152,23 @@ public class MsgDAO extends SQLiteOpenHelper {
 		return msgDTO;
 	}
 
-	//진동 메세지 존재 여부 반환 Method
-	public boolean existBzz(String sender) {
+	//진동 메세지 카운트 반환 Method
+	public int existBzz(String sender) {
 		SQLiteDatabase db = this.getReadableDatabase();
-		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + " AND " + Flag + " = " + Constants.msgFlag_Bzz, null);
+		Cursor cursor = db.rawQuery("SELECT * FROM " + Table_name + " WHERE " + Sender + "='" + sender + "' AND " + Flag + " = " + Constants.msgFlag_Bzz, null);
 
-		return (cursor.getCount() > 0);
+		if(cursor.getCount() < 1) {
+			cursor.close();
+			return 0;
+		} else {
+			cursor.moveToFirst();
+			int count = cursor.getInt(3);
+
+			cursor.close();
+			db.close();
+
+			return count;
+		}
 	}
 
 	//진동 카운트 없데이트 Method
@@ -163,7 +179,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 			db.close();
 			return;
 		}
-		String sql = "UPDATE " + Table_name + " SET " + Count + "=" + count + "," + Time + "= " + Long.toString(time) + "  WHERE " + Sender + "='" + sender + "' AND" + Flag + "=" + flag;
+		String sql = "UPDATE " + Table_name + " SET " + Count + "=" + count + "," + Time + "= '" + Long.toString(time) + "'  WHERE " + Sender + "='" + sender + "' AND " + Flag + "=" + flag;
 		try {
 			db.execSQL(sql);
 			db.close();

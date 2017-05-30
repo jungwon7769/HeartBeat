@@ -2,17 +2,13 @@ package comjungwon7769heartbeat.github.heartbeat;
 
 import android.util.Log;
 
+import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
@@ -22,18 +18,21 @@ import java.util.HashMap;
  */
 public class ServerCommunication extends Thread{
 
-	private final String sv_URL =  "192.168.43.156";//내 아이피주소!
+	private final String sv_URL =  Constants.SERVERURL;//내 아이피주소!
 	private final int sv_PORT = 1200;
 	public String file_name = null;
 	//private File sound;
 
 	private BufferedReader br = null;
-	private BufferedOutputStream bw = null;
+	private BufferedOutputStream bos = null;
+	private BufferedInputStream bin = null;
+	private FileInputStream fis = null;
+	private DataOutputStream dos = null;
 
 	private Socket sv_sock = null;
 	public byte[] buf = new byte[1024];// 호빈수정 : 네트워크통신하려면 byte[]로 바꿔야함
 	public String msg=null;// 호빈추가 : 서버로 보낼 메시지 정의
-	public Object final_data = null; //서버처리해서 반환된 데이터야~~(boolean / HashMap<String, FriendDTO> 의 형태임)
+	public Object final_data = null; //서버처리해서 반환된 데이터야~~(boolean / HashMap<String, FriendDTO> / MsgDTO 의 형태임)
 	public boolean wait=true; //스레드 종료 알릴 플래그 용도
 	public boolean chkError = false;
 
@@ -55,7 +54,7 @@ public class ServerCommunication extends Thread{
 		try {
 			sv_sock = new Socket(sv_URL, sv_PORT);
 			br = new BufferedReader(new InputStreamReader(sv_sock.getInputStream(),"EUC-KR"));
-			bw = new BufferedOutputStream(sv_sock.getOutputStream());
+			bos = new BufferedOutputStream(sv_sock.getOutputStream());
 			//bw = new BufferedWriter(new OutputStreamWriter(out));
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -108,33 +107,8 @@ public class ServerCommunication extends Thread{
 	public void processMsg() {
 		try {
 			// 서버로 메시지 송신
-			bw.write(msg.getBytes("EUC-KR"));
-			bw.flush();
-
-			//2. (음성파일메시지인경우)서버로 파일 송신
-			String[] value = msg.split("/");
-			if(value[0].equals("0")&&file_name!=null) {
-				PrintWriter out = new PrintWriter(new BufferedWriter(new OutputStreamWriter(sv_sock.getOutputStream())), true);
-				Log.d("HBTEST_전체파일이름",file_name);
-				Log.d("HBTEST_파일이름",file_name.split("/")[7]);
-				out.println(file_name.split("/")[7]);
-				out.flush();
-				Log.d("HBTEST","데이터 찾는중");
-				DataInputStream dis = new DataInputStream(new FileInputStream(new File(file_name)));
-				DataOutputStream dos = new DataOutputStream(sv_sock.getOutputStream());
-				byte[] buf = new byte[1024];
-				long totalReadBytes = 0;
-				int readBytes;
-				while ((readBytes = dis.read(buf)) > 0) {
-					//길이 정해주고 딱 맞게 서버로 보냄
-					Log.d("HBTEST",new String(buf));
-					dos.write(buf, 0, readBytes);
-					//dos.flush();
-					totalReadBytes += readBytes;
-					Log.d("HBTEST",readBytes+"");
-				}
-				//dos.close();
-			}
+			bos.write(msg.getBytes("EUC-KR"));
+			bos.flush();
 
 			//서버로부터 메시지 수신
 			buf = br.readLine().getBytes();
@@ -145,8 +119,8 @@ public class ServerCommunication extends Thread{
 			try {
 				if (sv_sock != null)
 					sv_sock.close();
-				if(bw!=null)
-					bw.close();
+				if(bos!=null)
+					bos.close();
 				if(br!=null)
 					br.close();
 			} catch (IOException e) {
@@ -161,7 +135,9 @@ public class ServerCommunication extends Thread{
 
 		// Flag 0~9,11,12
 		if (Flag >= 0 && Flag <= 12 && Flag!=10) {
-			if (value[1].equals("true")) final_data=(boolean)true;
+			if (value[1].equals("true")) {
+				final_data = (boolean) true;
+			}
 			else if(value[1].equals("false")) final_data=(boolean)false;
 		}
 		//Flag 10
@@ -205,10 +181,17 @@ public class ServerCommunication extends Thread{
 		}
 		//Flag 14
 		else if(Flag==14){
-			HashMap<Long, MsgDTO> res = new HashMap<>();
-			MsgDTO dto = null;
+			//HashMap<Long, MsgDTO> res = new HashMap<>();
+			MsgDTO res = null;
 			if(value.length>2){
-				for(int i=1;i<value.length;i++){
+				res = new MsgDTO();
+				res.setMode(Integer.parseInt(value[1]));
+				res.setSender(value[2]);
+				res.setTime(Long.parseLong(value[3]));
+				res.setCount(1);
+				res.setFlag(Integer.parseInt(value[4]));
+				//res.setSoundPath(value[4]);
+				/*for(int i=1;i<value.length;i++){
 					switch(i%4){
 						case 1:
 							dto = new MsgDTO();
@@ -225,7 +208,7 @@ public class ServerCommunication extends Thread{
 							res.put(dto.getTime(), dto);
 							break;
 					}
-				}
+				}*/
 				final_data = res;
 			}
 		}

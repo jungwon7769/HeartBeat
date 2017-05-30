@@ -1,7 +1,9 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.media.MediaRecorder;
@@ -412,7 +414,9 @@ public class PopupActivity extends AppCompatActivity {
 			public void onClick(View v) {
 				//NotComplete
 				//Bluetooth Comu
-				BlueToothCommunication btComu = new BlueToothCommunication(((PopupActivity)getParent()).btHandler);
+				SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+				BlueToothHandler bth = (PopupActivity.this).btHandler;
+				BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), bth);
 				btComu.setUseMode(btComu.CODE_EMOTION);
 				btComu.setData(mode);
 				Thread thread = new Thread(btComu);
@@ -487,7 +491,7 @@ public class PopupActivity extends AppCompatActivity {
 		if(recorder == null) {
 			((Button) findViewById(R.id.popup_rv_btnTrans)).setEnabled(false);   //전송버튼 사용불가
 			//Set FilePath AND Create
-			recordFilePath = dirPath + "/" + System.currentTimeMillis() + ".mp3";
+			recordFilePath = dirPath + "/" + System.currentTimeMillis() + ".3gp";
 			File file = new File(dirPath);
 			file.mkdirs();
 
@@ -507,8 +511,8 @@ public class PopupActivity extends AppCompatActivity {
 			//Recorder Setting
 			recorder = new MediaRecorder();
 			recorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-			recorder.setOutputFormat(MediaRecorder.OutputFormat.MPEG_4);
-			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.DEFAULT);
+			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			recorder.setOutputFile(recordFilePath);
 
 			//Record Start
@@ -538,6 +542,9 @@ public class PopupActivity extends AppCompatActivity {
 		//파일이 없는 경우
 		if(!file.exists()) {
 			Toast.makeText(getApplicationContext(), "File Path ERROR", Toast.LENGTH_SHORT).show();
+			////여기서부터 코딩
+			Toast.makeText(getApplicationContext(), "음성다운받기", Toast.LENGTH_SHORT).show();
+
 			return;
 		}
 		try {

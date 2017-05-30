@@ -38,8 +38,10 @@ public class JoinActivity extends Activity {
 					sc.makeMsg(txtID.getText().toString(), null, null, null, 11, null, null, 0);
 					sc.start();
 					Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
-					while(sc.wait) {
-						///스레드처리완료 기다리기
+					try {
+						sc.join(10000);
+					} catch(InterruptedException e) {
+						e.printStackTrace();
 					}
 					if(sc.chkError) {
 						Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
@@ -123,8 +125,10 @@ public class JoinActivity extends Activity {
 		sc.makeMsg(id, null, pwd, Nick, 12, null, null, 0);
 		sc.start();
 		Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
-		while(sc.wait) {
-			///스레드처리완료 기다리기...
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
 		}
 		if(sc.chkError) {
 			Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();

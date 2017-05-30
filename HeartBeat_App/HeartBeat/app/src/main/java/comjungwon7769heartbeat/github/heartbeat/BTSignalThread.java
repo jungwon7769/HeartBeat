@@ -20,25 +20,21 @@ public class BTSignalThread implements Runnable {
 
 	@Override
 	public void run() {
+		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		int count;
-		btComu = new BlueToothCommunication(this.btHandler);
+		btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_RECEIVE);
 
 		while(true) {
 			count = 10;
 			if(btSignalReceive()) {  //if Receive Bluetooth Signal
 				//Bzz Friend ID Load From PreferenceData
-				SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+				Log.i("Test", "receive");
 				String bzz_id = preference.getString("bzz_id", null);
 				if(bzz_id != null) {         //Trans To Server
 					while(count > 0) {          //10번까지 시도
 						if(svTrans(bzz_id)) break;  //전송성공시 그만시도
 						count--;
-						try {
-							Thread.sleep(1000);
-						} catch(InterruptedException e) {
-							e.printStackTrace();
-						}
 					}
 				} //try trans
 
@@ -64,10 +60,13 @@ public class BTSignalThread implements Runnable {
 		svComu.makeMsg(preference.getString("my_id", "0"), id, null, null, 2, null, null, 0);   //msg 만듬
 		svComu.start();
 		try {
-			svComu.join();  //thread wait
+			svComu.join(2000);  //thread wait
 			if(svComu.chkError) {   //진동전송 실패시
 				return false;
 			} else {
+				if(svComu.final_data == null){
+					return false;
+				}
 				if(!(boolean) svComu.final_data) {  //진동전송 실패시
 					return false;
 				}
@@ -78,4 +77,9 @@ public class BTSignalThread implements Runnable {
 		}
 		return true;    //진동전송 성공
 	}
+
+	public void stopThread(){
+		btComu.closeSock();
+	}
+
 }

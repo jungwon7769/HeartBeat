@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -27,11 +28,13 @@ public class MessageListActivity extends AppCompatActivity {
 	private ArrayList<MsgDTO> msgList;
 	private int flag;
 	private MsgListAdapter adapter;
+	private String frinedID;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_message_list);
+		frinedID = null;
 
 		//get intent -> Flag check
 		Intent intent = getIntent();
@@ -49,21 +52,16 @@ public class MessageListActivity extends AppCompatActivity {
 			case Constants.msgFlag_Bzz:
 				setTitle(getText(R.string.msgList_bzz_Label));
 				break;
+			case Constants.msgFlag_any_id:
+				frinedID = intent.getStringExtra("FriendID");
+				setTitle(frinedID);
+				break;
 		}
 
 		//Msg Load Using MsgDAO
 		MsgDAO msgDAO = new MsgDAO(getApplicationContext(), MsgDAO.DataBase_name, null, 1);
 
-		//Notcomplete Test  지우기
-		Random r = new Random();
-		for(int i = 0; i < 1; i++) {
-			MsgDTO testDTO = new MsgDTO(r.nextInt(4), "id" + r.nextInt(1000), System.currentTimeMillis(), Constants.Emotion.sad, "");
-			msgDAO.addMsg(testDTO);
-		}
-
-
-
-		msgList = msgDAO.listMsg(flag);
+		msgList = msgDAO.listMsg(flag, frinedID);
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
 		final ListView msgListView = (ListView) findViewById(R.id.msglistView);
@@ -81,7 +79,7 @@ public class MessageListActivity extends AppCompatActivity {
 				Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
 				TextView txtNick = (TextView) view.findViewById(R.id.msgItem_txtFriend);
 
-				switch(flag) {
+				switch(selectMsg.getFlag()) {
 					case Constants.msgFlag_Friend:
 						intent.putExtra("Popup", Constants.popup_msgFriend);
 						break;
@@ -113,7 +111,7 @@ public class MessageListActivity extends AppCompatActivity {
 		MsgDAO msgDAO = new MsgDAO(getApplicationContext(), MsgDAO.DataBase_name, null, 1);
 		msgDAO.deleteMsg(id, time);
 
-		msgList = msgDAO.listMsg(flag);
+		msgList = msgDAO.listMsg(flag, frinedID);
 		adapter.setItemList(msgList);
 		adapter.notifyDataSetChanged();
 	} //delete_msg()
@@ -122,12 +120,60 @@ public class MessageListActivity extends AppCompatActivity {
 		Log.i("Test", "acceptFriend");
 		//Notcomplete
 		//ServerComu
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(preference.getString("my_id", null), friend_id, null, null, 6, null, null, 0);
+		sc.start();
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		if(sc.chkError) {
+			Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		} else {
+			if(sc.final_data == null) {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+			else if((boolean) sc.final_data) {//성공
+				SharedPreferences.Editor editor = preference.edit();
+				editor.putLong("friend_time", 0);
+			}else if(!(boolean) sc.final_data) {//실패
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+		}
 	} //accept_friend()
 
 	private void no_friend(String friend_id) {
 		Log.i("Test", "no friend");
 		//Notcomplete
 		//ServerComu
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(preference.getString("my_id", null), friend_id, null, null, 7, null, null, 0);
+		sc.start();
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		if(sc.chkError) {
+			Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		} else {
+			if(sc.final_data == null) {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+			else if((boolean) sc.final_data) {//성공
+				SharedPreferences.Editor editor = preference.edit();
+				editor.putLong("friend_time", 0);
+			}else if(!(boolean) sc.final_data) {//실패
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+		}
 	} //no friend()
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -190,17 +236,20 @@ public class MessageListActivity extends AppCompatActivity {
 			}
 			TextView name = (TextView) convertView.findViewById(R.id.msgItem_txtFriend);      //텍스트뷰와 닉네임 연결
 			ImageView mode = (ImageView) convertView.findViewById(R.id.msgItem_imgMode);
+			TextView content = (TextView) convertView.findViewById(R.id.msgItem_txtContent);
 
 			MsgDTO msgItem = myMsg.get(position);  //position에 해당하는 MsgDTO
 
 			//친구 요청 메세지의 경우(친구관계 아님)
-			if(flag == Constants.msgFlag_Friend) {
+			if(msgItem.getFlag() == Constants.msgFlag_Friend) {
 				//친구요청한 사람의 ID 표시
 				name.setText(msgItem.getSender());
 				//기분 표시
 				Constants.Emotion[] e = Constants.Emotion.values();
 				mode.setImageResource(getResources().getIdentifier(e[0].toString(), "drawable", getPackageName()));
 				mode.setBackgroundColor(Color.parseColor("#" + e[0].getColor()));
+				//내용
+				content.setText(getText(R.string.msg_content_friend));
 			}
 			//다른 메세지인 경우
 			else {
@@ -225,6 +274,13 @@ public class MessageListActivity extends AppCompatActivity {
 					mode.setImageResource(getResources().getIdentifier(e[0].toString(), "drawable", getPackageName()));
 					mode.setBackgroundColor(Color.parseColor("#" + e[0].getColor()));
 				}
+				if(msgItem.getFlag() == Constants.msgFlag_Bzz) {
+					content.setText(getText(R.string.msg_content_bzz));
+				} else if(msgItem.getFlag() == Constants.msgFlag_Emotion) {
+					content.setText(getText(Constants.Emotion_content[msgItem.getModeInt()]));
+				} else if(msgItem.getFlag() == Constants.msgFlag_Voice) {
+					content.setText(getText(R.string.msg_content_voice));
+				}
 
 			}
 
@@ -234,7 +290,7 @@ public class MessageListActivity extends AppCompatActivity {
 			long msgTime = msgItem.getTime();
 			long currentTime = System.currentTimeMillis();
 
-			if((msgTime - currentTime) > 86400) {
+			if((currentTime - msgTime) < 86400000) {
 				DateFormat dateFormat = new SimpleDateFormat("HH:mm");
 				txtTime.setText(dateFormat.format(msgTime));
 			} else {

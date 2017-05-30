@@ -4,15 +4,20 @@ package comjungwon7769heartbeat.github.heartbeat;
  * Created by AH on 2017-05-02.
  */
 public class Constants {
-	public static final String deviceName = "BK8000L";
+	public static final String defaultDeviceName = "BK8000L";
 
 	public static final int maxString = 16;
 	public static final int minString = 4;
 
-	public static final int friendLoad_Interval = 1000;    //millsec -> 5min 300000
-	public static final int RequestMsg_Interval = 5000;
+	public static final int friendLoad_Interval = 300000;    //millsec -> 5min 300000
+	public static final int RequestMsg_Interval = 10000;
 
+	//설정
+	public static final boolean set_btBzz_ok = true, set_btBzz_no = false;
+	public static final int set_push_no = 0, set_push_sound = 1, set_push_bzz = 2, set_push_both = 3;
 
+	//서버주소
+	public static final String SERVERURL =  "1.236.102.161";
 	/*
 	PopupActivity 의 Type 정의
 	 */
@@ -37,10 +42,14 @@ public class Constants {
 	public static final int msgFlag_Emotion = 1;
 	public static final int msgFlag_Bzz = 2;
 	public static final int msgFlag_Friend = 3;
+	public static final int msgFlag_any_id = 4;
 
 
 	public static final int Emotion_sound[] = {R.raw.emotion_00_smile, R.raw.emotion_01_laugh, R.raw.emotion_02_sad, R.raw.emotion_03_annoy, R.raw.emotion_04_angry,
 			R.raw.emotion_05_wink, R.raw.emotion_06_love, R.raw.emotion_07_wow, R.raw.emotion_08_overeat, R.raw.emotion_09_sleep};
+
+	public static final int Emotion_content[] = {R.string.msg_content_e_smile, R.string.msg_content_e_laugh, R.string.msg_content_e_sad, R.string.msg_content_e_annoy,
+			R.string.msg_content_e_angry, R.string.msg_content_e_wink, R.string.msg_content_e_love, R.string.msg_content_e_wow, R.string.msg_content_e_overeat, R.string.msg_content_e_sleep};
 
 	public static enum Emotion {
 		smile(0, "59BE7F"), laugh(1, "FFFF00"), sad(2, "0000FF"), annoy(3, "FF9900"), angry(4, "FF0000"),

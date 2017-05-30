@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -16,6 +18,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 	private FriendDTO selectFriendDTO;
 	private Button btnBzzColor, btnTransEmotion, btnTransBzz, btnTransVoice, btnBzzFriend, btnDeleteFriend;
+	private FloatingActionButton btnMsg;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +37,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 		btnTransVoice = (Button) findViewById(R.id.frDt_btnTransVoice);
 		btnBzzFriend = (Button)findViewById(R.id.frDt_btnBzzFriend);
 		btnDeleteFriend = (Button)findViewById(R.id.frDt_btnDeleteFriend);
+		btnMsg = (FloatingActionButton)findViewById(R.id.frDt_btnMsg);
 
 		btnBzzColor.setOnClickListener(new Button.OnClickListener() {
 			@Override
@@ -71,6 +75,16 @@ public class FriendDetailActivity extends AppCompatActivity {
 				deleteFriend_Click();
 			}
 		});
+		btnMsg.setOnClickListener(new View.OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent(FriendDetailActivity.this, MessageListActivity.class);
+				intent.putExtra("Flag", Constants.msgFlag_any_id);
+				intent.putExtra("FriendID", selectFriendDTO.getID());
+				startActivity(intent);
+			}
+		});
+
 	} //OnCreate
 
 	//Friend Info Load Method
@@ -82,7 +96,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 
 		//View Setting
 		((TextView) findViewById(R.id.frDt_txtID)).setText(selectFriendDTO.getID());
-		((TextView) findViewById(R.id.frDt_txtNick)).setText(selectFriendDTO.getNick());
+		((CollapsingToolbarLayout)findViewById(R.id.frDt_toolbar_layout)).setTitle(selectFriendDTO.getNick());
 
 		ImageView imgMode = (ImageView) findViewById(R.id.frDt_imgMode);
 		imgMode.setImageResource(getResources().getIdentifier(selectFriendDTO.getMode().toString(), "drawable", this.getPackageName()));
@@ -121,7 +135,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 2, null, null, 0);
 		sc.start();
 		try {
-			sc.join();
+			sc.join(10000);
 			if(sc.chkError){
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 			}else {
@@ -152,7 +166,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 			btnBzzFriend.setText(getResources().getString(R.string.DetailAct_BzzFriend) + " ON");
 
 			//List Activity ImgChange
-			((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+			((MainActivity)MainActivity.mainContext).frListRefresh();
 		}
 
 	}
@@ -198,14 +212,18 @@ public class FriendDetailActivity extends AppCompatActivity {
 		imgMode.setBackgroundColor(android.graphics.Color.parseColor("#" + color));
 
 		//List Activity ImgChange
-		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+		((MainActivity)MainActivity.mainContext).frListRefresh();
 
 		//Server Comu
 		SharedPreferences pf = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 9, null, selectFriendDTO.getColor(), 0);
 		sc.start();
-		while(sc.wait){}//스레드 종료 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
@@ -223,7 +241,11 @@ public class FriendDetailActivity extends AppCompatActivity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 1, null, null, e.getMode());
 		sc.start();
-		while(sc.wait){}//스레드 종료 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException ex) {
+			ex.printStackTrace();
+		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
@@ -241,12 +263,25 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 0, path, null, 0);
 		//Toast.makeText(getApplicationContext(), Environment.getExternalStorageState(),Toast.LENGTH_SHORT).show();
 		sc.start();
-		while(sc.wait){}//스레드 종료 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
 			if(!(boolean) sc.final_data) {//음성전송 실패시
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}else{//true반환되면
+				//////음성데이터 보내기
+				Log.d("MP3TEST",path);
+				SendMP3 sm = new SendMP3(pf.getString("my_id","0"),selectFriendDTO.getID() );
+				Log.d("MP3TEST","...1");
+				sm.filename=path;
+				Log.d("MP3TEST","...2 " + sm.filename);
+				sm.start();
+				Log.d("MP3TEST","...3");
 			}
 		}
 	}
@@ -257,14 +292,22 @@ public class FriendDetailActivity extends AppCompatActivity {
 		//HB 나중에 여기에 파일 넣기!!
 		sc.makeMsg(preference.getString("my_id","0"), selectFriendDTO.getID(), null, null, 8, null, null, 0);
 		sc.start();
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			return;
 		}else {
-			while(sc.wait) {
-			}//스레드 종료 기다리기
-			if(!(boolean) sc.final_data) {//친구삭제 실패시
+			if(sc.final_data == null){
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+				return;
+			}
+			else if(!(boolean) sc.final_data) {//친구삭제 실패시
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+				return;
 			}
 		}
 
@@ -278,7 +321,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 			editor.commit();
 		}
 		//List Activity ImgChange
-		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+		((MainActivity)MainActivity.mainContext).frListRefresh();
 		finish();
 	}
 }

@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".SettingFragment"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:divider="@drawable/divider"
+        android:orientation="vertical"
+        android:showDividers="middle">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_layout"
+            android:paddingTop="@dimen/margin_layout">
+
+            <TextView
+                android:id="@+id/setting_titleNick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/nickname"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_mini"/>
+
+            <LinearLayout
+                android:id="@+id/setting_layout_nick"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center_vertical"
+                android:orientation="horizontal">
+
+                <EditText
+                    android:id="@+id/setting_txtNick"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:hint="@string/input_nick"
+                    android:textColor="@color/colorPrimaryText"
+                    android:textSize="@dimen/textSize_xmini"/>
+
+
+                <Button
+                    android:id="@+id/setting_btnNickOK"
+                    android:layout_width="60dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/selector_button"
+                    android:enabled="false"
+                    android:text="@string/ok"
+                    android:textColor="@drawable/selector_button"
+                    android:textSize="@dimen/textSize_xmini"/>
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/setting_viewBT"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_layout"
+            android:paddingTop="@dimen/margin_layout">
+
+            <TextView
+                android:id="@+id/setting_titleBT"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="@string/setting_btName"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_mini"/>
+
+            <TextView
+                android:id="@+id/setting_txtBT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/textSize_xmini"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/setting_viewPush"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_layout"
+            android:paddingTop="@dimen/margin_layout">
+
+            <TextView
+                android:id="@+id/setting_titlePush"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/setting_select_push"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_mini"/>
+
+            <TextView
+                android:id="@+id/setting_txtPush"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="dd"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/textSize_xmini"/>
+
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/setting_viewBzz"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_layout"
+            android:paddingTop="@dimen/margin_layout">
+
+            <TextView
+                android:id="@+id/setting_titleBTbzz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:text="@string/setting_select_BTbzz"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_mini"/>
+
+            <TextView
+                android:id="@+id/setting_txtBzz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="dd"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/textSize_xmini"/>
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>

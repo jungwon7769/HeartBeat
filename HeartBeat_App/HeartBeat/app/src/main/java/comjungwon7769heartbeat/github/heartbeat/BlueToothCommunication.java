@@ -3,8 +3,6 @@ package comjungwon7769heartbeat.github.heartbeat;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.util.Log;
-import android.util.Xml;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,12 +21,14 @@ public class BlueToothCommunication implements Runnable {
 	//public static final boolean BZZ_MY = true, BZZ_FR = false;
 
 	//변수 정의
-	private BluetoothAdapter btAdapter;
-	private BluetoothDevice btDevice;
-	private BluetoothSocket btSock;
+	static private String btName;
 
-	private OutputStream outStream;
-	private InputStream inStream;
+	static private BluetoothAdapter btAdapter;
+	static private BluetoothDevice btDevice;
+	static private BluetoothSocket btSock;
+
+	static private OutputStream outStream;
+	static private InputStream inStream;
 
 	private int useMode = -1;
 	private Object data;
@@ -36,7 +36,8 @@ public class BlueToothCommunication implements Runnable {
 
 	public BlueToothHandler btHander;
 
-	public BlueToothCommunication(BlueToothHandler btHander) {
+	public BlueToothCommunication(String name, BlueToothHandler btHander) {
+		this.btName = name;
 		this.btHander = btHander;
 	}
 
@@ -47,7 +48,7 @@ public class BlueToothCommunication implements Runnable {
 		try {
 			if(useMode == -1) return;
 			//블루투스 연결
-			int chk = checkConnect(Constants.deviceName);
+			int chk = checkConnect(btName);
 
 			switch(chk) {
 				case CONNECT_FAILD:
@@ -98,8 +99,6 @@ public class BlueToothCommunication implements Runnable {
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
-		//블루투스 연결해제
-		closeSock();
 
 		return;
 
@@ -117,8 +116,9 @@ public class BlueToothCommunication implements Runnable {
 		data = value;
 	}
 
-	private int checkConnect(String name) {
-		//if(btSock != null && btSock.isConnected()) return CONNECT_SUCCESS;
+	public int checkConnect(String name) {
+		if(btSock != null && btSock.isConnected() && btDevice.getName().equals(name)) return CONNECT_SUCCESS;
+		closeSock();
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		btDevice = null;
 		btSock = null;
@@ -138,14 +138,15 @@ public class BlueToothCommunication implements Runnable {
 		if(pairedDevices.size() > 0) {
 			for(BluetoothDevice device : pairedDevices) {
 				//인자값에 해당하는 name 을 가진 device인 경우
-				if(device.getName().contains(name)) {
+				if(device.getName().equals(name)) {
 					btDevice = device;
 				}
 			}
 		}
 		//Paired Device 중 name이 일치하는 Device 없음
 		if(btDevice == null) {
-			return CONNECT_FAILD;
+			btDevice = btAdapter.getRemoteDevice(name);
+			if(btDevice == null) return CONNECT_FAILD;
 		}
 
 		//Socket Connect
@@ -189,7 +190,7 @@ public class BlueToothCommunication implements Runnable {
 			e.printStackTrace();
 		}
 		String msg = new String(readBuffer);
-		if(msg.contains("bzz")) {
+		if(msg.contains("6@")) {
 			return true;
 		} else {
 			return false;

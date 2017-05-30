@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -24,12 +25,12 @@ public class MyDetailActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_detail);
 
-		TextView user_nick = (TextView) findViewById(R.id.myDt_txtNick);
+		CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.frDt_toolbar_layout);
 		ImageView user_mode = (ImageView) findViewById(R.id.myDt_imgMode);
 
 		//User Nick, Emotion Load From PreferenceData ***
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		user_nick.setText(preference.getString("my_nick", "DataLoadError"));
+		toolbarLayout.setTitle(preference.getString("my_nick", "DataLoadError"));
 		int myMode = preference.getInt("my_mode", 1);
 
 		Constants.Emotion[] e = Constants.Emotion.values();
@@ -88,7 +89,8 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void transBzzToMe_Click() {
 		//Trans Bzz Using BluetoothComu
-		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
 		btComu.btHander = this.btHandler;
 		btComu.setUseMode(btComu.CODE_MY_BZZ);
 		Thread thread = new Thread(btComu);
@@ -121,7 +123,8 @@ public class MyDetailActivity extends AppCompatActivity {
 
 	private void setLED(String color) {
 		//Bluetooth Comu - color Trans
-		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_LED);
 		btComu.setData(color);
 		Thread thread = new Thread(btComu);
@@ -137,12 +140,20 @@ public class MyDetailActivity extends AppCompatActivity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(preference.getString("my_id","0"),null,null,null,5,null,null,e.getMode());
 		sc.start();
-		while(sc.wait){
-			///스레드처리완료 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException ex) {
+			ex.printStackTrace();
 		}
-		if((boolean)sc.final_data) {//기분설정 성공
-			editor.putInt("my_mode", e.getMode());
-			editor.commit();
+		if(sc.chkError) {
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		} else {
+			if((boolean) sc.final_data) {//닉네임설정 성공
+				editor.putInt("my_mode", e.getMode());
+				editor.commit();
+			} else {
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
 		}
 
 
@@ -152,10 +163,10 @@ public class MyDetailActivity extends AppCompatActivity {
 		user_mode.setBackgroundColor(Color.parseColor("#" + e.getColor()));
 
 		//List Activity ImgChange
-		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+		((MainActivity)MainActivity.mainContext).frListRefresh();
 
 		//Bluetooth Play
-		BlueToothCommunication btComu = new BlueToothCommunication(this.btHandler);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_EMOTION);
 		btComu.setData(e);
 		Thread thread = new Thread(btComu);

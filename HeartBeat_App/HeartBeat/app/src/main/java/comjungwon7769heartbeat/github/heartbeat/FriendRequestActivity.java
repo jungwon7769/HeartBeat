@@ -102,9 +102,12 @@ public class FriendRequestActivity extends AppCompatActivity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(friend_id, null, null, null, 11, null, null, 0);
 		sc.start();
-		while(sc.wait){
-			///스레드처리완료 기다리기
-		}if(sc.chkError){
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			return false;
 		}
@@ -121,8 +124,10 @@ public class FriendRequestActivity extends AppCompatActivity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(pref.getString("my_id","0"), friend_id, null, null, 3, null, null, 0);
 		sc.start();
-		while(sc.wait){
-			///스레드처리완료 기다리기
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
 		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
@@ -140,7 +145,7 @@ public class FriendRequestActivity extends AppCompatActivity {
 		Random ra = new Random();
 		int n = ra.nextInt(1000);
 		friendDAO.addFriend(new FriendDTO("id" + n, "친구지롱" + n, "000001", Constants.Emotion.values()[ra.nextInt(10)]));
-		((FriendListActivity)FriendListActivity.listContext).dataRefresh();
+		((MainActivity)MainActivity.mainContext).frListRefresh();
 
 		txtID.setText("");
 	}
