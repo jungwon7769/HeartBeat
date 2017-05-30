@@ -69,7 +69,8 @@
                 android:textColor="@color/colorTextAndIcon"
                 android:background="@color/colorAccent"
                 android:textSize="@dimen/textSize_mini"
-                android:layout_weight="1"/>
+                android:layout_weight="1"
+                android:inputType="text"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
