@@ -370,7 +370,6 @@ public class PopupActivity extends AppCompatActivity {
 			@Override
 			public void onClick(View v) {
 				playVoice(recordFilePath);
-				Log.d("PLAYTEST",recordFilePath);
 			}
 		});
 		Button btnDelete = (Button)findViewById(R.id.popup_msgVoice_btnDelete);
@@ -413,7 +412,6 @@ public class PopupActivity extends AppCompatActivity {
 		btnPlay.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//NotComplete
 				//Bluetooth Comu
 				SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 				BlueToothHandler bth = (PopupActivity.this).btHandler;
@@ -515,7 +513,6 @@ public class PopupActivity extends AppCompatActivity {
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			recorder.setOutputFile(recordFilePath);
-			//Toast.makeText(getApplicationContext(), recordFilePath, Toast.LENGTH_SHORT).show();
 
 			//Record Start
 			try {
@@ -538,9 +535,7 @@ public class PopupActivity extends AppCompatActivity {
 	}
 
 	private void playVoice(String path) {
-		//Toast.makeText(getApplicationContext(), path, Toast.LENGTH_SHORT);
 		File file = new File(path);
-        //Toast.makeText(getApplicationContext(), path,Toast.LENGTH_SHORT).show();//test
 		//파일이 없는 경우
 		if(!file.exists()) {
 			Toast.makeText(getApplicationContext(), "File Path ERROR", Toast.LENGTH_SHORT).show();
@@ -619,12 +614,6 @@ public class PopupActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		/*if(event.getAction()== MotionEvent.BUTTON_BACK) {
-
-		}
-		if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
-			return false;
-		}*/
 		stopVoice();
 		return true;
 	}

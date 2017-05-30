@@ -11,6 +11,7 @@ public class Constants {
 
 	public static final int friendLoad_Interval = 300000;    //millsec -> 5min 300000
 	public static final int RequestMsg_Interval = 10000;
+	public static final int ServerWaitTime = 10000;
 
 	//설정
 	public static final boolean set_btBzz_ok = true, set_btBzz_no = false;

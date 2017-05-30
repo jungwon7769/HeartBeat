@@ -55,5 +55,5 @@
         android:id="@+id/msgItem_check"
         android:focusable="false"
         android:checked="false"
-        android:clickable="true"/>
+        android:clickable="false"/>
 </comjungwon7769heartbeat.github.heartbeat.CheckableRelativeLayout>

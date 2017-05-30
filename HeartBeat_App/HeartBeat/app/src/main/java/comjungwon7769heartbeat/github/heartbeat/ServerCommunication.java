@@ -30,7 +30,7 @@ public class ServerCommunication extends Thread{
 	private DataOutputStream dos = null;
 
 	private Socket sv_sock = null;
-	public byte[] buf = new byte[1024];// 호빈수정 : 네트워크통신하려면 byte[]로 바꿔야함
+	public byte[] buf = new byte[1024];
 	public String msg=null;// 호빈추가 : 서버로 보낼 메시지 정의
 	public Object final_data = null; //서버처리해서 반환된 데이터야~~(boolean / HashMap<String, FriendDTO> / MsgDTO 의 형태임)
 	public boolean wait=true; //스레드 종료 알릴 플래그 용도
@@ -183,12 +183,10 @@ public class ServerCommunication extends Thread{
 		}
 		//Flag 14
 		else if(Flag==14){
-			//HashMap<Long, MsgDTO> res = new HashMap<>();
 			MsgDTO res = null;
 			if(value.length>2){
 				res = new MsgDTO();
 				if(value[1].equals("0")){//음성메시지 수신인경우
-					Log.d("PATHTEST",value[4]);
 					res.setSoundPath(value[4]);
 					res.setMode(0);
 				}else {//진동, 기분, 친구요청인경우
@@ -198,10 +196,6 @@ public class ServerCommunication extends Thread{
 				res.setTime(Long.parseLong(value[3]));
 				res.setCount(1);
 				res.setFlag(Integer.parseInt(value[1]));
-				///test
-				Log.d("RECVTEST1",res.getFlag()+"");
-				Log.d("RECVTEST1",res.getModeInt()+"");
-				Log.d("RECVTEST1",res.getTime()+"");
 				final_data = res;
 			}
 		}

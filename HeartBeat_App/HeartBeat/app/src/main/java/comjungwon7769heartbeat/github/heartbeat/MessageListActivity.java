@@ -171,15 +171,13 @@ public class MessageListActivity extends AppCompatActivity {
 	} //delete_msg()
 
 	private void accept_friend(String friend_id) {
-		Log.i("Test", "acceptFriend");
-		//Notcomplete
 		//ServerComu
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(preference.getString("my_id", null), friend_id, null, null, 6, null, null, 0);
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -202,15 +200,13 @@ public class MessageListActivity extends AppCompatActivity {
 	} //accept_friend()
 
 	private void no_friend(String friend_id) {
-		Log.i("Test", "no friend");
-		//Notcomplete
 		//ServerComu
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(preference.getString("my_id", null), friend_id, null, null, 7, null, null, 0);
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
