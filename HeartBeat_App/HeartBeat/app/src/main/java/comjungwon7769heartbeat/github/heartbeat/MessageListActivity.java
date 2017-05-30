@@ -69,10 +69,6 @@ public class MessageListActivity extends AppCompatActivity {
 
 		//Msg Load Using MsgDAO
 		MsgDAO msgDAO = new MsgDAO(getApplicationContext(), MsgDAO.DataBase_name, null, 1);
-
-		for(int i=0; i<20; i++) {
-			msgDAO.addMsg(new MsgDTO(2, "g"+i, 10, Constants.Emotion.sad, ""));
-		}
 		msgList = msgDAO.listMsg(flag, frinedID);
 
 		//리스트어댑터 생성 밑 리스트뷰와 연결
