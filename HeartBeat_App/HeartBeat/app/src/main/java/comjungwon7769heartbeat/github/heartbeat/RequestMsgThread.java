@@ -90,9 +90,20 @@ public class RequestMsgThread implements Runnable {
 	public void pushAllarm(MsgDTO message) {
 		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		int setPush = preference.getInt("set_push", 0);
+		String content;
 
 		if(setPush == Constants.set_push_no) {
 			return;
+		}
+
+		if(message.getFlag() == Constants.msgFlag_Friend){
+			content = mContext.getText(R.string.msg_content_friend).toString();
+		}else if(message.getFlag() == Constants.msgFlag_Voice){
+			content = mContext.getText(R.string.msg_content_voice).toString();
+		}else if(message.getFlag() == Constants.msgFlag_Emotion){
+			content = mContext.getText(Constants.Emotion_content[message.getModeInt()]).toString();
+		}else{
+			content = mContext.getText(R.string.msg_content_bzz).toString();
 		}
 
 		NotificationManager notificationManager = (NotificationManager) mContext.getSystemService(mContext.NOTIFICATION_SERVICE);
@@ -101,11 +112,11 @@ public class RequestMsgThread implements Runnable {
 		Notification.Builder builder = new Notification.Builder(mContext);
 
 		builder.setSmallIcon(R.mipmap.ico);
-		builder.setTicker(mContext.getText(R.string.app_name) + " " + message.getSender());
+		builder.setTicker(message.getSender() + " : " + content);
 		builder.setWhen(System.currentTimeMillis());
 		if(message.getFlag() == Constants.msgFlag_Bzz) builder.setNumber(message.getCount());
 		builder.setContentTitle(message.getSender());
-		builder.setContentText("내용");
+		builder.setContentText(content);
 		builder.setContentIntent(pendingIntent).setAutoCancel(true);
 
 		if(setPush == Constants.set_push_bzz)
