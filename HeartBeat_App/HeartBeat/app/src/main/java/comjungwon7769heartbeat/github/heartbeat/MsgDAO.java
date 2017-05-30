@@ -179,7 +179,7 @@ public class MsgDAO extends SQLiteOpenHelper {
 			db.close();
 			return;
 		}
-		String sql = "UPDATE " + Table_name + " SET " + Count + "=" + count + "," + Time + "= " + Long.toString(time) + "  WHERE " + Sender + "='" + sender + "' AND" + Flag + "=" + flag;
+		String sql = "UPDATE " + Table_name + " SET " + Count + "=" + count + "," + Time + "= '" + Long.toString(time) + "'  WHERE " + Sender + "='" + sender + "' AND " + Flag + "=" + flag;
 		try {
 			db.execSQL(sql);
 			db.close();
