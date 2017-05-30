@@ -4,14 +4,14 @@ import android.content.Context;
 import android.util.AttributeSet;
 import android.widget.CheckBox;
 import android.widget.Checkable;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 /**
  * Created by AH on 2017-05-30.
  */
-public class CheckableLinearLayout extends LinearLayout implements Checkable{
+public class CheckableFrameLayout extends FrameLayout implements Checkable{
 
-	public CheckableLinearLayout(Context context, AttributeSet attrs){
+	public CheckableFrameLayout(Context context, AttributeSet attrs){
 		super(context, attrs);
 	}
 

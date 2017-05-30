@@ -8,14 +8,17 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -31,11 +34,15 @@ public class MessageListActivity extends AppCompatActivity {
 	private String frinedID;
 	private boolean selectMode = false;
 	private ListView msgListView = null;
+	private LinearLayout selectMenu;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_message_list);
+
+		selectMenu = (LinearLayout)findViewById(R.id.msglist_selectMenu);
+		selectMenu.setVisibility(View.GONE);
 		frinedID = null;
 
 		//get intent -> Flag check
@@ -126,10 +133,39 @@ public class MessageListActivity extends AppCompatActivity {
 				CheckBox cb = (CheckBox)view.findViewById(R.id.msgItem_check);
 				cb.setChecked(true);
 				selectMode = true;
+				selectMenu.setVisibility(View.VISIBLE);
 				return true;
 			}
 		});
 
+		Button btnSelectAll = (Button)findViewById(R.id.msglist_selectAll);
+		Button btnDelete = (Button)findViewById(R.id.msglist_selectDelete);
+
+		btnSelectAll.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				msgListView.clearChoices();
+				adapter.notifyDataSetChanged();
+			}
+		});
+		btnDelete.setOnClickListener(new Button.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				MsgDTO selectMsg;
+				SparseBooleanArray sb = msgListView.getCheckedItemPositions();
+				if(sb.size() != 0){
+					for(int i=0; i< msgListView.getCount(); i++){
+						if(sb.get(i)){
+							selectMsg = msgList.get(i);
+							delete_msg(selectMsg.getSender(), selectMsg.getTime());
+						}
+					}
+					msgListView.clearChoices();
+					selectMode = false;
+					adapter.notifyDataSetChanged();
+				} //if
+			}
+		});
 	}
 
 	private void delete_msg(String id, long time) {
@@ -169,6 +205,7 @@ public class MessageListActivity extends AppCompatActivity {
 				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			}
 		}
+		((MainActivity)MainActivity.mainContext).frListRefresh();
 	} //accept_friend()
 
 	private void no_friend(String friend_id) {
@@ -342,22 +379,12 @@ public class MessageListActivity extends AppCompatActivity {
 	public void onBackPressed() {
 		if(selectMode) {
 			selectMode = false;
+			msgListView.clearChoices();
 			adapter.notifyDataSetChanged();
+			selectMenu.setVisibility(View.GONE);
 
 		}else{
 			super.onBackPressed();
 		}
 	}
-
-	/*
-	@Override
-	public boolean onTouchEvent(MotionEvent event) {
-		if(event.getAction()== MotionEvent.BUTTON_BACK) {
-			if(selectMode) {
-				selectMode = false;
-				return false;
-			}
-		}
-		return true;
-	}*/
 }

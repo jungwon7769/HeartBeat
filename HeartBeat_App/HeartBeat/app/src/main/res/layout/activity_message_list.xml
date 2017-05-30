@@ -1,23 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
-<comjungwon7769heartbeat.github.heartbeat.CheckableLinearLayout
+<comjungwon7769heartbeat.github.heartbeat.CheckableFrameLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="comjungwon7769heartbeat.github.heartbeat.MessageListActivity">
 
     <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/msglistView"
-        android:divider="@color/colorDivider"
-        android:dividerHeight="@dimen/listDivider"
-        android:layout_alignParentTop="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_alignParentStart="true"
-        android:choiceMode="multipleChoice"/>
+        android:layout_alignParentTop="true"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:choiceMode="multipleChoice"
+        android:divider="@color/colorDivider"
+        android:dividerHeight="@dimen/listDivider"/>
 
-</comjungwon7769heartbeat.github.heartbeat.CheckableLinearLayout>
+
+    <LinearLayout
+        android:id="@+id/msglist_selectMenu"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:background="@color/colorPrimary"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/msglist_selectAll"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_text"
+            android:text="SELECT ALL"
+            android:textColor="@drawable/selector_button_text"/>
+
+        <Button
+            android:id="@+id/msglist_selectDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/selector_button_text"
+            android:text="DELETE"
+            android:textColor="@drawable/selector_button_text"/>
+    </LinearLayout>
+
+</comjungwon7769heartbeat.github.heartbeat.CheckableFrameLayout>

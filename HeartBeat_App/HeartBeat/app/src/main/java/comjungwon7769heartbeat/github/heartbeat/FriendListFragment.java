@@ -129,7 +129,7 @@ public class FriendListFragment extends Fragment {
 	}
 
 	//친구목록 서버로부터 불러오기
-	private ArrayList<FriendDTO> FriendList_Load() {
+	public ArrayList<FriendDTO> FriendList_Load() {
 		//Notcomplete
 		Log.i("HBTest", "FriendList_Load");
 		//서버통신
