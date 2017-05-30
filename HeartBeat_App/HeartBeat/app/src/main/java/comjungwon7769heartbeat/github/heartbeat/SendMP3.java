@@ -14,20 +14,35 @@ import java.net.Socket;
 
 public class SendMP3 extends Thread {
     Socket s;
-    String filename = null;
+    public String filename = null;
     BufferedOutputStream bos = null;
     BufferedInputStream bis = null;
     FileInputStream fis = null;
     DataOutputStream dos = null;
-    String fileName=null;
 
-    public SendMP3(String fileName){
+    @Override
+    public void run() {
+        try {
+            init();
+            sendMP3();
+        }
+        catch(Exception e){
+            Log.d("TEST_ SendMP3", e.getMessage());
+        }
+    }
+
+    private void init(){
         try {
             s = new Socket(Constants.SERVERURL, 12000);
-            this.fileName=fileName;
+            //this.filename=filename;
             bos = new BufferedOutputStream(s.getOutputStream());
             dos = new DataOutputStream(s.getOutputStream());
-            dos.writeUTF("test.mp3");////////////////나중에 수정
+            ///////////////test
+            Log.d("TESTTEST", filename);
+            //filename="/storage/emulated/legacy/Music/test.mp3";
+            //String realName = filename.split("/")[5];
+            String realName = filename.split("/")[7];
+            dos.writeUTF(realName);
             fis = new FileInputStream(filename);
             bis = new BufferedInputStream(fis);
         }catch(Exception e){
@@ -35,26 +50,19 @@ public class SendMP3 extends Thread {
         }
     }
 
-    @Override
-    public void run() {
+    private void sendMP3(){
         try {
             int ch = 0;
-
-            System.out.println("test");
             while ((ch = bis.read()) != -1) {
-                System.out.println("test");
                 bos.write(ch);
+                Log.d("TESTTEST", ch+"");
             }
-            System.out.println("test");
-
             bos.flush();
             bos.close();
             fis.close();
             s.close();
-
-        }
-        catch(Exception e){
-            Log.d("TEST2_ SendMP3", e.getMessage());
+        }catch(Exception e){
+            //Log.d("TEST_ SendMP3", e.getMessage());
         }
     }
 }

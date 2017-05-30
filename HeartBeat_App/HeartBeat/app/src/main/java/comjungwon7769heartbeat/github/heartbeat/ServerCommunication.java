@@ -137,11 +137,6 @@ public class ServerCommunication extends Thread{
 		if (Flag >= 0 && Flag <= 12 && Flag!=10) {
 			if (value[1].equals("true")) {
 				final_data = (boolean) true;
-				if(Flag==0){// 음성파일전송
-					Log.d("TEST_HB","음성파일 전송시작");//////test
-					SendMP3 sm = new SendMP3(file_name);
-					sm.start();
-				}
 			}
 			else if(value[1].equals("false")) final_data=(boolean)false;
 		}

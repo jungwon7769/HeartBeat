@@ -273,6 +273,15 @@ public class FriendDetailActivity extends AppCompatActivity {
 		}else {
 			if(!(boolean) sc.final_data) {//음성전송 실패시
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}else{//true반환되면
+				//////음성데이터 보내기
+				Log.d("MP3TEST",path);
+				SendMP3 sm = new SendMP3();
+				Log.d("MP3TEST","...1");
+				sm.filename=path;
+				Log.d("MP3TEST","...2 " + sm.filename);
+				sm.start();
+				Log.d("MP3TEST","...3");
 			}
 		}
 	}
