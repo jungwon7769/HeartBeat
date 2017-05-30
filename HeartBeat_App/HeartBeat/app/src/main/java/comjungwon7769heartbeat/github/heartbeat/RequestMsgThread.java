@@ -31,6 +31,9 @@ public class RequestMsgThread implements Runnable {
 			if(message != null) {
 				saveMsg(message);
 				pushAllarm(message);
+				if(message.getFlag() == Constants.msgFlag_Bzz){
+					playBzz(message.getSender());
+				}
 			}
 
 			try {
@@ -126,5 +129,22 @@ public class RequestMsgThread implements Runnable {
 		else if(setPush == Constants.set_push_both) builder.setDefaults(Notification.DEFAULT_ALL);
 
 		notificationManager.notify(1, builder.build());
+	}
+
+	//Trans Bzz to 기기
+	public void playBzz(String sender){
+		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
+		btComu.btHander = this.btHandler;
+
+		//블루투스 전송 데이터 설정
+		btComu.setUseMode(btComu.CODE_BZZ);
+		FriendDAO friendDAO = new FriendDAO(mContext.getApplicationContext(), FriendDAO.DataBase_name, null, 1);
+		FriendDTO friendDTO = friendDAO.getFriend(sender);
+		btComu.setData(friendDTO.getColor());
+
+		//전송
+		Thread thread = new Thread(btComu);
+		thread.start();
 	}
 }
