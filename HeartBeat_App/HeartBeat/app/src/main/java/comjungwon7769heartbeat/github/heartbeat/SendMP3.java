@@ -38,9 +38,9 @@ public class SendMP3 extends Thread {
             bos = new BufferedOutputStream(s.getOutputStream());
             dos = new DataOutputStream(s.getOutputStream());
             ///////////////test
-            Log.d("TESTTEST", filename);
-            //filename="/storage/emulated/legacy/Music/test.mp3";
-            //String realName = filename.split("/")[5];
+            Log.d("TESTTEST", filename);/*
+            filename="/storage/emulated/legacy/Music/EXID - L.I.E.mp3";
+            String realName = filename.split("/")[5];*/
             String realName = filename.split("/")[7];
             dos.writeUTF(realName);
             fis = new FileInputStream(filename);
