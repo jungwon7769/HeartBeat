@@ -16,6 +16,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -119,12 +120,60 @@ public class MessageListActivity extends AppCompatActivity {
 		Log.i("Test", "acceptFriend");
 		//Notcomplete
 		//ServerComu
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(preference.getString("my_id", null), friend_id, null, null, 6, null, null, 0);
+		sc.start();
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		if(sc.chkError) {
+			Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		} else {
+			if(sc.final_data == null) {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+			else if((boolean) sc.final_data) {//성공
+				SharedPreferences.Editor editor = preference.edit();
+				editor.putLong("friend_time", 0);
+			}else if(!(boolean) sc.final_data) {//실패
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+		}
 	} //accept_friend()
 
 	private void no_friend(String friend_id) {
 		Log.i("Test", "no friend");
 		//Notcomplete
 		//ServerComu
+		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(preference.getString("my_id", null), friend_id, null, null, 7, null, null, 0);
+		sc.start();
+		try {
+			sc.join(10000);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		if(sc.chkError) {
+			Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		} else {
+			if(sc.final_data == null) {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+			else if((boolean) sc.final_data) {//성공
+				SharedPreferences.Editor editor = preference.edit();
+				editor.putLong("friend_time", 0);
+			}else if(!(boolean) sc.final_data) {//실패
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}
+		}
 	} //no friend()
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -187,7 +236,7 @@ public class MessageListActivity extends AppCompatActivity {
 			}
 			TextView name = (TextView) convertView.findViewById(R.id.msgItem_txtFriend);      //텍스트뷰와 닉네임 연결
 			ImageView mode = (ImageView) convertView.findViewById(R.id.msgItem_imgMode);
-			TextView content = (TextView)convertView.findViewById(R.id.msgItem_txtContent);
+			TextView content = (TextView) convertView.findViewById(R.id.msgItem_txtContent);
 
 			MsgDTO msgItem = myMsg.get(position);  //position에 해당하는 MsgDTO
 
@@ -225,9 +274,13 @@ public class MessageListActivity extends AppCompatActivity {
 					mode.setImageResource(getResources().getIdentifier(e[0].toString(), "drawable", getPackageName()));
 					mode.setBackgroundColor(Color.parseColor("#" + e[0].getColor()));
 				}
-				if(msgItem.getFlag() == Constants.msgFlag_Bzz){content.setText(getText(R.string.msg_content_bzz));}
-				else if(msgItem.getFlag() == Constants.msgFlag_Emotion){content.setText(getText(Constants.Emotion_content[msgItem.getModeInt()]));}
-				else if(msgItem.getFlag() == Constants.msgFlag_Voice){content.setText(getText(R.string.msg_content_voice));}
+				if(msgItem.getFlag() == Constants.msgFlag_Bzz) {
+					content.setText(getText(R.string.msg_content_bzz));
+				} else if(msgItem.getFlag() == Constants.msgFlag_Emotion) {
+					content.setText(getText(Constants.Emotion_content[msgItem.getModeInt()]));
+				} else if(msgItem.getFlag() == Constants.msgFlag_Voice) {
+					content.setText(getText(R.string.msg_content_voice));
+				}
 
 			}
 
