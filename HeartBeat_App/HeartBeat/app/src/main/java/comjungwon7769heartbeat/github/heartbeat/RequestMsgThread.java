@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.util.Random;
-
 /**
  * Created by AH on 2017-05-27.
  */
@@ -62,9 +60,11 @@ public class RequestMsgThread implements Runnable {
 				Log.d("MSGTEST", "수신할 메시지 없음");
 			}else{
 				//Log.d("MSGTEST", "메시지 수신완료");
-				msgDTO.setSoundPath(msgDTO.getSender()+"_"+preference.getString("my_id","0")+"_"+msgDTO.getTime());
+				msgDTO.setSoundPath(msgDTO.getSender()+"_"+preference.getString("my_id","0")+"_"+msgDTO.getTime()+".3gp");
 				if(msgDTO.getFlag()==Constants.msgFlag_Voice){//음성파일인경우 수신하기
-
+					ReceiveMP3 rm = new ReceiveMP3(msgDTO.getSoundPath());
+					Log.d("RECVTEST",rm.filename);
+					rm.start();
 				}
 				return msgDTO;
 			}

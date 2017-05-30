@@ -514,6 +514,7 @@ public class PopupActivity extends AppCompatActivity {
 			recorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
 			recorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 			recorder.setOutputFile(recordFilePath);
+			//Toast.makeText(getApplicationContext(), recordFilePath, Toast.LENGTH_SHORT).show();
 
 			//Record Start
 			try {

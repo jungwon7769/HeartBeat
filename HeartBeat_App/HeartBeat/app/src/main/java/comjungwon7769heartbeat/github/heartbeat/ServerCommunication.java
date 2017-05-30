@@ -185,30 +185,12 @@ public class ServerCommunication extends Thread{
 			MsgDTO res = null;
 			if(value.length>2){
 				res = new MsgDTO();
-				res.setMode(Integer.parseInt(value[1]));
+				res.setMode(Integer.parseInt(value[4]));
 				res.setSender(value[2]);
 				res.setTime(Long.parseLong(value[3]));
 				res.setCount(1);
-				res.setFlag(Integer.parseInt(value[4]));
-				//res.setSoundPath(value[4]);
-				/*for(int i=1;i<value.length;i++){
-					switch(i%4){
-						case 1:
-							dto = new MsgDTO();
-							dto.setFlag(Integer.parseInt(value[i]));
-							break;
-						case 2:
-							dto.setSender(value[i]);
-							break;
-						case 3:
-							dto.setTime(Long.parseLong(value[i]));
-							break;
-						case 0:
-							dto.setMode(Integer.parseInt(value[i]));
-							res.put(dto.getTime(), dto);
-							break;
-					}
-				}*/
+				res.setFlag(Integer.parseInt(value[1]));
+
 				final_data = res;
 			}
 		}
