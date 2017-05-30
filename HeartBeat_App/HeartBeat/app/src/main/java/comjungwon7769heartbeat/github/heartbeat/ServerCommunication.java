@@ -30,7 +30,7 @@ public class ServerCommunication extends Thread{
 	private DataOutputStream dos = null;
 
 	private Socket sv_sock = null;
-	public byte[] buf = new byte[1024];// 호빈수정 : 네트워크통신하려면 byte[]로 바꿔야함
+	public byte[] buf = new byte[1024];
 	public String msg=null;// 호빈추가 : 서버로 보낼 메시지 정의
 	public Object final_data = null; //서버처리해서 반환된 데이터야~~(boolean / HashMap<String, FriendDTO> / MsgDTO 의 형태임)
 	public boolean wait=true; //스레드 종료 알릴 플래그 용도
@@ -68,13 +68,15 @@ public class ServerCommunication extends Thread{
 		msg = Flag + "/";
 		switch (Flag) {
 			case 0:
+				msg += ME + "/" + ID +"/"+Sound.split("/")[7]+"//";
+				file_name=Sound;
+				break;
 			case 2:
 			case 3:
 			case 6:
 			case 7:
 			case 8:// 음성전송, 진동전송, 친구추가, 친구요청 수락, 거절, 친구관계삭제
 				msg += ME + "/" + ID + "//";
-				if(Flag==0) file_name=Sound;
 				break;
 			case 1:// 기분전송
 				msg += ME + "/" + ID + "/" + mode + "//";
@@ -181,34 +183,19 @@ public class ServerCommunication extends Thread{
 		}
 		//Flag 14
 		else if(Flag==14){
-			//HashMap<Long, MsgDTO> res = new HashMap<>();
 			MsgDTO res = null;
 			if(value.length>2){
 				res = new MsgDTO();
-				res.setMode(Integer.parseInt(value[1]));
+				if(value[1].equals("0")){//음성메시지 수신인경우
+					res.setSoundPath(value[4]);
+					res.setMode(0);
+				}else {//진동, 기분, 친구요청인경우
+					res.setMode(Integer.parseInt(value[4]));
+				}
 				res.setSender(value[2]);
 				res.setTime(Long.parseLong(value[3]));
 				res.setCount(1);
-				res.setFlag(Integer.parseInt(value[4]));
-				//res.setSoundPath(value[4]);
-				/*for(int i=1;i<value.length;i++){
-					switch(i%4){
-						case 1:
-							dto = new MsgDTO();
-							dto.setFlag(Integer.parseInt(value[i]));
-							break;
-						case 2:
-							dto.setSender(value[i]);
-							break;
-						case 3:
-							dto.setTime(Long.parseLong(value[i]));
-							break;
-						case 0:
-							dto.setMode(Integer.parseInt(value[i]));
-							res.put(dto.getTime(), dto);
-							break;
-					}
-				}*/
+				res.setFlag(Integer.parseInt(value[1]));
 				final_data = res;
 			}
 		}

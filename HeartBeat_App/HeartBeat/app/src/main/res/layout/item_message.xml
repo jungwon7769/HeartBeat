@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<comjungwon7769heartbeat.github.heartbeat.CheckableRelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -46,4 +47,13 @@
         android:text="2017.05.17"
         android:textSize="12dp"/>
 
-</RelativeLayout>
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_alignParentRight="true"
+        android:id="@+id/msgItem_check"
+        android:focusable="false"
+        android:checked="false"
+        android:clickable="false"/>
+</comjungwon7769heartbeat.github.heartbeat.CheckableRelativeLayout>

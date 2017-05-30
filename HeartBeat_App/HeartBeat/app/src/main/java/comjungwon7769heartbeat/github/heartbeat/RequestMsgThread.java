@@ -9,8 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
 
-import java.util.Random;
-
 /**
  * Created by AH on 2017-05-27.
  */
@@ -31,6 +29,9 @@ public class RequestMsgThread implements Runnable {
 			if(message != null) {
 				saveMsg(message);
 				pushAllarm(message);
+				if(message.getFlag() == Constants.msgFlag_Bzz){
+					playBzz(message.getSender());
+				}
 			}
 
 			try {
@@ -58,10 +59,12 @@ public class RequestMsgThread implements Runnable {
 			if(msgDTO==null){
 				Log.d("MSGTEST", "수신할 메시지 없음");
 			}else{
-				//Log.d("MSGTEST", "메시지 수신완료");
-				msgDTO.setSoundPath(msgDTO.getSender()+"_"+preference.getString("my_id","0")+"_"+msgDTO.getTime());
+				Log.d("MSGTEST", "메시지 수신완료");
 				if(msgDTO.getFlag()==Constants.msgFlag_Voice){//음성파일인경우 수신하기
-
+					msgDTO.setSoundPath(msgDTO.getSender() + "_" + preference.getString("my_id", "0") + "_" + msgDTO.getSoundPath());
+					Log.d("RECVTEST", msgDTO.getSoundPath());
+					ReceiveMP3 rm = new ReceiveMP3(msgDTO.getSoundPath());
+					rm.start();
 				}
 				return msgDTO;
 			}
@@ -126,5 +129,22 @@ public class RequestMsgThread implements Runnable {
 		else if(setPush == Constants.set_push_both) builder.setDefaults(Notification.DEFAULT_ALL);
 
 		notificationManager.notify(1, builder.build());
+	}
+
+	//Trans Bzz to 기기
+	public void playBzz(String sender){
+		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
+		btComu.btHander = this.btHandler;
+
+		//블루투스 전송 데이터 설정
+		btComu.setUseMode(btComu.CODE_BZZ);
+		FriendDAO friendDAO = new FriendDAO(mContext.getApplicationContext(), FriendDAO.DataBase_name, null, 1);
+		FriendDTO friendDTO = friendDAO.getFriend(sender);
+		btComu.setData(friendDTO.getColor());
+
+		//전송
+		Thread thread = new Thread(btComu);
+		thread.start();
 	}
 }

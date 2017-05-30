@@ -129,7 +129,7 @@ public class FriendListFragment extends Fragment {
 	}
 
 	//친구목록 서버로부터 불러오기
-	private ArrayList<FriendDTO> FriendList_Load() {
+	public ArrayList<FriendDTO> FriendList_Load() {
 		//Notcomplete
 		Log.i("HBTest", "FriendList_Load");
 		//서버통신
@@ -138,13 +138,12 @@ public class FriendListFragment extends Fragment {
 		sc.makeMsg(preference.getString("my_id", "0"), null, null, null, 13, null, null, 0);
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
 		HashMap<String, FriendDTO> f_list = (HashMap<String, FriendDTO>) sc.final_data;
 		if(f_list == null) {//친구없음
-			//Toast.makeText(getActivity().getApplicationContext(), "불러올 친구목록이 없습니다.", Toast.LENGTH_SHORT).show();
 		} else {
 			//친구 1명이상
 			FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
@@ -153,12 +152,7 @@ public class FriendListFragment extends Fragment {
 			while(it.hasNext()) {
 				String fid = (String) it.next();
 				FriendDTO dto = f_list.get(fid);
-				Log.d("HBTEST", dto.getID() + "/" + dto.getNick() + "/" + dto.getColor() + "/" + dto.getModeInt());///test
-				//friendDAO.addFriend(new FriendDTO(dto.getID(), dto.getNick(), dto.getColor(), Constants.Emotion.values()[dto.getModeInt()]));
 				friendDAO.addFriend(new FriendDTO(dto.getID(), dto.getNick(), dto.getColor(), Constants.Emotion.values()[dto.getModeInt()]));
-				//friendDAO.addFriend(new FriendDTO("id", "친구지롱" , "33F2DD", Constants.Emotion.values()[0]));
-				//((FriendListActivity)FriendListActivity.listContext).dataRefresh();
-				//Log.d("HBTEST", String.valueOf(addchk));///test
 			}
 		}
 

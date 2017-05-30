@@ -135,11 +135,13 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 2, null, null, 0);
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 			if(sc.chkError){
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 			}else {
-				if(!(boolean) sc.final_data) {//진동전송 실패시
+				if(sc.final_data == null){
+					Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+				}else if(!(boolean) sc.final_data) {//진동전송 실패시
 					Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 				}
 			}
@@ -220,68 +222,69 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 9, null, selectFriendDTO.getColor(), 0);
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
-			if(!(boolean) sc.final_data) {//친구색지정오류
+			if(sc.final_data == null){
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+			}
+			else if(!(boolean) sc.final_data) {//친구색지정오류
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			}
 		}
+		((MainActivity)MainActivity.mainContext).frListRefresh();
 	}
 
 	private void transEmotion(Constants.Emotion e) {
-		//Toast.makeText(getApplicationContext(),selectFriendDTO.getID()+"/"+selectFriendDTO.getNick()+"/"+selectFriendDTO.getColor()+"/"+selectFriendDTO.getModeInt(),Toast.LENGTH_SHORT).show();
-		//Toast.makeText(getApplicationContext(),e.getMode()+"",Toast.LENGTH_SHORT).show();
 		//ServerComu 이용
 		SharedPreferences pf = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 1, null, null, e.getMode());
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException ex) {
 			ex.printStackTrace();
 		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
-			if(!(boolean) sc.final_data) {//기분전송 실패시
+			if(sc.final_data == null){
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+			}
+			else if(!(boolean) sc.final_data) {//기분전송 실패시
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
 
 	private void transSoundMsg(String path){
-		//Toast.makeText(getApplicationContext(),path,Toast.LENGTH_SHORT).show();//test
 		SharedPreferences pf = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		ServerCommunication sc = new ServerCommunication();
-		//HB 나중에 여기에 파일 넣기!!
 		sc.makeMsg(pf.getString("my_id","0"), selectFriendDTO.getID(), null, null, 0, path, null, 0);
-		//Toast.makeText(getApplicationContext(), Environment.getExternalStorageState(),Toast.LENGTH_SHORT).show();
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
-			if(!(boolean) sc.final_data) {//음성전송 실패시
+			if(sc.final_data == null){
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+			}
+			else if(!(boolean) sc.final_data) {//음성전송 실패시
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			}else{//true반환되면
 				//////음성데이터 보내기
-				Log.d("MP3TEST",path);
 				SendMP3 sm = new SendMP3(pf.getString("my_id","0"),selectFriendDTO.getID() );
-				Log.d("MP3TEST","...1");
 				sm.filename=path;
-				Log.d("MP3TEST","...2 " + sm.filename);
 				sm.start();
-				Log.d("MP3TEST","...3");
 			}
 		}
 	}
@@ -293,7 +296,7 @@ public class FriendDetailActivity extends AppCompatActivity {
 		sc.makeMsg(preference.getString("my_id","0"), selectFriendDTO.getID(), null, null, 8, null, null, 0);
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}

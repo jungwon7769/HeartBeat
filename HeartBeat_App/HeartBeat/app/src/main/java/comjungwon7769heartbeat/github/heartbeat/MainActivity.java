@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
 	}
 
 	public void frListRefresh(){
-//		this.tab_frList.dataRefresh();
+		this.tab_frList.FriendList_Load();
 	}
 
 	public class PagerAdapter extends FragmentStatePagerAdapter {

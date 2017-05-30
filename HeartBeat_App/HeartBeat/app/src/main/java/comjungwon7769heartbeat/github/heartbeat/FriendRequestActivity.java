@@ -103,15 +103,16 @@ public class FriendRequestActivity extends AppCompatActivity {
 		sc.makeMsg(friend_id, null, null, null, 11, null, null, 0);
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			return false;
-		}
-		if(!(boolean)sc.final_data){//해당 id를 갖는 회원이 존재하지 않는경우
+		}else if(sc.final_data == null){
+			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+		}else if(!(boolean)sc.final_data){//해당 id를 갖는 회원이 존재하지 않는경우
 			return false;
 		}
 		return true; //존재하는 경우
@@ -125,27 +126,22 @@ public class FriendRequestActivity extends AppCompatActivity {
 		sc.makeMsg(pref.getString("my_id","0"), friend_id, null, null, 3, null, null, 0);
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
 		if(sc.chkError){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		}else {
-			if(!(boolean) sc.final_data) {//친구요청추가 실패
+			if(sc.final_data == null){
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+			}else if(!(boolean) sc.final_data) {//친구요청추가 실패
 				Toast.makeText(getApplicationContext(), "이미친구관계입니다", Toast.LENGTH_SHORT).show();
 			}
 		}
 
 
 		//Notcomplete
-
-		//테스트데이터 만드는거 넣어놓음
-		FriendDAO friendDAO = new FriendDAO(getApplicationContext(), "Friend_table.db", null, 1);
-		Random ra = new Random();
-		int n = ra.nextInt(1000);
-		friendDAO.addFriend(new FriendDTO("id" + n, "친구지롱" + n, "000001", Constants.Emotion.values()[ra.nextInt(10)]));
-		((MainActivity)MainActivity.mainContext).frListRefresh();
 
 		txtID.setText("");
 	}

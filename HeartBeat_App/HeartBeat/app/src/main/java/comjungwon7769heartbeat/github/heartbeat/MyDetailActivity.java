@@ -141,14 +141,16 @@ public class MyDetailActivity extends AppCompatActivity {
 		sc.makeMsg(preference.getString("my_id","0"),null,null,null,5,null,null,e.getMode());
 		sc.start();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException ex) {
 			ex.printStackTrace();
 		}
 		if(sc.chkError) {
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		} else {
-			if((boolean) sc.final_data) {//닉네임설정 성공
+			if(sc.final_data == null){
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			} else if((boolean) sc.final_data) {//닉네임설정 성공
 				editor.putInt("my_mode", e.getMode());
 				editor.commit();
 			} else {

@@ -32,30 +32,9 @@ public class JoinActivity extends Activity {
 		//중복검사 버튼 리스너 지정(ID_Usable_Check)
 		btnUsable.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
-				if(ID_Usable_Check(txtID.getText().toString())) {//아이디 길이 적당한 경우
-					//서버통신시작
-					ServerCommunication sc = new ServerCommunication();
-					sc.makeMsg(txtID.getText().toString(), null, null, null, 11, null, null, 0);
-					sc.start();
-					Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
-					try {
-						sc.join(10000);
-					} catch(InterruptedException e) {
-						e.printStackTrace();
-					}
-					if(sc.chkError) {
-						Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
-					} else {
-						if(!(boolean) sc.final_data) {//아이디 중복안됨!!
-							id = txtID.getText().toString();
-							chkIdUsable = true;
-							Toast.makeText(getApplicationContext(), "사용가능한 아이디입니다", Toast.LENGTH_SHORT).show();
-						} else if((boolean) sc.final_data) {
-							Toast.makeText(getApplicationContext(), "!! 사용할수 없는 아이디 입니다", Toast.LENGTH_SHORT).show();
-						} else {
-							Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
-						}//여기까지가 통신확인
-					}
+				if(ID_Usable_Check(txtID.getText().toString())) {
+					id = txtID.getText().toString();
+					chkIdUsable = true;
 				}
 			}
 		});
@@ -113,11 +92,31 @@ public class JoinActivity extends Activity {
 			return false;
 		}
 		//ServerComu class Create
-		//Request ID Exist
-		//Notcomplete
+		ServerCommunication sc = new ServerCommunication();
+		sc.makeMsg(txtID.getText().toString(), null, null, null, 11, null, null, 0);
+		sc.start();
+		Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+		try {
+			sc.join(Constants.ServerWaitTime);
+		} catch(InterruptedException e) {
+			e.printStackTrace();
+		}
+		if(sc.chkError) {
+			Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+		} else {
+			if(sc.final_data == null) {
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+			} else if(!(boolean) sc.final_data) {//아이디 중복안됨!!
 
+				Toast.makeText(getApplicationContext(), "사용가능한 아이디입니다", Toast.LENGTH_SHORT).show();
+			} else if((boolean) sc.final_data) {
+				Toast.makeText(getApplicationContext(), "!! 사용할수 없는 아이디 입니다", Toast.LENGTH_SHORT).show();
+			} else {
+				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}//여기까지가 통신확인
+		}
 
-		return true;
+		return false;
 	} //id_usable_check()
 
 	private void Join(String id, String pwd, String Nick) {
@@ -126,22 +125,24 @@ public class JoinActivity extends Activity {
 		sc.start();
 		Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
 		if(sc.chkError) {
 			Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		} else {
-			if((boolean) sc.final_data) {//회원가입성공
+			if(sc.final_data == null){
+				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}else if((boolean) sc.final_data) {//회원가입성공
 				Toast.makeText(getApplication(), getText(R.string.joinSucces), Toast.LENGTH_SHORT).show();
+				finish();
 			} else if(!(boolean) sc.final_data) {//회원가입실패
 				Toast.makeText(getApplication(), getText(R.string.joinFaild), Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			}
 
-			finish();
 		}
 	} //join()
 }

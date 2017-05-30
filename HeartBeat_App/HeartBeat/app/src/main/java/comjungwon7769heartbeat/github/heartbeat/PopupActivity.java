@@ -412,7 +412,6 @@ public class PopupActivity extends AppCompatActivity {
 		btnPlay.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//NotComplete
 				//Bluetooth Comu
 				SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 				BlueToothHandler bth = (PopupActivity.this).btHandler;
@@ -536,14 +535,10 @@ public class PopupActivity extends AppCompatActivity {
 	}
 
 	private void playVoice(String path) {
-		//Toast.makeText(getApplicationContext(), path, Toast.LENGTH_SHORT);
 		File file = new File(path);
-        //Toast.makeText(getApplicationContext(), path,Toast.LENGTH_SHORT).show();//test
 		//파일이 없는 경우
 		if(!file.exists()) {
 			Toast.makeText(getApplicationContext(), "File Path ERROR", Toast.LENGTH_SHORT).show();
-			////여기서부터 코딩
-			Toast.makeText(getApplicationContext(), "음성다운받기", Toast.LENGTH_SHORT).show();
 
 			return;
 		}
@@ -619,12 +614,6 @@ public class PopupActivity extends AppCompatActivity {
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		/*if(event.getAction()== MotionEvent.BUTTON_BACK) {
-
-		}
-		if(event.getAction()==MotionEvent.ACTION_OUTSIDE){
-			return false;
-		}*/
 		stopVoice();
 		return true;
 	}

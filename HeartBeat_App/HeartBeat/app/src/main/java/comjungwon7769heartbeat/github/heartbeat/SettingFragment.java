@@ -213,7 +213,6 @@ public class SettingFragment extends Fragment {
 				String selectedText = items[pos].toString();
 				SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 				SharedPreferences.Editor editor = preference.edit();
-				//editor.putBoolean("set_btBzz", Constants.set_btBzz_ok);
 				editor.putInt("set_push", pos);
 				editor.commit();
 				txtPush.setText(selectedText);

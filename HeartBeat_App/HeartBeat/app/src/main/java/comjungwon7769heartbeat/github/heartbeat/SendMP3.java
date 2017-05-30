@@ -41,11 +41,9 @@ public class SendMP3 extends Thread {
     private void init(){
         try {
             s = new Socket(Constants.SERVERURL, 12000);
-            //this.filename=filename;
             bos = new BufferedOutputStream(s.getOutputStream());
             dos = new DataOutputStream(s.getOutputStream());
-            ///////////////test
-            Log.d("TESTTEST", filename);
+
             String realName = filename.split("/")[7];
             dos.writeUTF(sender+"_"+receiver+"_"+realName);
             fis = new FileInputStream(filename);
@@ -60,14 +58,12 @@ public class SendMP3 extends Thread {
             int ch = 0;
             while ((ch = bis.read()) != -1) {
                 bos.write(ch);
-                Log.d("TESTTEST", ch+"");
             }
             bos.flush();
             bos.close();
             fis.close();
             s.close();
         }catch(Exception e){
-            //Log.d("TEST_ SendMP3", e.getMessage());
         }
     }
 }
