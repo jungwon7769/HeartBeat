@@ -36,6 +36,7 @@
             android:layout_width="60dp"
             android:layout_height="wrap_content"
             android:background="@drawable/selector_button"
+            android:textColor="@drawable/selector_button"
             android:text="@string/search"/>
     </LinearLayout>
 
@@ -54,6 +55,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/selector_button"
+            android:textColor="@drawable/selector_button"
             android:enabled="false"
             android:layout_marginRight="3dp"
             android:text="@string/Request"/>
@@ -65,6 +67,7 @@
             android:layout_marginLeft="3dp"
             android:layout_weight="1"
             android:background="@drawable/selector_button"
+            android:textColor="@drawable/selector_button"
             android:text="@string/cancel"/>
     </LinearLayout>
 

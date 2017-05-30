@@ -67,7 +67,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/frList_editSearch"
                 android:textColor="@color/colorTextAndIcon"
-                android:background="@color/colorPrimary"
+                android:background="@color/colorAccent"
                 android:textSize="@dimen/textSize_mini"
                 android:layout_weight="1"/>
 

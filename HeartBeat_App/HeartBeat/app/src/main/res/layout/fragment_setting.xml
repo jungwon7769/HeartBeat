@@ -60,6 +60,7 @@
                     android:background="@drawable/selector_button"
                     android:enabled="false"
                     android:text="@string/ok"
+                    android:textColor="@drawable/selector_button"
                     android:textSize="@dimen/textSize_xmini"/>
 
             </LinearLayout>
