@@ -542,9 +542,6 @@ public class PopupActivity extends AppCompatActivity {
 		//파일이 없는 경우
 		if(!file.exists()) {
 			Toast.makeText(getApplicationContext(), "File Path ERROR", Toast.LENGTH_SHORT).show();
-			////여기서부터 코딩
-			Toast.makeText(getApplicationContext(), "음성다운받기", Toast.LENGTH_SHORT).show();
-
 			return;
 		}
 		try {

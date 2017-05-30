@@ -19,19 +19,12 @@ public class SendMP3 extends Thread {
     BufferedInputStream bis = null;
     FileInputStream fis = null;
     DataOutputStream dos = null;
-    String sender;
-    String receiver;
-
-    public SendMP3(String sender, String receiver){
-        this.sender = sender;
-        this.receiver = receiver;
-    }
 
     @Override
     public void run() {
         try {
             init();
-            //sendMP3();
+            sendMP3();
         }
         catch(Exception e){
             Log.d("TEST_ SendMP3", e.getMessage());
@@ -45,9 +38,11 @@ public class SendMP3 extends Thread {
             bos = new BufferedOutputStream(s.getOutputStream());
             dos = new DataOutputStream(s.getOutputStream());
             ///////////////test
-            Log.d("TESTTEST", filename);
+            Log.d("TESTTEST", filename);/*
+            filename="/storage/emulated/legacy/Music/EXID - L.I.E.mp3";
+            String realName = filename.split("/")[5];*/
             String realName = filename.split("/")[7];
-            dos.writeUTF(sender+"_"+receiver+"_"+realName);
+            dos.writeUTF(realName);
             fis = new FileInputStream(filename);
             bis = new BufferedInputStream(fis);
         }catch(Exception e){
@@ -55,7 +50,7 @@ public class SendMP3 extends Thread {
         }
     }
 
-/*    private void sendMP3(){
+    private void sendMP3(){
         try {
             int ch = 0;
             while ((ch = bis.read()) != -1) {
@@ -69,5 +64,5 @@ public class SendMP3 extends Thread {
         }catch(Exception e){
             //Log.d("TEST_ SendMP3", e.getMessage());
         }
-    }*/
+    }
 }
