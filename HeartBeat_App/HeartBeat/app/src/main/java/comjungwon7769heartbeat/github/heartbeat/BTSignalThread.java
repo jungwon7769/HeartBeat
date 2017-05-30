@@ -35,11 +35,6 @@ public class BTSignalThread implements Runnable {
 					while(count > 0) {          //10번까지 시도
 						if(svTrans(bzz_id)) break;  //전송성공시 그만시도
 						count--;
-						try {
-							Thread.sleep(1000);
-						} catch(InterruptedException e) {
-							e.printStackTrace();
-						}
 					}
 				} //try trans
 
@@ -69,6 +64,9 @@ public class BTSignalThread implements Runnable {
 			if(svComu.chkError) {   //진동전송 실패시
 				return false;
 			} else {
+				if(svComu.final_data == null){
+					return false;
+				}
 				if(!(boolean) svComu.final_data) {  //진동전송 실패시
 					return false;
 				}
