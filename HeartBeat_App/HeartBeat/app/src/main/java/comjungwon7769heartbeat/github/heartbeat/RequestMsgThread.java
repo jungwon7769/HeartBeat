@@ -64,7 +64,6 @@ public class RequestMsgThread implements Runnable {
 					msgDTO.setSoundPath(msgDTO.getSender() + "_" + preference.getString("my_id", "0") + "_" + msgDTO.getSoundPath());
 					Log.d("RECVTEST", msgDTO.getSoundPath());
 					ReceiveMP3 rm = new ReceiveMP3(msgDTO.getSoundPath());
-					Log.d("RECVTEST",rm.filename);
 					rm.start();
 				}
 				return msgDTO;
