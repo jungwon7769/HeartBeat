@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.util.Log;
 
 import java.util.Random;
 
@@ -45,13 +46,13 @@ public class RequestMsgThread implements Runnable {
 		MsgDTO msgDTO = new MsgDTO();
 
 		//NotComplete
-		/*
+
 		try {
 			svComu = new ServerCommunication();
 			SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-			//svComu.makeMsg(preference.getString("my_id", "0"),,,,,);
+			svComu.makeMsg(preference.getString("my_id","0"),null, null, null, 14, null, null, 0);
+			//Log.d("MSGTEST",svComu.msg);
 			svComu.start();     //thread Start
-<<<<<<< HEAD
 			svComu.join();
 			msgDTO = (MsgDTO)svComu.final_data;
 			if(msgDTO==null){
@@ -68,25 +69,6 @@ public class RequestMsgThread implements Runnable {
 			e.printStackTrace();
 		}
 		return null;
-=======
-			svComu.join();  //thread end Wait...
-		} catch(InterruptedException e) {
-			e.printStackTrace();
-		}
-		*/
-
-		//test Data
-		Random r = new Random();
-		msgDTO.setSender("현정이");
-		msgDTO.setFlag(r.nextInt(4));
-		msgDTO.setCount(3);
-		msgDTO.setTime(System.currentTimeMillis());
-		msgDTO.setMode(r.nextInt(10));
-		msgDTO.setSoundPath("");
-
-
-		return msgDTO;
->>>>>>> parent of dba1aa6... 친구 메시지 수신가능
 	}
 
 	//Message 저장

@@ -32,7 +32,7 @@ public class ServerCommunication extends Thread{
 	private Socket sv_sock = null;
 	public byte[] buf = new byte[1024];// 호빈수정 : 네트워크통신하려면 byte[]로 바꿔야함
 	public String msg=null;// 호빈추가 : 서버로 보낼 메시지 정의
-	public Object final_data = null; //서버처리해서 반환된 데이터야~~(boolean / HashMap<String, FriendDTO> 의 형태임)
+	public Object final_data = null; //서버처리해서 반환된 데이터야~~(boolean / HashMap<String, FriendDTO> / MsgDTO 의 형태임)
 	public boolean wait=true; //스레드 종료 알릴 플래그 용도
 	public boolean chkError = false;
 
@@ -181,10 +181,9 @@ public class ServerCommunication extends Thread{
 		}
 		//Flag 14
 		else if(Flag==14){
-			HashMap<Long, MsgDTO> res = new HashMap<>();
-			MsgDTO dto = null;
+			//HashMap<Long, MsgDTO> res = new HashMap<>();
+			MsgDTO res = null;
 			if(value.length>2){
-<<<<<<< HEAD
 				res = new MsgDTO();
 				res.setMode(Integer.parseInt(value[1]));
 				res.setSender(value[2]);
@@ -193,9 +192,6 @@ public class ServerCommunication extends Thread{
 				res.setFlag(Integer.parseInt(value[4]));
 				//res.setSoundPath(value[4]);
 				/*for(int i=1;i<value.length;i++){
-=======
-				for(int i=1;i<value.length;i++){
->>>>>>> parent of dba1aa6... 친구 메시지 수신가능
 					switch(i%4){
 						case 1:
 							dto = new MsgDTO();
@@ -212,7 +208,7 @@ public class ServerCommunication extends Thread{
 							res.put(dto.getTime(), dto);
 							break;
 					}
-				}
+				}*/
 				final_data = res;
 			}
 		}
