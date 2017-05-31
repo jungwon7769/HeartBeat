@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ public class SettingFragment extends Fragment {
 	EditText txtNick;
 	Button btnNickOK;
 	TextView txtBTName, txtPush, txtBzz;
-	View btView, pushView, bzzView;
+	View btView, pushView, bzzView, syncView;
 	public static String pushModeText[];
 
 	@Override
@@ -58,6 +57,8 @@ public class SettingFragment extends Fragment {
 
 		txtBzz = (TextView) getView().findViewById(R.id.setting_txtBzz);
 		bzzView = (View) getView().findViewById(R.id.setting_viewBzz);
+
+		syncView = (View)getView().findViewById(R.id.setting_viewSync);
 
 
 		SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
@@ -114,6 +115,13 @@ public class SettingFragment extends Fragment {
 			@Override
 			public void onClick(View v) {
 				bzzModeShow();
+			}
+		});
+
+		syncView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((MainActivity)MainActivity.mainContext).frListRefresh();
 			}
 		});
 	}

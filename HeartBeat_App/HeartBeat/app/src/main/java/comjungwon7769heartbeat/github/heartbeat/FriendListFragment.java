@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -133,7 +132,7 @@ public class FriendListFragment extends Fragment {
 		//Notcomplete
 		Log.i("HBTest", "FriendList_Load");
 		//서버통신
-		SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		SharedPreferences preference = MainActivity.mainContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(preference.getString("my_id", "0"), null, null, null, 13, null, null, 0);
 		sc.start();
@@ -146,7 +145,7 @@ public class FriendListFragment extends Fragment {
 		if(f_list == null) {//친구없음
 		} else {
 			//친구 1명이상
-			FriendDAO friendDAO = new FriendDAO(getActivity().getApplicationContext(), FriendDAO.DataBase_name, null, 1);
+			FriendDAO friendDAO = new FriendDAO(MainActivity.mainContext.getApplicationContext(), FriendDAO.DataBase_name, null, 1);
 			friendDAO.deleteAll();
 			Iterator it = f_list.keySet().iterator();
 			while(it.hasNext()) {
