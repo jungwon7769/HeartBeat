@@ -22,7 +22,7 @@ public class BTSignalThread implements Runnable {
 	public void run() {
 		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		int count;
-		btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
+		btComu = new BlueToothCommunication(preference.getString("btAddr",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_RECEIVE);
 
 		while(true) {

@@ -90,7 +90,7 @@ public class MyDetailActivity extends AppCompatActivity {
 	private void transBzzToMe_Click() {
 		//Trans Bzz Using BluetoothComu
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr",""), this.btHandler);
 		btComu.btHander = this.btHandler;
 		btComu.setUseMode(btComu.CODE_MY_BZZ);
 		Thread thread = new Thread(btComu);
@@ -124,7 +124,7 @@ public class MyDetailActivity extends AppCompatActivity {
 	private void setLED(String color) {
 		//Bluetooth Comu - color Trans
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_LED);
 		btComu.setData(color);
 		Thread thread = new Thread(btComu);
@@ -168,7 +168,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		((MainActivity)MainActivity.mainContext).frListRefresh();
 
 		//Bluetooth Play
-		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_EMOTION);
 		btComu.setData(e);
 		Thread thread = new Thread(btComu);

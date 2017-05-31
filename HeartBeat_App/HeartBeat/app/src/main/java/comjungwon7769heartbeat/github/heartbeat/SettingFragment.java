@@ -140,14 +140,16 @@ public class SettingFragment extends Fragment {
 		sc.start();
 		Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
 		if(sc.chkError) {
 			Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		} else {
-			if((boolean) sc.final_data) {//닉네임설정 성공
+			if(sc.final_data == null){
+				Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}else if((boolean) sc.final_data) {//닉네임설정 성공
 				editor.putString("my_nick", nick);
 				editor.commit();
 				//popup
@@ -178,28 +180,32 @@ public class SettingFragment extends Fragment {
 			return;
 		}
 		//Paired Device Search
-		final List<String> ListItems = new ArrayList<>();
+		final List<String> ListItems_name = new ArrayList<>();
+		final List<String> ListItems_addr = new ArrayList<>();
 		Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 		if(pairedDevices.size() > 0) {
 			for(BluetoothDevice device : pairedDevices) {
-				ListItems.add(device.getName());
+				ListItems_name.add(device.getName());
+				ListItems_addr.add(device.getAddress());
 			}
 		}
-		final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
+		final CharSequence[] items = ListItems_name.toArray(new String[ListItems_name.size()]);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle("페어링 기기 목록");
 
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int pos) {
-				String selectedText = items[pos].toString();
+				String selectedName = ListItems_name.get(pos).toString();
+				String selectedAddr = ListItems_addr.get(pos).toString();
 				SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 				SharedPreferences.Editor editor = preference.edit();
-				editor.putString("btName", selectedText);
+				editor.putString("btName", selectedName);
+				editor.putString("btAddr", selectedAddr);
 				editor.commit();
-				txtBTName.setText(selectedText);
-				BlueToothCommunication btComu = new BlueToothCommunication(selectedText, null);
-				btComu.checkConnect(selectedText);
+				txtBTName.setText(selectedName);
+				BlueToothCommunication btComu = new BlueToothCommunication(selectedAddr, null);
+				btComu.checkConnect(selectedAddr);
 			}
 		});
 		builder.show();

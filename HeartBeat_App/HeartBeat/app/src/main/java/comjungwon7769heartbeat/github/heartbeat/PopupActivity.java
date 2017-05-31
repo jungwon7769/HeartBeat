@@ -415,7 +415,7 @@ public class PopupActivity extends AppCompatActivity {
 				//Bluetooth Comu
 				SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 				BlueToothHandler bth = (PopupActivity.this).btHandler;
-				BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), bth);
+				BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr",""), bth);
 				btComu.setUseMode(btComu.CODE_EMOTION);
 				btComu.setData(mode);
 				Thread thread = new Thread(btComu);
@@ -425,7 +425,6 @@ public class PopupActivity extends AppCompatActivity {
 					if(player != null) {
 						player.stop();
 						player.release();
-						;
 						player = null;
 					}
 					player = MediaPlayer.create(getApplicationContext(), Constants.Emotion_sound[mode.getMode()]);

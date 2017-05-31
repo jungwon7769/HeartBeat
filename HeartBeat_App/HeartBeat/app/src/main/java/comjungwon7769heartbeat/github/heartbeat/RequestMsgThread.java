@@ -7,7 +7,11 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.media.MediaPlayer;
 import android.util.Log;
+import android.widget.Toast;
+
+import java.io.File;
 
 /**
  * Created by AH on 2017-05-27.
@@ -17,6 +21,7 @@ public class RequestMsgThread implements Runnable {
 	public ServerCommunication svComu;
 	public Context mContext;
 	BlueToothHandler btHandler = new BlueToothHandler(null);
+	MediaPlayer player;
 
 	public RequestMsgThread(Context c) {
 		this.mContext = c;
@@ -29,10 +34,18 @@ public class RequestMsgThread implements Runnable {
 			if(message != null) {
 				saveMsg(message);
 				pushAllarm(message);
-				if(message.getFlag() == Constants.msgFlag_Bzz){
-					playBzz(message.getSender());
+				switch(message.getFlag()) {
+					case Constants.msgFlag_Bzz:
+						playBzz(message.getSender());
+						break;
+					case Constants.msgFlag_Voice:
+						playVoice(message.getSoundPath());
+						break;
+					case Constants.msgFlag_Emotion:
+						playEmotion(message.getMode());
+						break;
 				}
-			}
+			} //if
 
 			try {
 				Thread.sleep(Constants.RequestMsg_Interval);
@@ -43,6 +56,7 @@ public class RequestMsgThread implements Runnable {
 	}
 
 	//서버로부터 메시지가져옴
+
 	public MsgDTO serverMsgReceive() {
 		MsgDTO msgDTO = new MsgDTO();
 
@@ -51,20 +65,21 @@ public class RequestMsgThread implements Runnable {
 		try {
 			svComu = new ServerCommunication();
 			SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-			svComu.makeMsg(preference.getString("my_id","0"),null, null, null, 14, null, null, 0);
+			svComu.makeMsg(preference.getString("my_id", "0"), null, null, null, 14, null, null, 0);
 			//Log.d("MSGTEST",svComu.msg);
 			svComu.start();     //thread Start
 			svComu.join();
-			msgDTO = (MsgDTO)svComu.final_data;
-			if(msgDTO==null){
+			msgDTO = (MsgDTO) svComu.final_data;
+			if(msgDTO == null) {
 				Log.d("MSGTEST", "수신할 메시지 없음");
-			}else{
+			} else {
 				Log.d("MSGTEST", "메시지 수신완료");
-				if(msgDTO.getFlag()==Constants.msgFlag_Voice){//음성파일인경우 수신하기
+				if(msgDTO.getFlag() == Constants.msgFlag_Voice) {//음성파일인경우 수신하기
 					msgDTO.setSoundPath(msgDTO.getSender() + "_" + preference.getString("my_id", "0") + "_" + msgDTO.getSoundPath());
 					Log.d("RECVTEST", msgDTO.getSoundPath());
 					ReceiveMP3 rm = new ReceiveMP3(msgDTO.getSoundPath());
 					rm.start();
+					rm.join();
 				}
 				return msgDTO;
 			}
@@ -77,10 +92,10 @@ public class RequestMsgThread implements Runnable {
 	//Message 저장
 	public boolean saveMsg(MsgDTO message) {
 		MsgDAO msgDAO = new MsgDAO(mContext, MsgDAO.DataBase_name, null, 1);
-		if(message.getFlag() == Constants.msgFlag_Bzz){
+		if(message.getFlag() == Constants.msgFlag_Bzz) {
 			int count = msgDAO.existBzz(message.getSender());
-			if(count > 0){
-				msgDAO.updateMsg(message.getSender(), message.getFlag(), count+1, message.getTime());
+			if(count > 0) {
+				msgDAO.updateMsg(message.getSender(), message.getFlag(), count + 1, message.getTime());
 				return true;
 			}
 		}
@@ -99,13 +114,13 @@ public class RequestMsgThread implements Runnable {
 			return;
 		}
 
-		if(message.getFlag() == Constants.msgFlag_Friend){
+		if(message.getFlag() == Constants.msgFlag_Friend) {
 			content = mContext.getText(R.string.msg_content_friend).toString();
-		}else if(message.getFlag() == Constants.msgFlag_Voice){
+		} else if(message.getFlag() == Constants.msgFlag_Voice) {
 			content = mContext.getText(R.string.msg_content_voice).toString();
-		}else if(message.getFlag() == Constants.msgFlag_Emotion){
+		} else if(message.getFlag() == Constants.msgFlag_Emotion) {
 			content = mContext.getText(Constants.Emotion_content[message.getModeInt()]).toString();
-		}else{
+		} else {
 			content = mContext.getText(R.string.msg_content_bzz).toString();
 		}
 
@@ -132,9 +147,9 @@ public class RequestMsgThread implements Runnable {
 	}
 
 	//Trans Bzz to 기기
-	public void playBzz(String sender){
+	public void playBzz(String sender) {
 		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr", ""), this.btHandler);
 		btComu.btHander = this.btHandler;
 
 		//블루투스 전송 데이터 설정
@@ -146,5 +161,50 @@ public class RequestMsgThread implements Runnable {
 		//전송
 		Thread thread = new Thread(btComu);
 		thread.start();
+	}
+
+	//음성 재생
+	public void playVoice(String path) {
+		try {
+			File file = new File("/storage/emulated/0/HeartBeat/tmp/myVoice/"+path);
+			//파일이 없는 경우
+			if(!file.exists()) {
+				return;
+			}
+			//재생중인 파일이 있는 경우
+			if(player != null) {
+				player.stop();
+				player.release();
+				player = null;
+			}
+			//play
+			player = new MediaPlayer();
+			player.setDataSource("/storage/emulated/0/HeartBeat/tmp/myVoice/"+path);
+			player.prepare();
+			player.start();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	}
+
+	//기분재생
+	public void playEmotion(Constants.Emotion mode) {
+		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr",""), this.btHandler);
+		btComu.setUseMode(btComu.CODE_EMOTION);
+		btComu.setData(mode);
+		Thread thread = new Thread(btComu);
+		thread.start();
+		try {
+			if(player != null) {
+				player.stop();
+				player.release();
+				player = null;
+			}
+			player = MediaPlayer.create(mContext.getApplicationContext(), Constants.Emotion_sound[mode.getMode()]);
+			player.start();
+		} catch(Exception e) {
+
+		}
 	}
 }
