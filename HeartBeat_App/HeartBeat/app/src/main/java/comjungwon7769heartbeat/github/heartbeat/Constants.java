@@ -18,7 +18,7 @@ public class Constants {
 	public static final int set_push_no = 0, set_push_sound = 1, set_push_bzz = 2, set_push_both = 3;
 
 	//서버주소
-	public static final String SERVERURL =  "1.236.102.161";
+	public static final String SERVERURL =  "223.195.2.80";
 	/*
 	PopupActivity 의 Type 정의
 	 */

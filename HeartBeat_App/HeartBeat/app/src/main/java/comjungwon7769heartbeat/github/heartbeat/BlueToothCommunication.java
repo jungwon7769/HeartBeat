@@ -73,8 +73,6 @@ public class BlueToothCommunication implements Runnable {
 					break;
 				case CODE_BZZ:
 					if(data == null) return;
-					msg = CODE_LED_OFF + "@";
-					sendMsg(msg);
 					msg = CODE_BZZ + "/" + data.toString() + "@";
 					sendMsg(msg);
 					break;

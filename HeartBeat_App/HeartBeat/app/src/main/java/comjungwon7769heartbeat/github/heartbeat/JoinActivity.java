@@ -107,8 +107,8 @@ public class JoinActivity extends Activity {
 			if(sc.final_data == null) {
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 			} else if(!(boolean) sc.final_data) {//아이디 중복안됨!!
-
 				Toast.makeText(getApplicationContext(), "사용가능한 아이디입니다", Toast.LENGTH_SHORT).show();
+				return true;
 			} else if((boolean) sc.final_data) {
 				Toast.makeText(getApplicationContext(), "!! 사용할수 없는 아이디 입니다", Toast.LENGTH_SHORT).show();
 			} else {
