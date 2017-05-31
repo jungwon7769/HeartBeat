@@ -10,7 +10,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -220,7 +219,7 @@ public class MessageListActivity extends AppCompatActivity {
 				SharedPreferences.Editor editor = preference.edit();
 				editor.putLong("friend_time", 0);
 			}else if(!(boolean) sc.final_data) {//실패
-				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplication(), getText(R.string.no_friend), Toast.LENGTH_SHORT).show();
 			} else {
 				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			}

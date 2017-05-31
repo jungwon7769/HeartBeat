@@ -1,7 +1,6 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -11,8 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import java.util.Random;
 
 public class FriendRequestActivity extends AppCompatActivity {
 	private EditText txtID;
@@ -78,11 +75,11 @@ public class FriendRequestActivity extends AppCompatActivity {
 					//존재하지 않는 아이디인 경우
 					else {
 						btnAdd.setEnabled(false);
-						//Popup 으로 알림
+						/*//Popup 으로 알림
 						Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
 						intent.putExtra("Popup", Constants.popup_ok);
 						intent.putExtra("Message", getText(R.string.addfr_notExistID));
-						startActivity(intent);
+						startActivity(intent);*/
 					}
 				}
 			}
@@ -112,9 +109,12 @@ public class FriendRequestActivity extends AppCompatActivity {
 			return false;
 		}else if(sc.final_data == null){
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+			return false;
 		}else if(!(boolean)sc.final_data){//해당 id를 갖는 회원이 존재하지 않는경우
+			Toast.makeText(getApplicationContext(), getText(R.string.no_member), Toast.LENGTH_SHORT).show();//test
 			return false;
 		}
+		Toast.makeText(getApplicationContext(), getText(R.string.yes_friend), Toast.LENGTH_SHORT).show();//test
 		return true; //존재하는 경우
 	}
 

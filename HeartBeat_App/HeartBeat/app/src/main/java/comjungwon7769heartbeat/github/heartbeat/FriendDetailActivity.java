@@ -142,7 +142,9 @@ public class FriendDetailActivity extends AppCompatActivity {
 				if(sc.final_data == null){
 					Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 				}else if(!(boolean) sc.final_data) {//진동전송 실패시
-					Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
+					Toast.makeText(getApplicationContext(), getText(R.string.no_friend), Toast.LENGTH_SHORT).show();//test
+				}else if((boolean)sc.final_data){
+					Toast.makeText(getApplicationContext(), getText(R.string.send_ok), Toast.LENGTH_SHORT).show();//test
 				}
 			}
 		} catch(InterruptedException e) {
@@ -233,7 +235,9 @@ public class FriendDetailActivity extends AppCompatActivity {
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 			}
 			else if(!(boolean) sc.final_data) {//친구색지정오류
-				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), getText(R.string.no_friend), Toast.LENGTH_SHORT).show();
+			}else if((boolean) sc.final_data){
+				Toast.makeText(getApplicationContext(), getText(R.string.send_ok), Toast.LENGTH_SHORT).show();
 			}
 		}
 		((MainActivity)MainActivity.mainContext).frListRefresh();
@@ -257,7 +261,9 @@ public class FriendDetailActivity extends AppCompatActivity {
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 			}
 			else if(!(boolean) sc.final_data) {//기분전송 실패시
-				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), getText(R.string.no_friend), Toast.LENGTH_SHORT).show();
+			}else if((boolean)sc.final_data){
+				Toast.makeText(getApplicationContext(), getText(R.string.send_ok), Toast.LENGTH_SHORT).show();
 			}
 		}
 	}
