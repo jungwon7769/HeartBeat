@@ -95,7 +95,7 @@ public class JoinActivity extends Activity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(txtID.getText().toString(), null, null, null, 11, null, null, 0);
 		sc.start();
-		Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), getText(R.string.checking), Toast.LENGTH_SHORT).show();
 		try {
 			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
@@ -123,7 +123,7 @@ public class JoinActivity extends Activity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(id, null, pwd, Nick, 12, null, null, 0);
 		sc.start();
-		Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getApplicationContext(), getText(R.string.checking), Toast.LENGTH_SHORT).show();
 		try {
 			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {

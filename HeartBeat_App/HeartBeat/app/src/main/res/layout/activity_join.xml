@@ -46,6 +46,7 @@
                 android:layout_alignStart="@+id/join_txtPWD"
                 android:hint="ID"
                 android:text=""
+                android:inputType="text"
                 android:textColor="@color/colorLight"
                 android:textCursorDrawable="@null"/>
 
@@ -83,7 +84,8 @@
             android:hint="NICKNAME"
             android:text=""
             android:textColor="@color/colorLight"
-            android:textCursorDrawable="@null"/>
+            android:textCursorDrawable="@null"
+            android:inputType="text"/>
 
         <Button
             android:id="@+id/join_btnJoin"

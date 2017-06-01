@@ -136,7 +136,7 @@ public class FriendRequestActivity extends AppCompatActivity {
 			if(sc.final_data == null){
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();//test
 			}else if(!(boolean) sc.final_data) {//친구요청추가 실패
-				Toast.makeText(getApplicationContext(), "이미친구관계입니다", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "이미 친구관계입니다", Toast.LENGTH_SHORT).show();
 			}
 		}
 

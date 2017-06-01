@@ -138,7 +138,7 @@ public class SettingFragment extends Fragment {
 		sc.makeMsg(my_id, null, null, nick, 4, null, null, 0);
 		//Toast.makeText(getApplicationContext(),sc.msg,Toast.LENGTH_SHORT).show();//test
 		sc.start();
-		Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
 		try {
 			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
