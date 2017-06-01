@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +27,7 @@ public class SettingFragment extends Fragment {
 	EditText txtNick;
 	Button btnNickOK;
 	TextView txtBTName, txtPush, txtBzz;
-	View btView, pushView, bzzView;
+	View btView, pushView, bzzView, syncView;
 	public static String pushModeText[];
 
 	@Override
@@ -58,6 +57,8 @@ public class SettingFragment extends Fragment {
 
 		txtBzz = (TextView) getView().findViewById(R.id.setting_txtBzz);
 		bzzView = (View) getView().findViewById(R.id.setting_viewBzz);
+
+		syncView = (View)getView().findViewById(R.id.setting_viewSync);
 
 
 		SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
@@ -116,6 +117,13 @@ public class SettingFragment extends Fragment {
 				bzzModeShow();
 			}
 		});
+
+		syncView.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				((MainActivity)MainActivity.mainContext).frListRefresh();
+			}
+		});
 	}
 
 	private void nick_OK_Button(String nick) {
@@ -130,16 +138,18 @@ public class SettingFragment extends Fragment {
 		sc.makeMsg(my_id, null, null, nick, 4, null, null, 0);
 		//Toast.makeText(getApplicationContext(),sc.msg,Toast.LENGTH_SHORT).show();//test
 		sc.start();
-		Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
+		//Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
 		try {
-			sc.join(10000);
+			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
 			e.printStackTrace();
 		}
 		if(sc.chkError) {
 			Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		} else {
-			if((boolean) sc.final_data) {//닉네임설정 성공
+			if(sc.final_data == null){
+				Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+			}else if((boolean) sc.final_data) {//닉네임설정 성공
 				editor.putString("my_nick", nick);
 				editor.commit();
 				//popup
@@ -170,28 +180,32 @@ public class SettingFragment extends Fragment {
 			return;
 		}
 		//Paired Device Search
-		final List<String> ListItems = new ArrayList<>();
+		final List<String> ListItems_name = new ArrayList<>();
+		final List<String> ListItems_addr = new ArrayList<>();
 		Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 		if(pairedDevices.size() > 0) {
 			for(BluetoothDevice device : pairedDevices) {
-				ListItems.add(device.getName());
+				ListItems_name.add(device.getName());
+				ListItems_addr.add(device.getAddress());
 			}
 		}
-		final CharSequence[] items = ListItems.toArray(new String[ListItems.size()]);
+		final CharSequence[] items = ListItems_name.toArray(new String[ListItems_name.size()]);
 
 		AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
 		builder.setTitle("페어링 기기 목록");
 
 		builder.setItems(items, new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int pos) {
-				String selectedText = items[pos].toString();
+				String selectedName = ListItems_name.get(pos).toString();
+				String selectedAddr = ListItems_addr.get(pos).toString();
 				SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 				SharedPreferences.Editor editor = preference.edit();
-				editor.putString("btName", selectedText);
+				editor.putString("btName", selectedName);
+				editor.putString("btAddr", selectedAddr);
 				editor.commit();
-				txtBTName.setText(selectedText);
-				BlueToothCommunication btComu = new BlueToothCommunication(selectedText, null);
-				btComu.checkConnect(selectedText);
+				txtBTName.setText(selectedName);
+				BlueToothCommunication btComu = new BlueToothCommunication(selectedAddr, null);
+				btComu.checkConnect(selectedAddr);
 			}
 		});
 		builder.show();

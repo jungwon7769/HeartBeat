@@ -21,7 +21,7 @@ public class BlueToothCommunication implements Runnable {
 	//public static final boolean BZZ_MY = true, BZZ_FR = false;
 
 	//변수 정의
-	static private String btName;
+	static private String btAddr;
 
 	static private BluetoothAdapter btAdapter;
 	static private BluetoothDevice btDevice;
@@ -36,8 +36,8 @@ public class BlueToothCommunication implements Runnable {
 
 	public BlueToothHandler btHander;
 
-	public BlueToothCommunication(String name, BlueToothHandler btHander) {
-		this.btName = name;
+	public BlueToothCommunication(String addr, BlueToothHandler btHander) {
+		this.btAddr = addr;
 		this.btHander = btHander;
 	}
 
@@ -48,7 +48,7 @@ public class BlueToothCommunication implements Runnable {
 		try {
 			if(useMode == -1) return;
 			//블루투스 연결
-			int chk = checkConnect(btName);
+			int chk = checkConnect(btAddr);
 
 			switch(chk) {
 				case CONNECT_FAILD:
@@ -73,8 +73,6 @@ public class BlueToothCommunication implements Runnable {
 					break;
 				case CODE_BZZ:
 					if(data == null) return;
-					msg = CODE_LED_OFF + "@";
-					sendMsg(msg);
 					msg = CODE_BZZ + "/" + data.toString() + "@";
 					sendMsg(msg);
 					break;
@@ -116,8 +114,8 @@ public class BlueToothCommunication implements Runnable {
 		data = value;
 	}
 
-	public int checkConnect(String name) {
-		if(btSock != null && btSock.isConnected() && btDevice.getName().equals(name)) return CONNECT_SUCCESS;
+	public int checkConnect(String addr) {
+		if(btSock != null && btSock.isConnected() && btDevice.getAddress().equals(addr)) return CONNECT_SUCCESS;
 		closeSock();
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		btDevice = null;
@@ -136,16 +134,25 @@ public class BlueToothCommunication implements Runnable {
 		//Paired Device Search
 		Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 		if(pairedDevices.size() > 0) {
-			for(BluetoothDevice device : pairedDevices) {
-				//인자값에 해당하는 name 을 가진 device인 경우
-				if(device.getName().equals(name)) {
-					btDevice = device;
+			if(addr.equals(Constants.defaultDeviceName)){
+				for(BluetoothDevice device : pairedDevices) {
+					//인자값에 해당하는 addr 을 가진 device인 경우
+					if(device.getName().equals(addr)) {
+						btDevice = device;
+					}
+				}
+			}else {
+				for(BluetoothDevice device : pairedDevices) {
+					//인자값에 해당하는 addr 을 가진 device인 경우
+					if(device.getAddress().equals(addr)) {
+						btDevice = device;
+					}
 				}
 			}
 		}
-		//Paired Device 중 name이 일치하는 Device 없음
+		//Paired Device 중 addr이 일치하는 Device 없음
 		if(btDevice == null) {
-			btDevice = btAdapter.getRemoteDevice(name);
+			btDevice = btAdapter.getRemoteDevice(addr);
 			if(btDevice == null) return CONNECT_FAILD;
 		}
 

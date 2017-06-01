@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -10,8 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".SettingFragment"
-    >
+    tools:context=".SettingFragment">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,7 +32,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/nickname"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/textSize_mini"/>
+                android:textSize="@dimen/textSize_mini" />
 
             <LinearLayout
                 android:id="@+id/setting_layout_nick"
@@ -50,7 +48,8 @@
                     android:layout_weight="1"
                     android:hint="@string/input_nick"
                     android:textColor="@color/colorPrimaryText"
-                    android:textSize="@dimen/textSize_xmini"/>
+                    android:textSize="@dimen/textSize_xmini"
+                    android:inputType="text"/>
 
 
                 <Button
@@ -61,7 +60,7 @@
                     android:enabled="false"
                     android:text="@string/ok"
                     android:textColor="@drawable/selector_button"
-                    android:textSize="@dimen/textSize_xmini"/>
+                    android:textSize="@dimen/textSize_xmini" />
 
             </LinearLayout>
         </LinearLayout>
@@ -70,6 +69,7 @@
             android:id="@+id/setting_viewBT"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/selector_button_text"
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_layout"
             android:paddingTop="@dimen/margin_layout">
@@ -81,7 +81,7 @@
                 android:layout_gravity="center_horizontal"
                 android:text="@string/setting_btName"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/textSize_mini"/>
+                android:textSize="@dimen/textSize_mini" />
 
             <TextView
                 android:id="@+id/setting_txtBT"
@@ -89,7 +89,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/textSize_xmini"/>
+                android:textSize="@dimen/textSize_xmini" />
 
         </LinearLayout>
 
@@ -97,6 +97,7 @@
             android:id="@+id/setting_viewPush"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/selector_button_text"
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_layout"
             android:paddingTop="@dimen/margin_layout">
@@ -108,7 +109,7 @@
                 android:layout_alignParentLeft="true"
                 android:text="@string/setting_select_push"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/textSize_mini"/>
+                android:textSize="@dimen/textSize_mini" />
 
             <TextView
                 android:id="@+id/setting_txtPush"
@@ -117,7 +118,7 @@
                 android:layout_weight="1"
                 android:text="dd"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/textSize_xmini"/>
+                android:textSize="@dimen/textSize_xmini" />
 
 
         </LinearLayout>
@@ -126,6 +127,7 @@
             android:id="@+id/setting_viewBzz"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@drawable/selector_button_text"
             android:orientation="vertical"
             android:paddingBottom="@dimen/margin_layout"
             android:paddingTop="@dimen/margin_layout">
@@ -137,7 +139,7 @@
                 android:layout_alignParentLeft="true"
                 android:text="@string/setting_select_BTbzz"
                 android:textColor="@color/colorPrimary"
-                android:textSize="@dimen/textSize_mini"/>
+                android:textSize="@dimen/textSize_mini" />
 
             <TextView
                 android:id="@+id/setting_txtBzz"
@@ -146,7 +148,26 @@
                 android:layout_weight="1"
                 android:text="dd"
                 android:textColor="@color/colorPrimaryText"
-                android:textSize="@dimen/textSize_xmini"/>
+                android:textSize="@dimen/textSize_xmini" />
         </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/setting_viewSync"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/selector_button_text"
+            android:orientation="vertical"
+            android:paddingBottom="@dimen/margin_layout"
+            android:paddingTop="@dimen/margin_layout">
+
+            <TextView
+                android:id="@+id/setting_txtSync"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="친구목록 동기화"
+                android:textColor="@color/colorPrimary"
+                android:textSize="@dimen/textSize_mini" />
+        </LinearLayout>
+
     </LinearLayout>
 </RelativeLayout>

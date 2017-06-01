@@ -22,7 +22,7 @@ public class BTSignalThread implements Runnable {
 	public void run() {
 		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		int count;
-		btComu = new BlueToothCommunication(preference.getString("btName",""), this.btHandler);
+		btComu = new BlueToothCommunication(preference.getString("btAddr",""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_RECEIVE);
 
 		while(true) {
@@ -31,7 +31,8 @@ public class BTSignalThread implements Runnable {
 				//Bzz Friend ID Load From PreferenceData
 				Log.i("Test", "receive");
 				String bzz_id = preference.getString("bzz_id", null);
-				if(bzz_id != null) {         //Trans To Server
+				//Log.d()
+				if(bzz_id != null  && !bzz_id.equals("")) {         //Trans To Server
 					while(count > 0) {          //10번까지 시도
 						if(svTrans(bzz_id)) break;  //전송성공시 그만시도
 						count--;

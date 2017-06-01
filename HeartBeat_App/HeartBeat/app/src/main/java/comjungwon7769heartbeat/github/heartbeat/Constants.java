@@ -10,7 +10,7 @@ public class Constants {
 	public static final int minString = 4;
 
 	public static final int friendLoad_Interval = 300000;    //millsec -> 5min 300000
-	public static final int RequestMsg_Interval = 10000;
+	public static final int RequestMsg_Interval = 1000;
 	public static final int ServerWaitTime = 10000;
 
 	//설정
@@ -18,7 +18,7 @@ public class Constants {
 	public static final int set_push_no = 0, set_push_sound = 1, set_push_bzz = 2, set_push_both = 3;
 
 	//서버주소
-	public static final String SERVERURL =  "1.236.102.161";
+	public static final String SERVERURL =  "223.195.2.80";
 	/*
 	PopupActivity 의 Type 정의
 	 */

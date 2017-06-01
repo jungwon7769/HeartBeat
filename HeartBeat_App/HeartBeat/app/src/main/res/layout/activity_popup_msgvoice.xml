@@ -24,7 +24,7 @@
             >
 
             <ImageView
-                android:id="@+id/popup_msgVoice_img"
+                android:id="@+id/popup_msgVoice_imgMode"
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:background="#FFFFFF"

@@ -23,7 +23,7 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/popup_msgfr_img"
+                android:id="@+id/popup_msgfr_imgMode"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:background="#FFFFFF"

@@ -28,7 +28,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:hint="@string/input_id"/>
+            android:hint="@string/input_id"
+            android:inputType="text"/>
 
         <Button
             android:id="@+id/addfr_btnSearch"
