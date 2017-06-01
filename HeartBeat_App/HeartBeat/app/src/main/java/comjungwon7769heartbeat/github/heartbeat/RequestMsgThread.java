@@ -9,7 +9,6 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.File;
 
@@ -95,8 +94,11 @@ public class RequestMsgThread implements Runnable {
 		if(message.getFlag() == Constants.msgFlag_Bzz) {
 			int count = msgDAO.existBzz(message.getSender());
 			if(count > 0) {
+				message.setCount(count+1);
 				msgDAO.updateMsg(message.getSender(), message.getFlag(), count + 1, message.getTime());
 				return true;
+			}else{
+				message.setCount(1);
 			}
 		}
 		msgDAO.addMsg(message);
@@ -149,18 +151,20 @@ public class RequestMsgThread implements Runnable {
 	//Trans Bzz to 기기
 	public void playBzz(String sender) {
 		SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr", ""), this.btHandler);
-		btComu.btHander = this.btHandler;
+		if(preference.getBoolean("set_btBzz", true) == Constants.set_btBzz_ok) {
+			BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr", ""), this.btHandler);
+			btComu.btHander = this.btHandler;
 
-		//블루투스 전송 데이터 설정
-		btComu.setUseMode(btComu.CODE_BZZ);
-		FriendDAO friendDAO = new FriendDAO(mContext.getApplicationContext(), FriendDAO.DataBase_name, null, 1);
-		FriendDTO friendDTO = friendDAO.getFriend(sender);
-		btComu.setData(friendDTO.getColor());
+			//블루투스 전송 데이터 설정
+			btComu.setUseMode(btComu.CODE_BZZ);
+			FriendDAO friendDAO = new FriendDAO(mContext.getApplicationContext(), FriendDAO.DataBase_name, null, 1);
+			FriendDTO friendDTO = friendDAO.getFriend(sender);
+			btComu.setData(friendDTO.getColor());
 
-		//전송
-		Thread thread = new Thread(btComu);
-		thread.start();
+			//전송
+			Thread thread = new Thread(btComu);
+			thread.start();
+		}
 	}
 
 	//음성 재생

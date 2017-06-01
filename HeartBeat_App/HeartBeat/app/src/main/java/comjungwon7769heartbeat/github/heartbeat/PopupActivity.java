@@ -317,6 +317,11 @@ public class PopupActivity extends AppCompatActivity {
 		Time = intent.getLongExtra("Time", 0);
 		final TextView id = (TextView) findViewById(R.id.popup_msgfr_txtId);
 		id.setText(ID);
+		int frMode = intent.getIntExtra("frMode", 1);
+		String frColor = intent.getStringExtra("frColor");
+		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgfr_imgMode);
+		imgMode.setImageResource(getResources().getIdentifier(Constants.Emotion.values()[frMode].toString(), "drawable", getPackageName()));
+		imgMode.setBackgroundColor(Color.parseColor("#"+frColor));
 
 		//팝업 버튼의 리스너 지정
 		Button btnAccept = (Button) findViewById(R.id.popup_msgfr_btnAccept);
@@ -357,6 +362,11 @@ public class PopupActivity extends AppCompatActivity {
 		ID = intent.getStringExtra("ID");
 		Time = intent.getLongExtra("Time", 0);
 		this.recordFilePath = intent.getStringExtra("Path");
+		int frMode = intent.getIntExtra("frMode", 1);
+		String frColor = intent.getStringExtra("frColor");
+		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgVoice_imgMode);
+		imgMode.setImageResource(getResources().getIdentifier(Constants.Emotion.values()[frMode].toString(), "drawable", getPackageName()));
+		imgMode.setBackgroundColor(Color.parseColor("#"+frColor));
 
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgVoice_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
@@ -401,11 +411,16 @@ public class PopupActivity extends AppCompatActivity {
 		final TextView txtTime = (TextView)findViewById(R.id.popup_msgEmotion_txtTime);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 		txtTime.setText(dateFormat.format(Time));
+		int frMode = intent.getIntExtra("frMode", 1);
+		String frColor = intent.getStringExtra("frColor");
+		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgEmotion_imgMode);
+		imgMode.setImageResource(getResources().getIdentifier(Constants.Emotion.values()[frMode].toString(), "drawable", getPackageName()));
+		imgMode.setBackgroundColor(Color.parseColor("#"+frColor));
 
 		mode = Constants.Emotion.values()[intent.getIntExtra("Emotion", 0)];
-		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgEmotion_imgEmotion);
-		imgMode.setImageResource(getResources().getIdentifier(mode.toString(), "drawable", this.getPackageName()));
-		imgMode.setBackgroundColor(Color.parseColor("#" + mode.getColor()));
+		ImageView imgfrMode = (ImageView)findViewById(R.id.popup_msgEmotion_imgEmotion);
+		imgfrMode.setImageResource(getResources().getIdentifier(mode.toString(), "drawable", this.getPackageName()));
+		imgfrMode.setBackgroundColor(Color.parseColor("#" + mode.getColor()));
 
 		//팝업 버튼의 리스너 지정
 		Button btnPlay = (Button) findViewById(R.id.popup_msgEmotion_btnPlay);
@@ -457,6 +472,11 @@ public class PopupActivity extends AppCompatActivity {
 		//팝업을 호출한 액티비티로부터 데이터를 불러와 뷰 셋팅
 		ID = intent.getStringExtra("ID");
 		Time = intent.getLongExtra("Time", 0);
+		int frMode = intent.getIntExtra("frMode", 1);
+		String frColor = intent.getStringExtra("frColor");
+		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgBzz_imgMode);
+		imgMode.setImageResource(getResources().getIdentifier(Constants.Emotion.values()[frMode].toString(), "drawable", getPackageName()));
+		imgMode.setBackgroundColor(Color.parseColor("#"+frColor));
 
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgBzz_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));

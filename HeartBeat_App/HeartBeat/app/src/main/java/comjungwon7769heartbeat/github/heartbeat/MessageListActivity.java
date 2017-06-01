@@ -7,7 +7,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -86,26 +85,52 @@ public class MessageListActivity extends AppCompatActivity {
 					//Popup
 					Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
 					TextView txtNick = (TextView) view.findViewById(R.id.msgItem_txtFriend);
+					ImageView imgMode = (ImageView)view.findViewById(R.id.msgItem_imgMode);
+
+					FriendDAO friendDAO = new FriendDAO(getApplicationContext(), FriendDAO.DataBase_name, null, 1);
+					FriendDTO friendDTO = friendDAO.getFriend(selectMsg.getSender());
 
 					switch(selectMsg.getFlag()) {
 						case Constants.msgFlag_Friend:
 							intent.putExtra("Popup", Constants.popup_msgFriend);
+							intent.putExtra("frMode", Constants.Emotion.smile.getMode());
+							intent.putExtra("frColor", Constants.Emotion.smile.getColor());
 							break;
 						case Constants.msgFlag_Voice:
 							intent.putExtra("Popup", Constants.popup_msgVoice);
 							intent.putExtra("Nick", txtNick.getText());
 							intent.putExtra("Path", "/storage/emulated/0/HeartBeat/tmp/myVoice/"+selectMsg.getSoundPath());
-							Log.d("PLAYTEST",selectMsg.getSoundPath());
+							if(friendDTO != null) {
+								intent.putExtra("frMode", friendDTO.getModeInt());
+								intent.putExtra("frColor", friendDTO.getColor());
+							}else{
+								intent.putExtra("frMode", Constants.Emotion.smile.getMode());
+								intent.putExtra("frColor", Constants.Emotion.smile.getColor());
+							}
 							break;
 						case Constants.msgFlag_Emotion:
 							intent.putExtra("Popup", Constants.popup_msgEmotion);
 							intent.putExtra("Nick", txtNick.getText());
 							intent.putExtra("Emotion", selectMsg.getModeInt());
+							if(friendDTO != null) {
+								intent.putExtra("frMode", friendDTO.getModeInt());
+								intent.putExtra("frColor", friendDTO.getColor());
+							}else{
+								intent.putExtra("frMode", Constants.Emotion.smile.getMode());
+								intent.putExtra("frColor", Constants.Emotion.smile.getColor());
+							}
 							break;
 						case Constants.msgFlag_Bzz:
 							intent.putExtra("Popup", Constants.popup_msgBzz);
 							intent.putExtra("Nick", txtNick.getText());
 							intent.putExtra("Count", selectMsg.getCount());
+							if(friendDTO != null) {
+								intent.putExtra("frMode", friendDTO.getModeInt());
+								intent.putExtra("frColor", friendDTO.getColor());
+							}else{
+								intent.putExtra("frMode", Constants.Emotion.smile.getMode());
+								intent.putExtra("frColor", Constants.Emotion.smile.getColor());
+							}
 							break;
 					}
 					intent.putExtra("ID", selectMsg.getSender());
