@@ -7,10 +7,6 @@ import android.os.Message;
 import android.util.Log;
 import android.widget.Toast;
 
-/**
- * Created by SJCE on 2017-05-26.
- */
-
 public class BlueToothHandler extends Handler{
     Context mContext;
 
@@ -32,7 +28,6 @@ public class BlueToothHandler extends Handler{
                 Toast.makeText(mContext, mContext.getText(R.string.bt_notSupport), Toast.LENGTH_SHORT).show();
                 break;
             case BlueToothCommunication.CONNECT_SUCCESS:
-                //Toast.makeText(mContext, "CONNECT SUCCES", Toast.LENGTH_SHORT).show();
                 break;
         }
     }

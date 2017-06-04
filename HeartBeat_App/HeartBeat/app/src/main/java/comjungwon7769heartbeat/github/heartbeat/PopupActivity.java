@@ -68,7 +68,6 @@ public class PopupActivity extends AppCompatActivity {
 				popup_recordVoice(intent);
 				break;
 
-			//Notcomplete 4 Type Popup
 			case Constants.popup_msgFriend:
 				popup_msgFriend(intent);
 				break;
@@ -319,9 +318,9 @@ public class PopupActivity extends AppCompatActivity {
 		id.setText(ID);
 		int frMode = intent.getIntExtra("frMode", 1);
 		String frColor = intent.getStringExtra("frColor");
-		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgfr_imgMode);
+		ImageView imgMode = (ImageView) findViewById(R.id.popup_msgfr_imgMode);
 		imgMode.setImageResource(getResources().getIdentifier(Constants.Emotion.values()[frMode].toString(), "drawable", getPackageName()));
-		imgMode.setBackgroundColor(Color.parseColor("#"+frColor));
+		imgMode.setBackgroundColor(Color.parseColor("#" + frColor));
 
 		//팝업 버튼의 리스너 지정
 		Button btnAccept = (Button) findViewById(R.id.popup_msgfr_btnAccept);
@@ -338,7 +337,7 @@ public class PopupActivity extends AppCompatActivity {
 				finish();
 			}
 		});
-		Button btnDeny = (Button)findViewById(R.id.popup_msgfr_btnDeny);
+		Button btnDeny = (Button) findViewById(R.id.popup_msgfr_btnDeny);
 		btnDeny.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -364,13 +363,13 @@ public class PopupActivity extends AppCompatActivity {
 		this.recordFilePath = intent.getStringExtra("Path");
 		int frMode = intent.getIntExtra("frMode", 1);
 		String frColor = intent.getStringExtra("frColor");
-		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgVoice_imgMode);
+		ImageView imgMode = (ImageView) findViewById(R.id.popup_msgVoice_imgMode);
 		imgMode.setImageResource(getResources().getIdentifier(Constants.Emotion.values()[frMode].toString(), "drawable", getPackageName()));
-		imgMode.setBackgroundColor(Color.parseColor("#"+frColor));
+		imgMode.setBackgroundColor(Color.parseColor("#" + frColor));
 
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgVoice_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
-		final TextView txtTime = (TextView)findViewById(R.id.popup_msgVoice_txtTime);
+		final TextView txtTime = (TextView) findViewById(R.id.popup_msgVoice_txtTime);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 		txtTime.setText(dateFormat.format(Time));
 
@@ -382,7 +381,7 @@ public class PopupActivity extends AppCompatActivity {
 				playVoice(recordFilePath);
 			}
 		});
-		Button btnDelete = (Button)findViewById(R.id.popup_msgVoice_btnDelete);
+		Button btnDelete = (Button) findViewById(R.id.popup_msgVoice_btnDelete);
 		btnDelete.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -408,17 +407,17 @@ public class PopupActivity extends AppCompatActivity {
 
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgEmotion_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
-		final TextView txtTime = (TextView)findViewById(R.id.popup_msgEmotion_txtTime);
+		final TextView txtTime = (TextView) findViewById(R.id.popup_msgEmotion_txtTime);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 		txtTime.setText(dateFormat.format(Time));
 		int frMode = intent.getIntExtra("frMode", 1);
 		String frColor = intent.getStringExtra("frColor");
-		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgEmotion_imgMode);
+		ImageView imgMode = (ImageView) findViewById(R.id.popup_msgEmotion_imgMode);
 		imgMode.setImageResource(getResources().getIdentifier(Constants.Emotion.values()[frMode].toString(), "drawable", getPackageName()));
-		imgMode.setBackgroundColor(Color.parseColor("#"+frColor));
+		imgMode.setBackgroundColor(Color.parseColor("#" + frColor));
 
 		mode = Constants.Emotion.values()[intent.getIntExtra("Emotion", 0)];
-		ImageView imgfrMode = (ImageView)findViewById(R.id.popup_msgEmotion_imgEmotion);
+		ImageView imgfrMode = (ImageView) findViewById(R.id.popup_msgEmotion_imgEmotion);
 		imgfrMode.setImageResource(getResources().getIdentifier(mode.toString(), "drawable", this.getPackageName()));
 		imgfrMode.setBackgroundColor(Color.parseColor("#" + mode.getColor()));
 
@@ -430,7 +429,7 @@ public class PopupActivity extends AppCompatActivity {
 				//Bluetooth Comu
 				SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 				BlueToothHandler bth = (PopupActivity.this).btHandler;
-				BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr",""), bth);
+				BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr", ""), bth);
 				btComu.setUseMode(btComu.CODE_EMOTION);
 				btComu.setData(mode);
 				Thread thread = new Thread(btComu);
@@ -449,7 +448,7 @@ public class PopupActivity extends AppCompatActivity {
 				}
 			}
 		});
-		Button btnDelete = (Button)findViewById(R.id.popup_msgEmotion_btnDelete);
+		Button btnDelete = (Button) findViewById(R.id.popup_msgEmotion_btnDelete);
 		btnDelete.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -474,20 +473,20 @@ public class PopupActivity extends AppCompatActivity {
 		Time = intent.getLongExtra("Time", 0);
 		int frMode = intent.getIntExtra("frMode", 1);
 		String frColor = intent.getStringExtra("frColor");
-		ImageView imgMode = (ImageView)findViewById(R.id.popup_msgBzz_imgMode);
+		ImageView imgMode = (ImageView) findViewById(R.id.popup_msgBzz_imgMode);
 		imgMode.setImageResource(getResources().getIdentifier(Constants.Emotion.values()[frMode].toString(), "drawable", getPackageName()));
-		imgMode.setBackgroundColor(Color.parseColor("#"+frColor));
+		imgMode.setBackgroundColor(Color.parseColor("#" + frColor));
 
 		final TextView txtNick = (TextView) findViewById(R.id.popup_msgBzz_txtNick);
 		txtNick.setText(intent.getStringExtra("Nick"));
-		final TextView txtTime = (TextView)findViewById(R.id.popup_msgBzz_txtTime);
+		final TextView txtTime = (TextView) findViewById(R.id.popup_msgBzz_txtTime);
 		DateFormat dateFormat = new SimpleDateFormat("yyyy.MM.dd HH:mm");
 		txtTime.setText(dateFormat.format(Time));
 		final TextView txtCount = (TextView) findViewById(R.id.popup_msgBzz_txtCount);
-		txtCount.setText(intent.getIntExtra("Count", 0)+"");
+		txtCount.setText(intent.getIntExtra("Count", 0) + "");
 
 		//팝업 버튼의 리스너 지정
-		Button btnDelete = (Button)findViewById(R.id.popup_msgBzz_btnDelete);
+		Button btnDelete = (Button) findViewById(R.id.popup_msgBzz_btnDelete);
 		btnDelete.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -538,7 +537,6 @@ public class PopupActivity extends AppCompatActivity {
 				recorder.prepare();
 				recorder.start();
 			} catch(Exception e) {
-				Log.e("Test", "recordVoice Exception : ", e);
 			}
 		}
 		//녹음중에 버튼을 누른 경우

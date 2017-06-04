@@ -2,9 +2,6 @@ package comjungwon7769heartbeat.github.heartbeat;
 
 import android.graphics.Color;
 
-/**
- * Created by AH on 2017-04-30.
- */
 public class FriendDTO {
 	private String friendID, friendNick, friendColor;
 	private Constants.Emotion friendMode;

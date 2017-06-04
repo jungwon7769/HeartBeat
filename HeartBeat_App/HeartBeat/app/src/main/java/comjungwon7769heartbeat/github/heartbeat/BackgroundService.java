@@ -13,7 +13,7 @@ public class BackgroundService extends Service {
 	}
 
 	@Override
-	public void onCreate(){
+	public void onCreate() {
 		//Start Bluetooth Signal Receiver Thread
 		btThread = new BTSignalThread(getApplicationContext());
 		Thread thread_bt = new Thread(btThread);

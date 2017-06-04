@@ -95,7 +95,6 @@ public class JoinActivity extends Activity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(txtID.getText().toString(), null, null, null, 11, null, null, 0);
 		sc.start();
-		//Toast.makeText(getApplicationContext(), getText(R.string.checking), Toast.LENGTH_SHORT).show();
 		try {
 			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
@@ -123,7 +122,6 @@ public class JoinActivity extends Activity {
 		ServerCommunication sc = new ServerCommunication();
 		sc.makeMsg(id, null, pwd, Nick, 12, null, null, 0);
 		sc.start();
-		//Toast.makeText(getApplicationContext(), getText(R.string.checking), Toast.LENGTH_SHORT).show();
 		try {
 			sc.join(Constants.ServerWaitTime);
 		} catch(InterruptedException e) {
@@ -132,9 +130,9 @@ public class JoinActivity extends Activity {
 		if(sc.chkError) {
 			Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		} else {
-			if(sc.final_data == null){
+			if(sc.final_data == null) {
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
-			}else if((boolean) sc.final_data) {//회원가입성공
+			} else if((boolean) sc.final_data) {//회원가입성공
 				Toast.makeText(getApplication(), getText(R.string.joinSucces), Toast.LENGTH_SHORT).show();
 				finish();
 			} else if(!(boolean) sc.final_data) {//회원가입실패

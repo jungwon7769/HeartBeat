@@ -13,17 +13,9 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
-/**
- * Created by AH on 2017-05-05.
- */
-public class ColorPickerView extends View{
+public class ColorPickerView extends View {
 	//색상선택기의 색 목록
-	private final int[] colors = new int[] {
-			Color.RED, Color.parseColor("#FFFF00"), Color.YELLOW,
-			Color.GREEN, Color.CYAN,
-			Color.BLUE, Color.parseColor("#FF00FF"),
-			Color.RED
-	};
+	private final int[] colors = new int[]{Color.RED, Color.parseColor("#FFFF00"), Color.YELLOW, Color.GREEN, Color.CYAN, Color.BLUE, Color.parseColor("#FF00FF"), Color.RED};
 	private int width, height;      //뷰의 가로, 세로 크기
 	private String selectColor;     //사용자가 선택한 색상
 	private Shader shader;          //색선택기 그라데이션용 쉐이더
@@ -35,33 +27,37 @@ public class ColorPickerView extends View{
 		selectColor = "66CCFF";
 		init();
 	}
-	public ColorPickerView(Context context, AttributeSet attrs){
+
+	public ColorPickerView(Context context, AttributeSet attrs) {
 		this(context, attrs, 0);
 		selectColor = "66CCFF";
 		init();
 	}
-	public ColorPickerView(Context context, AttributeSet attrs, int defStyle){
+
+	public ColorPickerView(Context context, AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 		selectColor = "66CCFF";
 		init();
 	}
 
-	public String getSelectColor(){return selectColor;}
+	public String getSelectColor() {
+		return selectColor;
+	}
 
-	public void init(){
-		shader = new SweepGradient(width/2, height/2, colors, null);
+	public void init() {
+		shader = new SweepGradient(width / 2, height / 2, colors, null);
 
 		paint = new Paint();    //Color 선택용 원 초기화
 		paint.setShader(shader);
 		paint.setStyle(Paint.Style.STROKE);
 		paint.setStrokeWidth(120);
-		r = paint.getStrokeWidth()/2f;
+		r = paint.getStrokeWidth() / 2f;
 
 		centerPaint = new Paint();  //선택한 Color Display 원 초기화
 	}
 
 	@Override
-	protected  void onMeasure(int widthMeasureSpec, int heightMeasureSpec){
+	protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
 		// height 크기 구하기
 		int heightMode = MeasureSpec.getMode(heightMeasureSpec);
 		switch(heightMode) {
@@ -98,31 +94,30 @@ public class ColorPickerView extends View{
 	}
 
 	@Override
-	protected void onDraw(Canvas canvas){
+	protected void onDraw(Canvas canvas) {
 		//Color 원 그리기
-		canvas.drawOval(new RectF(r, r,
-				(width - r), height - r), paint);
+		canvas.drawOval(new RectF(r, r, (width - r), height - r), paint);
 
 		//중심원 그리기
 		centerPaint.setColor(Color.parseColor("#" + selectColor));
-		canvas.drawOval(new RectF(width/4, height/4, width*3/4, height*3/4), centerPaint);
+		canvas.drawOval(new RectF(width / 4, height / 4, width * 3 / 4, height * 3 / 4), centerPaint);
 	}
 
 	@Override
 	public boolean onTouchEvent(MotionEvent event) {
-		float x = event.getX() - width/2;
-		float y = -(event.getY() - height/2);
+		float x = event.getX() - width / 2;
+		float y = -(event.getY() - height / 2);
 		float angle, piece, percent;
 		int color1, color2, index, mixColorR, mixColorG, mixColorB;
 
 		//각도구하기
-		angle = (float)Math.atan2(y, x) * (float)(180.0/3.14);
+		angle = (float) Math.atan2(y, x) * (float) (180.0 / 3.14);
 		if(angle < 0) angle += 360;
 		angle = 360 - angle;
 		piece = 360 / colors.length;
 
 		//선택한 각도의 색구하기
-		index = (angle == 0)?0:(int)(angle / piece);
+		index = (angle == 0) ? 0 : (int) (angle / piece);
 		color1 = colors[index];
 
 		index++;
@@ -132,9 +127,9 @@ public class ColorPickerView extends View{
 		percent = ((angle % piece) / piece);
 
 		//색상혼합
-		mixColorR = (int)((Color.red(color1) * (1 -percent)) + (Color.red(color2) * percent));
-		mixColorG = (int)((Color.green(color1) * (1 -percent)) + (Color.green(color2) * percent));
-		mixColorB = (int)((Color.blue(color1) * (1 -percent)) + (Color.blue(color2) * percent));
+		mixColorR = (int) ((Color.red(color1) * (1 - percent)) + (Color.red(color2) * percent));
+		mixColorG = (int) ((Color.green(color1) * (1 - percent)) + (Color.green(color2) * percent));
+		mixColorB = (int) ((Color.blue(color1) * (1 - percent)) + (Color.blue(color2) * percent));
 
 		int c = Color.rgb(mixColorR, mixColorG, mixColorB);
 		selectColor = Integer.toHexString(c).substring(2);  //선택색 저장

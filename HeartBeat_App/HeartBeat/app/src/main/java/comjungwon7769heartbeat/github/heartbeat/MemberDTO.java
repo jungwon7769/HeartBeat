@@ -1,9 +1,5 @@
 package comjungwon7769heartbeat.github.heartbeat;
 
-/**
- * Created by Hobin on 2017-05-25.
- */
-
 public class MemberDTO {
     private String id;
     private String pwd;

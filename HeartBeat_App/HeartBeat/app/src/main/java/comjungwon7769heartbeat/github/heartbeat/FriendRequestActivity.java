@@ -75,11 +75,6 @@ public class FriendRequestActivity extends AppCompatActivity {
 					//존재하지 않는 아이디인 경우
 					else {
 						btnAdd.setEnabled(false);
-						/*//Popup 으로 알림
-						Intent intent = new Intent(getApplicationContext(), PopupActivity.class);
-						intent.putExtra("Popup", Constants.popup_ok);
-						intent.putExtra("Message", getText(R.string.addfr_notExistID));
-						startActivity(intent);*/
 					}
 				}
 			}
@@ -139,9 +134,6 @@ public class FriendRequestActivity extends AppCompatActivity {
 				Toast.makeText(getApplicationContext(), "이미 친구관계입니다", Toast.LENGTH_SHORT).show();
 			}
 		}
-
-
-		//Notcomplete
 
 		txtID.setText("");
 	}
