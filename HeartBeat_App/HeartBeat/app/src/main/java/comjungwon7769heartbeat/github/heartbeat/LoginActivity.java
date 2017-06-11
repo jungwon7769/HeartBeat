@@ -76,10 +76,6 @@ public class LoginActivity extends AppCompatActivity {
 	} //onCreate()
 
 	private boolean Login_Usable_Check(String id, String pwd) {
-		//매개변수값이 불필요하게 또 선언돼 있길래 지움_호빈
-		/*String inputID = txtId.getText().toString();
-		String inputPWD = txtPwd.getText().toString();*/
-
 		//ID나 PWD가 최소길이보다 작거나 최대길이보다 긴 경우
 		if(id.length() < Constants.minString || id.length() > Constants.maxString || pwd.length() < Constants.minString || pwd.length() > Constants.maxString) {
 			return false;
@@ -87,11 +83,10 @@ public class LoginActivity extends AppCompatActivity {
 			//서버통신_ 회원정보유무검사
 			ServerCommunication sc = new ServerCommunication();
 			sc.makeMsg(id, null, pwd, null, 10, null, null, 0);
-			//Toast.makeText(getApplicationContext(),sc.msg,Toast.LENGTH_SHORT).show();
 			sc.start();
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_waiting), Toast.LENGTH_SHORT).show();
 			try {
-				sc.join(10000);
+				sc.join(Constants.ServerWaitTime);
 			} catch(InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -99,6 +94,10 @@ public class LoginActivity extends AppCompatActivity {
 				Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 				return false;
 			} else {
+				if(sc.final_data == null){
+					Toast.makeText(getApplication(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
+					return false;
+				}
 				dto = (MemberDTO) sc.final_data;
 				if(dto == null) {
 					return false;

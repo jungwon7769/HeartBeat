@@ -11,9 +11,6 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-/**
- * Created by AH on 2017-05-13.
- */
 public class MsgDAO extends SQLiteOpenHelper {
 	public static final String DataBase_name = "Msg_table.db";
 	public static final String Table_name = "Msg_table";

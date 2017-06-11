@@ -13,15 +13,11 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.HashMap;
 
-/**
- * Created by AH on 2017-05-16.
- */
 public class ServerCommunication extends Thread{
 
 	private final String sv_URL =  Constants.SERVERURL;//내 아이피주소!
 	private final int sv_PORT = 1200;
 	public String file_name = null;
-	//private File sound;
 
 	private BufferedReader br = null;
 	private BufferedOutputStream bos = null;
@@ -31,7 +27,7 @@ public class ServerCommunication extends Thread{
 
 	private Socket sv_sock = null;
 	public byte[] buf = new byte[1024];
-	public String msg=null;// 호빈추가 : 서버로 보낼 메시지 정의
+	public String msg=null;//서버로 보낼 메시지 정의
 	public Object final_data = null; //서버처리해서 반환된 데이터야~~(boolean / HashMap<String, FriendDTO> / MsgDTO 의 형태임)
 	public boolean wait=true; //스레드 종료 알릴 플래그 용도
 	public boolean chkError = false;
@@ -55,15 +51,13 @@ public class ServerCommunication extends Thread{
 			sv_sock = new Socket(sv_URL, sv_PORT);
 			br = new BufferedReader(new InputStreamReader(sv_sock.getInputStream(),"EUC-KR"));
 			bos = new BufferedOutputStream(sv_sock.getOutputStream());
-			//bw = new BufferedWriter(new OutputStreamWriter(out));
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	//** Constant mode...이부분만 이클립스로하느라 바꿈!! -> ctrl+F : mode 해서 다시 바꾸기
-	// 호빈_ 메소드 추가(매개변수에 ME추가함)
+
 	public void makeMsg(String ME, String ID, String PWD, String NICK, int Flag, String Sound, String Color, int mode) {
 		msg = Flag + "/";
 		switch (Flag) {
@@ -116,7 +110,6 @@ public class ServerCommunication extends Thread{
 			buf = br.readLine().getBytes();
 			parsingMsg(new String(buf).trim());
 		} catch (Exception e) {
-			Log.d("HBTEST",e.getMessage());
 		} finally {
 			try {
 				if (sv_sock != null)
@@ -126,7 +119,6 @@ public class ServerCommunication extends Thread{
 				if(br!=null)
 					br.close();
 			} catch (IOException e) {
-				Log.d("HBTEST",e.getMessage());
 			}
 		}
 	}

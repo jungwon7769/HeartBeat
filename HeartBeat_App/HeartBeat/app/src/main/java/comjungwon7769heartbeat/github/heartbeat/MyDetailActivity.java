@@ -25,7 +25,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_my_detail);
 
-		CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout)findViewById(R.id.frDt_toolbar_layout);
+		CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) findViewById(R.id.frDt_toolbar_layout);
 		ImageView user_mode = (ImageView) findViewById(R.id.myDt_imgMode);
 
 		//User Nick, Emotion Load From PreferenceData ***
@@ -90,7 +90,7 @@ public class MyDetailActivity extends AppCompatActivity {
 	private void transBzzToMe_Click() {
 		//Trans Bzz Using BluetoothComu
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr",""), this.btHandler);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr", ""), this.btHandler);
 		btComu.btHander = this.btHandler;
 		btComu.setUseMode(btComu.CODE_MY_BZZ);
 		Thread thread = new Thread(btComu);
@@ -112,7 +112,7 @@ public class MyDetailActivity extends AppCompatActivity {
 			} else if(data.getIntExtra("Popup", 1) == Constants.popup_pickEmotion) {
 				int selectedEmotion = data.getIntExtra("selectedEmotion", 0);
 				setEmotion(Constants.Emotion.values()[selectedEmotion]);
-			} else if(data.getIntExtra("Popup", 1) == Constants.popup_recordVoice){
+			} else if(data.getIntExtra("Popup", 1) == Constants.popup_recordVoice) {
 				String voicePath = data.getStringExtra("voicePath");
 				playSoundMsg(voicePath);
 			}
@@ -124,7 +124,7 @@ public class MyDetailActivity extends AppCompatActivity {
 	private void setLED(String color) {
 		//Bluetooth Comu - color Trans
 		SharedPreferences preference = getSharedPreferences("user_info", Activity.MODE_PRIVATE);
-		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr",""), this.btHandler);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr", ""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_LED);
 		btComu.setData(color);
 		Thread thread = new Thread(btComu);
@@ -138,7 +138,7 @@ public class MyDetailActivity extends AppCompatActivity {
 
 		//서버통신_ 내기분변경 정보 전송
 		ServerCommunication sc = new ServerCommunication();
-		sc.makeMsg(preference.getString("my_id","0"),null,null,null,5,null,null,e.getMode());
+		sc.makeMsg(preference.getString("my_id", "0"), null, null, null, 5, null, null, e.getMode());
 		sc.start();
 		try {
 			sc.join(Constants.ServerWaitTime);
@@ -148,7 +148,7 @@ public class MyDetailActivity extends AppCompatActivity {
 		if(sc.chkError) {
 			Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		} else {
-			if(sc.final_data == null){
+			if(sc.final_data == null) {
 				Toast.makeText(getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 			} else if((boolean) sc.final_data) {//닉네임설정 성공
 				editor.putInt("my_mode", e.getMode());
@@ -165,10 +165,10 @@ public class MyDetailActivity extends AppCompatActivity {
 		user_mode.setBackgroundColor(Color.parseColor("#" + e.getColor()));
 
 		//List Activity ImgChange
-		((MainActivity)MainActivity.mainContext).frListRefresh();
+		((MainActivity) MainActivity.mainContext).frListRefresh();
 
 		//Bluetooth Play
-		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr",""), this.btHandler);
+		BlueToothCommunication btComu = new BlueToothCommunication(preference.getString("btAddr", ""), this.btHandler);
 		btComu.setUseMode(btComu.CODE_EMOTION);
 		btComu.setData(e);
 		Thread thread = new Thread(btComu);

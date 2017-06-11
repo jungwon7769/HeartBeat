@@ -12,9 +12,6 @@ import android.util.Log;
 
 import java.io.File;
 
-/**
- * Created by AH on 2017-05-27.
- */
 public class RequestMsgThread implements Runnable {
 	public BlueToothCommunication btComu;
 	public ServerCommunication svComu;
@@ -59,23 +56,17 @@ public class RequestMsgThread implements Runnable {
 	public MsgDTO serverMsgReceive() {
 		MsgDTO msgDTO = new MsgDTO();
 
-		//NotComplete
-
 		try {
 			svComu = new ServerCommunication();
 			SharedPreferences preference = mContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 			svComu.makeMsg(preference.getString("my_id", "0"), null, null, null, 14, null, null, 0);
-			//Log.d("MSGTEST",svComu.msg);
 			svComu.start();     //thread Start
 			svComu.join();
 			msgDTO = (MsgDTO) svComu.final_data;
 			if(msgDTO == null) {
-				Log.d("MSGTEST", "수신할 메시지 없음");
 			} else {
-				Log.d("MSGTEST", "메시지 수신완료");
 				if(msgDTO.getFlag() == Constants.msgFlag_Voice) {//음성파일인경우 수신하기
 					msgDTO.setSoundPath(msgDTO.getSender() + "_" + preference.getString("my_id", "0") + "_" + msgDTO.getSoundPath());
-					Log.d("RECVTEST", msgDTO.getSoundPath());
 					ReceiveMP3 rm = new ReceiveMP3(msgDTO.getSoundPath());
 					rm.start();
 					rm.join();

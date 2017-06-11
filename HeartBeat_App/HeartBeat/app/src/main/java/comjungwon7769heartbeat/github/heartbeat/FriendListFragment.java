@@ -79,7 +79,7 @@ public class FriendListFragment extends Fragment {
 		//*** Friend List Load END
 
 		//Button Handler Setting ***
-		txtSearch = (EditText)getView().findViewById(R.id.frList_editSearch);
+		txtSearch = (EditText) getView().findViewById(R.id.frList_editSearch);
 		//MyDetail Activity Button
 		getView().findViewById(R.id.frList_myDetailLayout).setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -129,8 +129,6 @@ public class FriendListFragment extends Fragment {
 
 	//친구목록 서버로부터 불러오기
 	public ArrayList<FriendDTO> FriendList_Load() {
-		//Notcomplete
-		Log.i("HBTest", "FriendList_Load");
 		//서버통신
 		SharedPreferences preference = MainActivity.mainContext.getSharedPreferences("user_info", Activity.MODE_PRIVATE);
 		ServerCommunication sc = new ServerCommunication();

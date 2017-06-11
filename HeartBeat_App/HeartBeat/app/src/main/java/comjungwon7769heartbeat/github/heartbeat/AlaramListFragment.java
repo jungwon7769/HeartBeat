@@ -19,30 +19,30 @@ public class AlaramListFragment extends Fragment {
 	public void onStart() {
 		super.onStart();
 
-		final Button btnFriend = (Button)getView().findViewById(R.id.almList_btnFriend);
-		final Button btnVoice = (Button)getView().findViewById(R.id.almList_btnVoice);
-		final Button btnEmotion = (Button)getView().findViewById(R.id.almList_btnEmotion);
-		final Button btnBzz = (Button)getView().findViewById(R.id.almList_btnBzz);
+		final Button btnFriend = (Button) getView().findViewById(R.id.almList_btnFriend);
+		final Button btnVoice = (Button) getView().findViewById(R.id.almList_btnVoice);
+		final Button btnEmotion = (Button) getView().findViewById(R.id.almList_btnEmotion);
+		final Button btnBzz = (Button) getView().findViewById(R.id.almList_btnBzz);
 
-		btnFriend.setOnClickListener(new Button.OnClickListener(){
+		btnFriend.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				btnMsg_Click(Constants.msgFlag_Friend);
 			}
 		});
-		btnVoice.setOnClickListener(new Button.OnClickListener(){
+		btnVoice.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				btnMsg_Click(Constants.msgFlag_Voice);
 			}
 		});
-		btnEmotion.setOnClickListener(new Button.OnClickListener(){
+		btnEmotion.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				btnMsg_Click(Constants.msgFlag_Emotion);
 			}
 		});
-		btnBzz.setOnClickListener(new Button.OnClickListener(){
+		btnBzz.setOnClickListener(new Button.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				btnMsg_Click(Constants.msgFlag_Bzz);
@@ -51,7 +51,7 @@ public class AlaramListFragment extends Fragment {
 
 	}   //onCreate
 
-	private  void btnMsg_Click(int select){
+	private void btnMsg_Click(int select) {
 		Intent intent = new Intent(getActivity(), MessageListActivity.class);
 		intent.putExtra("Flag", select);
 		startActivity(intent);

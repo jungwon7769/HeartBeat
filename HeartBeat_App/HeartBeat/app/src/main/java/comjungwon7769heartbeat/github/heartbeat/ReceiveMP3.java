@@ -8,9 +8,6 @@ import java.io.DataOutputStream;
 import java.io.FileOutputStream;
 import java.net.Socket;
 
-/**
- * Created by Hobin on 2017-05-29.
- */
 
 public class ReceiveMP3 extends Thread {
     Socket s;
@@ -30,7 +27,6 @@ public class ReceiveMP3 extends Thread {
             receiveMP3();
         }
         catch(Exception e){
-            Log.d("RECVTEST", e.getMessage());
         }
     }
 
@@ -41,7 +37,6 @@ public class ReceiveMP3 extends Thread {
             bis = new BufferedInputStream(s.getInputStream());
             bos = new BufferedOutputStream(new FileOutputStream("/storage/emulated/0/HeartBeat/tmp/myVoice/"+filename));
         }catch(Exception e){
-            Log.d("RECVTEST", e.getMessage());
         }
     }
 
@@ -51,14 +46,12 @@ public class ReceiveMP3 extends Thread {
             int ch=0;
             while((ch=bis.read())!=-1){
                 bos.write(ch);
-                Log.d("RECVTEST",ch+"");
             }
             bos.flush();
             bos.close();
             dos.close();
             s.close();
         }catch(Exception e){
-            Log.d("RECVTEST", e.getMessage());
         }
     }
 }

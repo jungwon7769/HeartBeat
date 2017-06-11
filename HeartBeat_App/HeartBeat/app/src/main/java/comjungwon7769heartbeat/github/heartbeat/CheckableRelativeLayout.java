@@ -6,9 +6,6 @@ import android.widget.CheckBox;
 import android.widget.Checkable;
 import android.widget.RelativeLayout;
 
-/**
- * Created by AH on 2017-05-30.
- */
 public class CheckableRelativeLayout extends RelativeLayout implements Checkable{
 
 	public CheckableRelativeLayout(Context context, AttributeSet attrs){

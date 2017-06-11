@@ -55,7 +55,7 @@ public class MainActivity extends AppCompatActivity {
 
 	}
 
-	public void frListRefresh(){
+	public void frListRefresh() {
 		this.tab_frList.FriendList_Load();
 	}
 

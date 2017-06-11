@@ -58,7 +58,7 @@ public class SettingFragment extends Fragment {
 		txtBzz = (TextView) getView().findViewById(R.id.setting_txtBzz);
 		bzzView = (View) getView().findViewById(R.id.setting_viewBzz);
 
-		syncView = (View)getView().findViewById(R.id.setting_viewSync);
+		syncView = (View) getView().findViewById(R.id.setting_viewSync);
 
 
 		SharedPreferences preference = getActivity().getSharedPreferences("user_info", Activity.MODE_PRIVATE);
@@ -121,7 +121,7 @@ public class SettingFragment extends Fragment {
 		syncView.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				((MainActivity)MainActivity.mainContext).frListRefresh();
+				((MainActivity) MainActivity.mainContext).frListRefresh();
 			}
 		});
 	}
@@ -147,9 +147,9 @@ public class SettingFragment extends Fragment {
 		if(sc.chkError) {
 			Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
 		} else {
-			if(sc.final_data == null){
+			if(sc.final_data == null) {
 				Toast.makeText(getActivity().getApplicationContext(), getText(R.string.sv_notConnect), Toast.LENGTH_SHORT).show();
-			}else if((boolean) sc.final_data) {//닉네임설정 성공
+			} else if((boolean) sc.final_data) {//닉네임설정 성공
 				editor.putString("my_nick", nick);
 				editor.commit();
 				//popup

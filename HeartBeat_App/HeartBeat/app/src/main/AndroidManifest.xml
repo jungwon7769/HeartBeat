@@ -31,7 +31,8 @@
             android:name=".JoinActivity"
             android:theme="@style/Theme.AppCompat.NoActionBar">
         </activity>
-        <activity android:name=".MainActivity"
+        <activity
+            android:name=".MainActivity"
             android:label="@string/app_name">
         </activity>
         <activity
@@ -40,13 +41,13 @@
         </activity>
         <activity
             android:name=".MyDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/myDetailAct_Label">
+            android:label="@string/myDetailAct_Label"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".FriendDetailActivity"
-            android:theme="@style/AppTheme.NoActionBar"
-            android:label="@string/frDetailAct_Label">
+            android:label="@string/frDetailAct_Label"
+            android:theme="@style/AppTheme.NoActionBar">
         </activity>
         <activity
             android:name=".FriendRequestActivity"

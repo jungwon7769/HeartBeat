@@ -10,15 +10,11 @@ import java.io.OutputStream;
 import java.util.Set;
 import java.util.UUID;
 
-/**
- * Created by AH on 2017-05-16.
- */
 public class BlueToothCommunication implements Runnable {
 	//상수 정의
 	public static final int CONNECT_NOT_SUPPORT = -1, CONNECT_NOT_ENABLE = 2, CONNECT_SUCCESS = 1, CONNECT_FAILD = 0;
 	public static final int CODE_EMOTION = 1, CODE_BZZ = 2, CODE_LED = 3, CODE_MY_BZZ = 4, CODE_LED_OFF = 5;
 	public static final int CODE_RECEIVE = 6;
-	//public static final boolean BZZ_MY = true, BZZ_FR = false;
 
 	//변수 정의
 	static private String btAddr;
@@ -115,7 +111,8 @@ public class BlueToothCommunication implements Runnable {
 	}
 
 	public int checkConnect(String addr) {
-		if(btSock != null && btSock.isConnected() && btDevice.getAddress().equals(addr)) return CONNECT_SUCCESS;
+		if(btSock != null && btSock.isConnected() && btDevice.getAddress().equals(addr))
+			return CONNECT_SUCCESS;
 		closeSock();
 		btAdapter = BluetoothAdapter.getDefaultAdapter();
 		btDevice = null;
@@ -134,14 +131,14 @@ public class BlueToothCommunication implements Runnable {
 		//Paired Device Search
 		Set<BluetoothDevice> pairedDevices = btAdapter.getBondedDevices();
 		if(pairedDevices.size() > 0) {
-			if(addr.equals(Constants.defaultDeviceName)){
+			if(addr.equals(Constants.defaultDeviceName)) {
 				for(BluetoothDevice device : pairedDevices) {
 					//인자값에 해당하는 addr 을 가진 device인 경우
 					if(device.getName().equals(addr)) {
 						btDevice = device;
 					}
 				}
-			}else {
+			} else {
 				for(BluetoothDevice device : pairedDevices) {
 					//인자값에 해당하는 addr 을 가진 device인 경우
 					if(device.getAddress().equals(addr)) {
