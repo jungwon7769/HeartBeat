@@ -1,33 +1,211 @@
-#include <SoftwareSerial.h>#define EMOTION 1        // 기분#define BZZ 2            // 진동#define MOOD 3           // 무드등#define MYBZZ 4          // 본인 진동#define MOODOFF 5        // 무드등 끄기
-/*핀번호 정의*/const int BtnPin = 6;     // 버튼핀const int BzzPin = 7;     // 진동const int RedPin = 9;     // LED Rconst int GreenPin = 10;  // LED Gconst int BluePin = 11;   // LEE B
-/*상태 전역변수*/int buttonState = 1;   // 진동 푸시상태 확인 (0:ON / 1:OFF)int MoodState = 0;     // 무드등 온오프 상태 (1:ON / 0:OFF)String MOODCOLOR = ""; // 무드등 색상 저장하기 위한 변수
-/*버튼 토글제어 변수*/long time = 0;          // LED가 ON/OFF 토글된 마지막 시간long debounce = 100;    // 디바운스 타임설정
+#include <SoftwareSerial.h>
+
+#define EMOTION 1        // 기분
+#define BZZ 2            // 진동
+#define MOOD 3           // 무드등
+#define MYBZZ 4          // 본인 진동
+#define MOODOFF 5        // 무드등 끄기
+
+/*핀번호 정의*/
+const int BtnPin = 6;     // 버튼핀
+const int BzzPin = 7;     // 진동
+const int RedPin = 9;     // LED R
+const int GreenPin = 10;  // LED G
+const int BluePin = 11;   // LED B
+
+/*상태 전역변수*/
+int buttonState = 1;   // 진동 푸시상태 확인 (0:ON / 1:OFF)
+int MoodState = 0;     // 무드등 온오프 상태 (1:ON / 0:OFF)
+String MOODCOLOR = ""; // 무드등 색상 저장하기 위한 변수
+
+/*버튼 토글제어 변수*/
+long time = 0;          // LED가 ON/OFF 토글된 마지막 시간
+long debounce = 100;    // 디바운스 타임설정
 SoftwareSerial HeartBeat(2,3); // 블루투스 통신 지정
+
 void setup() {
-/*통신 속도 설정*/  Serial.begin(9600);  HeartBeat.begin(9600);
-/*핀 설정*/     pinMode(BtnPin,INPUT_PULLUP); // 버튼   pinMode(BzzPin,OUTPUT); // 진동   pinMode(RedPin,OUTPUT); // RED   pinMode(GreenPin,OUTPUT); // GREEN   pinMode(BluePin,OUTPUT); // BLUE
-  HeartBeat.write("APT+SPP8888\r\n"); // 처음 연결시 데이터 통신을 위한 메세지  }
-void loop() {
-  int Time ; // LED 재생시간  char HB_Msg; // 한바이트씩 주고받을때 사용할 변수  String Msg = ""; // 주고 받은 메세지     /*블루투스로 메세지받기*/ while(HeartBeat.available()){  HB_Msg = HeartBeat.read();  Msg += HB_Msg;    Serial.println(Msg);    if(HB_Msg == '@') // 받은 문자가 @일때 전송  {      Serial.println(Msg);      receive_BT(Msg);  }          }
- while(Serial.available()){  HeartBeat.write(Serial.read()); }
-  /*버튼 신호 제어*/  buttonState = digitalRead(BtnPin);  if(!buttonState){    send_BT(buttonState);   }     }
-/*블루투스 신호 처리*/void receive_BT(String Msg){  String COLOR = "";  char FLAG[10];  int flag;  int first;
-  first = Msg.indexOf("+"); // +인덱스 반환    strcpy(FLAG, Msg.substring(first+1,first+2).c_str()); // 메세지의 숫자만 따옴  flag = (int)strtol(FLAG,NULL,10); // 문자인 flag를 10진수로 변환
-    switch(flag)    {      /*기분전송*/      case EMOTION :         COLOR = Msg.substring(first+3,first+9);         on_LED(COLOR,2000); // 전송받은색상, 2초동안 재생      break;
-      /*진동신호(신호받아서)*/      case BZZ :         COLOR = Msg.substring(first+3,first+9);         on_LEDMotor(COLOR); // 전송받은색상, 2초동안 재생      break;
-      /*무드등*/      case MOOD :         COLOR = Msg.substring(first+3,first+9);         on_LED(COLOR,0); // 전송받은 색상 무한시간동안 재생      break;
-      /*본인진동*/      case MYBZZ :         on_Motor();      break;
-      /*무드등 끄기*/      case MOODOFF:         off_LED();        break;
-      default :         break;    }}
-/*진동 버튼 누르면 어플로 블루투스신호 보내기*/void send_BT(int buttonState){   if(buttonState == HIGH && millis()- time > debounce) // 버튼 OFF   {      // 아무일도 하지 않음   }    else // 버튼 ON  {    delay(250);    HeartBeat.write("APT+6@\r\n"); // 버튼신호 앱으로 보내기    }     }    
-/*해당 시간 동안 LED점등*/void on_LED(String COLOR, int Time){  char r[16],g[16],b[16]="";  int R=0,G=0,B=0;
-/*받아온 COLOR값 16진수로 변환*/  strcpy(r, COLOR.substring(0,2).c_str());  strcpy(g, COLOR.substring(2,4).c_str());  strcpy(b, COLOR.substring(4,6).c_str());
-  R = (int)strtol(r,NULL,16);  G = (int)strtol(g,NULL,16);  B = (int)strtol(b,NULL,16);
-  /*신호가 무드등 일때*/  if(Time == 0)   {    MoodState = 1;          // 무드등 상태저장    MOODCOLOR = COLOR;      // 무드등 값 저장        analogWrite(RedPin,R);  // 입력받은 COLOR값으로 LED점등    analogWrite(GreenPin,G);    analogWrite(BluePin,B);  }
-  /*기본 신호일때*/  else   {  analogWrite(RedPin,R);  analogWrite(GreenPin,G);  analogWrite(BluePin,B);    delay(Time);    digitalWrite(RedPin,LOW);  digitalWrite(GreenPin,LOW);  digitalWrite(BluePin,LOW);  }  }
-/*진동 울리기*/void on_Motor() {  int i=0;
-   for(i=0;i<2;i++) // 1초씩 2번진동   {   digitalWrite(BzzPin, HIGH);   delay(1000);   digitalWrite(BzzPin, LOW);   delay(1000);    }}
-/*LED, 진동 동시 메소드*/void on_LEDMotor(String COLOR){  char r[16],g[16],b[16];  int R,G,B;  int i;    strcpy(r, COLOR.substring(0,2).c_str());  strcpy(g, COLOR.substring(2,4).c_str());  strcpy(b, COLOR.substring(4,6).c_str());    R = (int)strtol(r,NULL,16);  G = (int)strtol(g,NULL,16);  B = (int)strtol(b,NULL,16);    analogWrite(RedPin,R);  analogWrite(GreenPin,G);  analogWrite(BluePin,B);
-  for(i=0;i<2;i++){   digitalWrite(BzzPin, HIGH);   delay(1000);   digitalWrite(BzzPin, LOW);   delay(1000);   }    digitalWrite(RedPin,LOW);  digitalWrite(GreenPin,LOW);  digitalWrite(BluePin,LOW);
-  /*그 전상태가 무드등이였다면*/   if(MoodState == 1)      on_LED(MOODCOLOR,0); // 다시 그전 무드등색신호 보냄   }
-/*무드등끄기*/void off_LED(){  MoodState = 0; // 무드등 상태 OFF 변경  digitalWrite(RedPin,0);  digitalWrite(GreenPin,0);  digitalWrite(BluePin,0);  MoodState = 0;}
+
+/*통신 속도 설정*/  
+Serial.begin(9600); 
+HeartBeat.begin(9600);
+/*핀 설정*/     
+pinMode(BtnPin,INPUT_PULLUP); // 버튼  
+pinMode(BzzPin,OUTPUT); // 진동   
+pinMode(RedPin,OUTPUT); // RED   
+pinMode(GreenPin,OUTPUT); // GREEN   
+pinMode(BluePin,OUTPUT); // BLUE
+  HeartBeat.write("APT+SPP8888\r\n"); // 처음 연결시 데이터 통신을 위한 메세지 
+  
+  }
+  
+  
+  
+  void loop() {
+  int Time ; // LED 재생시간 
+  char HB_Msg; // 한바이트씩 주고받을때 사용할 변수 
+  String Msg = ""; // 주고 받은 메세지
+  
+    /*블루투스로 메세지받기*/
+    while(HeartBeat.available()){  
+    HB_Msg = HeartBeat.read();  
+    Msg += HB_Msg;    
+    Serial.println(Msg);
+    
+      if(HB_Msg == '@') // 받은 문자가 @일때 전송 
+      {     
+      Serial.println(Msg);    
+      receive_BT(Msg); 
+      }          
+    }
+    
+     while(Serial.available()){  
+     HeartBeat.write(Serial.read()); }
+     
+     
+  /*버튼 신호 제어*/  
+  buttonState = digitalRead(BtnPin); 
+  if(!buttonState){    
+  send_BT(buttonState);   
+  }    
+ }
+ 
+ /*블루투스 신호 처리*/
+ void receive_BT(String Msg)
+ {
+ String COLOR = "";  
+ char FLAG[10];  
+ int flag;  
+ int first; 
+ 
+ first = Msg.indexOf("+"); // +인덱스 반환    
+ strcpy(FLAG, Msg.substring(first+1,first+2).c_str()); // 메세지의 숫자만 따옴  
+ flag = (int)strtol(FLAG,NULL,10); // 문자인 flag를 10진수로 변환
+    
+    switch(flag)    {   
+    /*기분전송*/      
+    case EMOTION :        
+    COLOR = Msg.substring(first+3,first+9);
+    on_LED(COLOR,2000); // 전송받은색상, 2초동안 재생   
+    break;
+      
+      /*진동신호(신호받아서)*/   
+      case BZZ :      
+      COLOR = Msg.substring(first+3,first+9);  
+      on_LEDMotor(COLOR); // 전송받은색상, 2초동안 재생    
+      break;
+      
+      /*무드등*/ 
+      case MOOD :   
+      COLOR = Msg.substring(first+3,first+9);   
+      on_LED(COLOR,0); // 전송받은 색상 무한시간동안 재생  
+      break;
+      
+      /*본인진동*/
+      case MYBZZ :  
+      on_Motor();   
+      break;
+      
+      /*무드등 끄기*/
+      case MOODOFF: 
+      off_LED();   
+      break;
+      
+      default : 
+      break; 
+      }
+      
+      }
+      
+      /*진동 버튼 누르면 어플로 블루투스신호 보내기*/
+      void send_BT(int buttonState){
+      if(buttonState == HIGH && millis()- time > debounce) // 버튼 OFF   
+      {      // 아무일도 하지 않음   }   
+      
+      else // 버튼 ON  {    
+      delay(250);  
+      HeartBeat.write("APT+6@\r\n"); // 버튼신호 앱으로 보내기    }  
+      }    
+      
+      /*해당 시간 동안 LED점등*/
+      void on_LED(String COLOR, int Time){  
+      char r[16],g[16],b[16]=""; 
+      int R=0,G=0,B=0;
+
+/*받아온 COLOR값 16진수로 변환*/  
+strcpy(r, COLOR.substring(0,2).c_str());  
+strcpy(g, COLOR.substring(2,4).c_str());  
+strcpy(b, COLOR.substring(4,6).c_str());
+
+R = (int)strtol(r,NULL,16); 
+G = (int)strtol(g,NULL,16);
+B = (int)strtol(b,NULL,16);
+ 
+ /*신호가 무드등 일때*/ 
+ if(Time == 0) 
+ {    MoodState = 1;          // 무드등 상태저장   
+ MOODCOLOR = COLOR;      // 무드등 값 저장   
+ analogWrite(RedPin,R);  // 입력받은 COLOR값으로 LED점등   
+ analogWrite(GreenPin,G);    
+ analogWrite(BluePin,B);  
+ }
+  /*기본 신호일때*/  
+  else   {
+  analogWrite(RedPin,R);
+  analogWrite(GreenPin,G);
+  analogWrite(BluePin,B);  
+  delay(Time);  
+  digitalWrite(RedPin,LOW);
+  digitalWrite(GreenPin,LOW);  
+  digitalWrite(BluePin,LOW);  }  
+  }
+  
+  
+/*진동 울리기*/
+void on_Motor() {  
+int i=0;
+   for(i=0;i<2;i++) // 1초씩 2번진동   
+   {   digitalWrite(BzzPin, HIGH); 
+   delay(1000);  
+   digitalWrite(BzzPin, LOW);  
+   delay(1000);    }
+ }
+ 
+ /*LED, 진동 동시 메소드*/
+ void on_LEDMotor(String COLOR){  
+ char r[16],g[16],b[16];  
+ int R,G,B; 
+ int i; 
+ strcpy(r, COLOR.substring(0,2).c_str()); 
+ strcpy(g, COLOR.substring(2,4).c_str());
+ strcpy(b, COLOR.substring(4,6).c_str());  
+ R = (int)strtol(r,NULL,16); 
+ G = (int)strtol(g,NULL,16); 
+ B = (int)strtol(b,NULL,16);   
+ analogWrite(RedPin,R); 
+ analogWrite(GreenPin,G);
+ analogWrite(BluePin,B);
+ 
+  for(i=0;i<2;i++){   
+  digitalWrite(BzzPin, HIGH); 
+  delay(1000);  
+  digitalWrite(BzzPin, LOW); 
+  delay(1000); 
+  }  
+  digitalWrite(RedPin,LOW); 
+  digitalWrite(GreenPin,LOW); 
+  digitalWrite(BluePin,LOW);
+  
+  /*그 전상태가 무드등이였다면*/ 
+  if(MoodState == 1) 
+  on_LED(MOODCOLOR,0); // 다시 그전 무드등색신호 보냄   
+  }
+  
+  
+/*무드등끄기*/
+void off_LED(){  
+MoodState = 0; // 무드등 상태 OFF 변경  
+digitalWrite(RedPin,0);
+digitalWrite(GreenPin,0);
+digitalWrite(BluePin,0); 
+MoodState = 0;
+}
